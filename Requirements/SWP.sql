@@ -63,7 +63,8 @@ create table [Game]
 	Download int,
 	Rate float,
 	[Status] int,
-	[Description] nvarchar(300)
+	[Description] nvarchar(300),
+	Developer nvarchar(300)
 )
 go
 create table [User-Game-Comment]

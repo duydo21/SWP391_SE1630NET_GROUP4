@@ -1,0 +1,62 @@
+body{
+background: #f2f2f2;/*    background-image: url(../images/ckongu.jpg);*/
+}
+
+.form{
+    width: 390px;
+    height: 500px;
+    padding: 77px 55px 33px;
+    position: absolute;
+    background: #fff;
+    margin-top: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+    -o-box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+    -ms-box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+}
+.login{
+    color: #333;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 140%;
+}
+h3{
+    text-align: center;
+}
+.signup{
+    color: white;
+    text-align: center;
+    font-size: 140%;    
+    padding-top: 0px;
+}
+.back{
+    background-color: bisque;
+    width: 75px;
+    height: 75px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+    line-height: 70px;
+}
+.button{
+    display: block;
+    width: 50%;
+    height: 50px;
+    border-radius: 25px;
+    margin: 0 auto;
+    background: -webkit-linear-gradient(right,#21d4fd,#b721ff,#21d4fd,#b721ff);
+}
+
+.input{
+        font-size: 15px;
+    color: #555;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    height: 45px;
+    background: 0 0;
+    padding: 0 5px;
+}

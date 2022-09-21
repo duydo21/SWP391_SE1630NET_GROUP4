@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -55,7 +56,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+         request.getRequestDispatcher("Login.jsp").forward(request, response);
     } 
 
     /** 
@@ -68,7 +69,29 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        String cookie = request.getParameter("rememberMe");
+        //tao 3 cookie: username, pass, remember
+        Cookie cu = new Cookie("cuser", user);
+        Cookie cp = new Cookie("cpass", pass);
+        Cookie cr = new Cookie("cremember", cookie);
+        if (cookie != null) {
+            //co chon
+            cu.setMaxAge(60 * 60 * 27 * 7); // 7 ngay
+            cp.setMaxAge(60 * 60 * 27 * 7); // 7 ngay
+            cr.setMaxAge(60 * 60 * 27 * 7); // 7 ngay
+        } else {
+            //ko chon
+            cu.setMaxAge(0);
+            cp.setMaxAge(0);
+            cr.setMaxAge(0);
+        }
+        //luu vao browser
+        response.addCookie(cu);
+        response.addCookie(cp);
+        response.addCookie(cr);
+        response.sendRedirect("login");
     }
 
     /** 

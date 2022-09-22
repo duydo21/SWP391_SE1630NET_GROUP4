@@ -5,6 +5,7 @@
 
 package controller;
 
+import dal.userDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Account;
+import model.User;
 
 /**
  *
@@ -69,14 +72,30 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String email = request.getParameter("email");
-        if(email == null){         
-            request.setAttribute("ms", "Please enter email!!! ");
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        String pass2 = request.getParameter("pass2");
+        
+        userDAO ud = new userDAO();
+        Account a = ud.checkAccountExist(user);
+        if(user == null || user.equals("")){         
+            request.setAttribute("ms", "Please enter username!!! ");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         }
-        else{
-            request.setAttribute("acceptemail", email);
-            request.getRequestDispatcher("Register.jsp").forward(request, response);
+        else if(pass == null || pass.equals("") || pass2 == null || pass2.equals("")){
+            request.setAttribute("ms", "Please enter password!!! ");
+            request.getRequestDispatcher("Register.jsp").forward(request, response);          
+        }
+        else if(!pass.equals(pass2)){
+            request.setAttribute("ms", "Re-enter password does not match with your password!!! ");
+            request.getRequestDispatcher("Register.jsp").forward(request, response);            
+        }
+        else if (!user.equals("") && a== null && pass.equals(pass2)){
+            Account a2 = new Account(user, pass, true);
+            ud.createAccount(a2);
+            HttpSession session = request.getSession();
+            session.setAttribute("account", a2);
+            response.sendRedirect("test.jsp");
         }
     }
 

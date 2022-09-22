@@ -15,26 +15,15 @@
     </head>
     <body>         
         <div class= "form">
-            <c:if test = "${requestScope.acceptemail == null}">
-                <form action="register" class="signup" method="post">
-                    <h1 style="color: #333;">Register</h1>
-                    <h4 style="color: #333;">${requestScope.ms}</h4>
-                    <input type="text" name="email" class="input" placeholder="Email"><br>
-                    <input type="submit" value="Register Email" class ="button"> 
-                </form>                
-            </c:if>
-            <c:if test = "${requestScope.acceptemail != null}">
-                <form action="register" class="signup" method="post">
-                    <h1 style="color: #333;">Register</h1>
-                    <h4  style="color: #333;">${requestScope.ms}</h4>
-                    <input type="text" name="email" class="input" value="${requestScope.acceptemail}"><br>
-                    <input type="password" name="user" class="input" placeholder="Username"><br>
-                    <input type="password" name="pass" class="input" placeholder="Password"><br>
-                    <input type="password" name="pass2" class="input" placeholder="Re enter password"><br>                             
-                    <input type="submit" value="Register" class ="button"> 
-                </form>
-            </c:if>
-            <h3>already have account ? <a href="login">Signin here</a></h3>
+            <form action="register" class="signup" method="post">
+                <h5 style="color: #333;">Register</h5>
+                <h4  style="color: #333;">${requestScope.ms}</h4>
+                <input type="text" name="user" class="input" placeholder="Username"><br>
+                <input type="password" name="pass" class="input" placeholder="Password"><br>
+                <input type="password" name="pass2" class="input" placeholder="Re enter password"><br>                             
+                <input type="submit" value="Register" class ="button"> 
+            </form>
+            <h3>already have account ?<a href="login">Signin here</a></h3>
         </div>
     </body>
 </html>

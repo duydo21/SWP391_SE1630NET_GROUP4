@@ -6,30 +6,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : Sep 22, 2022, 4:54:29 PM
     Author     : Strongest
 */
+/*top bar*/
 nav{
     height: 60px;
     width: 100%;
     background-color: rgba(26,26,26,0.9);
     box-shadow: 0px 1px 3px 1px rgb(0 0 0 / 30%);
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 .choice{
     display: flex;
     padding: 5px;
     height: 100%;
-    font-size: 15px;
+    font-size: 20px;
     float: left;
     top: 50%;
-
+    padding-left: 10px;
 }
 .choicedropdown{
     display: flex;
     padding: 5px;
     height: 100%;
-    font-size: 15px;
+    font-size: 20px;
     float: left;
     position: relative;
-
+    padding-left: 100px;
 }
 .choice a {
     color: #ccc;
@@ -44,18 +47,21 @@ section{
     width: 70%;
     margin: 0 auto;
 }
+/*dropdown content*/
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: #F0FFFF;
     width: 200px;
     z-index: 1;
     text-align: center;
     top: 60px;
+    right: -72px;
+    color: #666;
 }
 
 .dropdown-content a {
-    color: white;
+    color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -71,4 +77,36 @@ section{
 
 .choicedropdown:hover .dropbtn {
     background-color: #3e8e41;
+}
+
+
+/*search container*/
+.search-container {
+  float: right;
+  border-radius: 15px;
+  position: relative;
+}
+
+.search-container input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #666;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  width:40px;
+  position: absolute;
+}
+
+.search-container button:hover {
+  background: #ccc;
 }

@@ -1,7 +1,7 @@
 create database SWP
 use SWP
 go
-
+--type true: admin, false: user
 create table Account
 (
       Username nvarchar(50) primary key,
@@ -22,7 +22,9 @@ create table [User]
 	[Name] nvarchar(50) foreign key references [Account](Username),
 	Country nvarchar(50),
 	AccountBalance float,
-	[Email] nvarchar(70)
+	[Email] nvarchar(70),
+	Avatar nvarchar(100),
+	IsDev bit
 )
 go
 create table Payment
@@ -37,7 +39,8 @@ create table Request
 	RequestID int IDENTITY(1,1) primary key,
 	RequestBy int foreign key references [User](UserID),
 	[Status] int,
-	Content nvarchar(100)
+	Content nvarchar(100),
+	[Time] smallDatetime
 )
 go
 create table [Notification]
@@ -105,5 +108,13 @@ create table [Game-Category]
 (
 	GameID int foreign key references [Game](GameID),
 	CategoryID int foreign key references Category(CategoryID)
+)
+go
+--type 1: anh demo trong game, 2: poster, 3: video demo trong game
+create table [Media]
+(
+	GameID int foreign key references [Game](GameID),
+	Link nvarchar(100) primary key,
+	[Type] int
 )
 go

@@ -20,6 +20,7 @@ create table [User]
 (
 	UserID int IDENTITY(1,1) primary key,
 	[Name] nvarchar(50) foreign key references [Account](Username),
+	Nickname nvarchar(50),
 	Country nvarchar(50),
 	AccountBalance float,
 	[Email] nvarchar(70),

@@ -170,7 +170,7 @@
                     New Release <!--Padding is optional-->
                 </span>
             </div>
-            <div id="carouselExampleControls" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
+            <div id="carouselExampleControls2" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="cards-wrapper">
@@ -245,13 +245,21 @@
                         </div>
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
             <div style="width: 100%; height: 20px; border-bottom: 1px solid black;">
                 <span style="font-size: 30px; background-color: #d9d9d9; padding: 0 10px;">
                     Best seller <!--Padding is optional-->
                 </span>
             </div>
-            <div id="carouselExampleControls" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
+            <div id="carouselExampleControls3" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="cards-wrapper">
@@ -326,6 +334,14 @@
                         </div>
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls3" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls3" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </section>
         <footer class="bg-light text-center text-lg-start">
@@ -337,7 +353,7 @@
                 Nguyen Hoang Anh<br>
                 Dang Minh Hieu <br>
                 Vu Hoang Minh Quan<br>
-                    <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
+                <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
             </div>
             <!-- Copyright -->
         </footer>

@@ -76,34 +76,13 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
-        String cookie = request.getParameter("rememberMe");
-        //tao 3 cookie: username, pass, remember
-        Cookie cu = new Cookie("cuser", user);
-        Cookie cp = new Cookie("cpass", pass);
-        Cookie cr = new Cookie("cremember", cookie);
-        if (cookie != null) {
-            //co chon
-            cu.setMaxAge(60 * 60 * 27 * 7); // 7 ngay
-            cp.setMaxAge(60 * 60 * 27 * 7); // 7 ngay
-            cr.setMaxAge(60 * 60 * 27 * 7); // 7 ngay
-        } else {
-            //ko chon
-            cu.setMaxAge(0);
-            cp.setMaxAge(0);
-            cr.setMaxAge(0);
-        }
-        //luu vao browser
-        response.addCookie(cu);
-        response.addCookie(cp);
-        response.addCookie(cr);
-
         userDAO ud = new userDAO();
         Account a = ud.checkLogin(user, pass);
         if (a == null) {
             request.setAttribute("ms", "username or password invalid!!! ");
-            request.getRequestDispatcher("login").forward(request, response);
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
-            response.sendRedirect("test.jsp");
+            response.sendRedirect("mainscreen");
         }
     }
 

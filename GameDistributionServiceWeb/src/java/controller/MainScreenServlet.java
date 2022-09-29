@@ -5,6 +5,7 @@
 
 package controller;
 
+import dal.gameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Game;
 
 /**
  *
@@ -55,6 +58,9 @@ public class MainScreenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        gameDAO gd = new gameDAO();
+        List<Game> list = gd.getGame();
+        request.setAttribute("gameList", list);
         request.getRequestDispatcher("MainScreen.jsp").forward(request, response);
     } 
 

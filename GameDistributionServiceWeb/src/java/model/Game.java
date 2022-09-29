@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Strongest
@@ -18,11 +20,13 @@ public class Game {
     private float Rate;
     private int Status;
     private String Description;
+    private Date Date;
     
     public Game() {
+        
     }
 
-    public Game(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, float Rate, int Status, String Description) {
+    public Game(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, float Rate, int Status, String Description, Date Date) {
         this.GameID = GameID;
         this.Name = Name;
         this.Price = Price;
@@ -32,7 +36,10 @@ public class Game {
         this.Rate = Rate;
         this.Status = Status;
         this.Description = Description;
+        this.Date = Date;
     }
+
+
 
     public int getGameID() {
         return GameID;
@@ -104,6 +111,14 @@ public class Game {
 
     public void setDescription(String Description) {
         this.Description = Description;
+    }
+
+    public Date getDate() {
+        return Date;
+    }
+
+    public void setDate(Date Date) {
+        this.Date = Date;
     }
     
     

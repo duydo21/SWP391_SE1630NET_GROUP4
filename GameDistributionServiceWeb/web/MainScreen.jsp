@@ -82,6 +82,10 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
+            
+            .d-flex button{
+                background-color: #a0a1b4;
+            }
         </style>
     </head>
     <body>
@@ -130,7 +134,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
-                                    <a class="dropdown-item" href="#">Sign out</a>
+                                    <a class="dropdown-item" href="logout">Sign out</a>
                                     <a class="dropdown-item" href="#">Payment</a>
                                 </div>
                             </li>

@@ -4,12 +4,13 @@
     Author     : Strongest
 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Wellcome to WHG</title>
+        <title>Welcome to WHG</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -98,10 +99,14 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">New Release</a>
+                                <a class="dropdown-item" href="#">Deals</a>
                                 <a class="dropdown-item" href="#">Best Selling</a>
+                                <a class="dropdown-item" href="#">Free to play</a>
                                 <a class="dropdown-item" href="#">Coming Soon</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Genre</a>
+                                <a class="dropdown-item" href="#">Deals</a>
+                                <a class="dropdown-item" href="#">All games</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -110,12 +115,26 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Support</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="login">Sign in</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="register">Sign up</a>
-                        </li>
+                        <c:if test="${(sessionScope.acc == null)}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="login">Sign in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="register">Sign up</a>
+                            </li>                            
+                        </c:if>
+                        <c:if test="${(sessionScope.acc != null)}"> 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Welcome ${sessionScope.userlogin.nickname}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
+                                    <a class="dropdown-item" href="#">Sign out</a>
+                                    <a class="dropdown-item" href="#">Payment</a>
+                                </div>
+                            </li>
+                        </c:if>                 
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

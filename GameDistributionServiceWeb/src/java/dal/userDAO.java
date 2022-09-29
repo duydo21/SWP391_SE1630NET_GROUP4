@@ -33,43 +33,145 @@ public class userDAO extends DBContext {
         }
     }
 
+//    public Account getAccountByName(String username) {
+//        String sql = "SELECT [Username]\n"
+//                + "      ,[Password]\n"
+//                + "     ,[Type\n]"
+//                + "  FROM [dbo].[Account]\n"
+//                + "  where [Username]=?";
+//        try {
+//            PreparedStatement st = connection.prepareStatement(sql);
+//            st.setString(1, username);
+//            ResultSet rs = st.executeQuery();
+//            if (rs.next()) {
+//                Account a = new Account(rs.getString("Username"), rs.getString("Password"), rs.getBoolean("Type"));
+//                return a;
+//            }
+//        } catch (SQLException e) {
+//
+//        }
+//        return null;
+//    }
     public Account checkAccountExist(String username) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
                 + "      ,[Type]\n"
                 + "  FROM [dbo].[Account] where [Username] = ?";
-        try{
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 Account a = new Account(rs.getString("Username"), rs.getString("Password"), true);
                 return a;
             }
-        }
-        catch(SQLException e){
-            
+        } catch (SQLException e) {
+
         }
         return null;
     }
-    public Account checkLogin(String username , String password) {
+
+    public Account checkLogin(String username, String password) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
                 + "      ,[Type]\n"
                 + "  FROM [dbo].[Account] where [Username] = ? AND [Password] = ?";
-        try{
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 Account a = new Account(rs.getString("Username"), rs.getString("Password"), true);
                 return a;
             }
-        }
-        catch(SQLException e){
-            
+        } catch (SQLException e) {
+
         }
         return null;
     }
+
+    public void createUser(String name) {
+        String sql = "INSERT INTO [dbo].[User]\n"
+                + "           ([Name]\n"
+                + "           ,[Nickname]\n"
+                + "           ,[Country]\n"
+                + "           ,[AccountBalance]\n"
+                + "           ,[Email]\n"
+                + "           ,[Avatar]\n"
+                + "           ,[IsDev])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, "No information");
+            st.setString(3, "No information");
+            st.setFloat(4, 0);
+            st.setString(5, "No information");
+            st.setString(6, "image/Default Avatar.jpg");
+            st.setBoolean(7, false);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public User findUserByName(String Username) {
+        String sql = "SELECT * FROM [dbo].[User] where [Name] = ?";
+        User u = new User();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, Username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Account a = checkAccountExist(rs.getString("Name"));
+                u.setUserID(rs.getInt("UserID"));
+                u.setUsername(a);
+                u.setNickname(rs.getString("Nickname"));
+                u.setCountry(rs.getString("Country"));
+                u.setAccountBalance(rs.getFloat("AccountBalance"));
+                u.setEmail(rs.getString("Email"));
+                u.setAvatar(rs.getString("Avatar"));
+                u.setIsDev(rs.getBoolean("IsDev"));
+            }
+            return u;
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
+
+    public User findUserByID(int id) {
+        String sql = "SELECT * FROM [dbo].[User] where [UserID] = ?";
+        User u = new User();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Account a = checkAccountExist(rs.getString("Name"));
+                u.setUserID(rs.getInt("UserID"));
+                u.setUsername(a);
+                u.setNickname(rs.getString("Nickname"));
+                u.setCountry(rs.getString("Country"));
+                u.setAccountBalance(rs.getFloat("AccountBalance"));
+                u.setEmail(rs.getString("Email"));
+                u.setAvatar(rs.getString("Avatar"));
+                u.setIsDev(rs.getBoolean("IsDev"));
+            }
+            return u;
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
+
+//    public static void main(String[] args) {
+//        userDAO ud = new userDAO();
+//        Account a = ud.checkAccountExist("manh");
+//        System.out.println(a.getUsername());
+//        User u = ud.findUserByID(1);
+//        System.out.println(u.getUsername().getUsername());
+//    }
 }

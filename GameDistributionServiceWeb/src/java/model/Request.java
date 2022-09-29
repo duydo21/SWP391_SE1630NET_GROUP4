@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Strongest
@@ -13,16 +15,17 @@ public class Request {
     private User RequestBy;
     private int Status;
     private String Context;
-    
+    private Date Time;
     
     public Request() {
     }
 
-    public Request(int RequestID, User RequestBy, int Status, String Context) {
+    public Request(int RequestID, User RequestBy, int Status, String Context, Date Time) {
         this.RequestID = RequestID;
         this.RequestBy = RequestBy;
         this.Status = Status;
         this.Context = Context;
+        this.Time = Time;
     }
 
     public Request(String Context) {
@@ -59,6 +62,14 @@ public class Request {
 
     public void setContext(String Context) {
         this.Context = Context;
+    }
+
+    public Date getTime() {
+        return Time;
+    }
+
+    public void setTime(Date Time) {
+        this.Time = Time;
     }
     
     

@@ -12,18 +12,20 @@ public class Payment {
     private int PaymentID;
     private User UserID;
     private int PaymentMethod;
-
+    private float Money;
     public Payment() {
     }
 
-    public Payment(int PaymentID, User UserID, int PaymentMethod) {
+    public Payment(int PaymentID, User UserID, int PaymentMethod, float Money) {
         this.PaymentID = PaymentID;
         this.UserID = UserID;
         this.PaymentMethod = PaymentMethod;
+        this.Money = Money;
     }
 
-    public Payment(int PaymentMethod) {
+    public Payment(int PaymentMethod, float Money) {
         this.PaymentMethod = PaymentMethod;
+        this.Money = Money;
     }
 
     public int getPaymentID() {
@@ -49,6 +51,14 @@ public class Payment {
     public void setPaymentMethod(int PaymentMethod) {
         this.PaymentMethod = PaymentMethod;
     }
-    
+
+    public float getMoney() {
+        return Money;
+    }
+
+    public void setMoney(float Money) {
+        this.Money = Money;
+    }
+
     
 }

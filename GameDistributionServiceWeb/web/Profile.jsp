@@ -97,12 +97,16 @@
                             </li>                            
                         </c:if>
                         <c:if test="${(sessionScope.acc != null)}">
-                            <li class="nav-item">
-                                <p>Welcome ${sessionScope.userlogin.nickname}</p>
-                            </li>   
-                            <li class="nav-item">
-                                <a class="nav-link" href="register">Signout</a>
-                            </li>                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Welcome ${sessionScope.userlogin.nickname}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
+                                    <a class="dropdown-item" href="#">Sign out</a>
+                                    <a class="dropdown-item" href="#">Payment</a>
+                                </div>
+                            </li>                          
                         </c:if>                 
                     </ul>
                     <form class="d-flex search">

@@ -56,6 +56,9 @@
             .search{
                 margin-left: auto;
             }
+            .d-flex button{
+                background-color: #a0a1b4;
+            }
         </style>
     </head>
     <body>

@@ -82,6 +82,10 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
+            
+            .d-flex button{
+                background-color: #a0a1b4;
+            }
         </style>
     </head>
     <body>

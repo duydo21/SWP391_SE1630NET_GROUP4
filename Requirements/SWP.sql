@@ -49,7 +49,7 @@ create table [Notification]
 (
 	NotiID int IDENTITY(1,1) primary key,
 	[Type] int,
-	Content nvarchar(100)
+	Content nvarchar(max)
 )
 go
 create table [User-Notification]
@@ -69,7 +69,7 @@ create table [Game]
 	Discount int,
 	Rate float,
 	[Status] int,
-	[Description] nvarchar(300),
+	[Description] nvarchar(max),
 	Developer nvarchar(300)
 )
 go
@@ -77,7 +77,7 @@ create table [User-Game-Comment]
 (
 	UserID int foreign key references [User](UserID),
 	GameID int foreign key references [Game](GameID),
-	Content nvarchar(300)
+	Content nvarchar(max)
 )
 go
 create table [User-Game-Rate]

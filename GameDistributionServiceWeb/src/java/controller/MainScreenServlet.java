@@ -14,7 +14,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Category;
 import model.Game;
+import model.GameCategory;
+import model.Media;
 
 /**
  *
@@ -59,8 +62,11 @@ public class MainScreenServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         gameDAO gd = new gameDAO();
-        List<Game> list = gd.getGame();
-        request.setAttribute("gameList", list);
+        List<Game> glist = gd.getGame();
+        List<GameCategory> cglist = gd.getCategory();
+        Media m = gd.getGamePosterByGameID(glist.indexOf(0));
+        request.setAttribute("categorylist", cglist);
+        request.setAttribute("gamelist", glist);
         request.getRequestDispatcher("MainScreen.jsp").forward(request, response);
     } 
 

@@ -4,8 +4,10 @@
     Author     : Strongest
 --%>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -82,7 +84,7 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
-            
+
             .d-flex button{
                 background-color: #a0a1b4;
             }
@@ -154,30 +156,28 @@
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="7" aria-label="Slide 8"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="8" aria-label="Slide 9"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="9" aria-label="Slide 10"></button>
                 </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1313140/capsule_616x353.jpg?t=1662741507" class="d-block w-100" alt="...">
-                        <div class="text">
-                            <p>Price: 300000</p>
-                            <button class="btn">Add to cart</button>
+                    <% boolean isFirst = true; %>
+                    <c:forEach items="${requestScope.gamelist}" var="game" begin="0" end ="9">
+                        <% Media m = gd.getGamePosterByGameID(${game.gameID}); %>
+                        <div class="carousel-item <%= isFirst ? "active" : ""%> ">
+                            <img src="<%= m.link %>" class="d-block w-100" alt="Poster">
+                            <div class="text">
+                                <p>${game.price}</p>
+                                <button class="btn">More Detail</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=1617174663" class="d-block w-100" alt="...">
-                        <div class="text">
-                            <p>Price: 300000</p>
-                            <button class="btn">Add to cart</button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" class="d-block w-100" alt="...">
-                        <div class="text">
-                            <p>Price: 300000</p>
-                            <button class="btn">Add to cart</button>
-                        </div>
+                        <% isFirst = false; %>  
+                    </c:forEach>
 
-                    </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -202,7 +202,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Cuphead</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>   
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -210,7 +209,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to carte</a>
                                 </div>
                             </div>
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -218,7 +216,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>    
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -226,7 +223,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>  
                         </div>
@@ -238,7 +234,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Cuphead</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>   
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -246,7 +241,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to carte</a>
                                 </div>
                             </div>
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -254,7 +248,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>    
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -262,7 +255,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>  
                         </div>
@@ -291,7 +283,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Cuphead</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>   
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -299,7 +290,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to carte</a>
                                 </div>
                             </div>
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -307,7 +297,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>    
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -315,7 +304,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>  
                         </div>
@@ -327,7 +315,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Cuphead</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>   
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -335,7 +322,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to carte</a>
                                 </div>
                             </div>
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -343,7 +329,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>    
                             <div class="card d-none d-md-block" style="width: 18rem;">
@@ -351,7 +336,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Card title</h5>
                                     <p class="card-text">Price: 100000</p>
-                                    <a href="#" class="btn btn-primary">Add to cart</a>
                                 </div>
                             </div>  
                         </div>

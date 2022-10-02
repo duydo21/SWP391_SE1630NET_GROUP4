@@ -66,6 +66,7 @@ create table [Game]
 	Price float,
 	PublishedBy nvarchar(50),
 	Download int,
+	Discount int,
 	Rate float,
 	[Status] int,
 	[Description] nvarchar(300),

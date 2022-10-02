@@ -17,16 +17,19 @@ public class Game {
     private String PublishedBy;
     private String Developer;
     private int Download;
+    private int Discount;
     private float Rate;
     private int Status;
     private String Description;
     private Date Date;
     
+    
     public Game() {
         
     }
 
-    public Game(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, float Rate, int Status, String Description, Date Date) {
+    public Game(int GameID, String Name, float Price, String PublishedBy, String Developer, 
+            int Download, int Discount, float Rate, int Status, String Description, Date Date) {
         this.GameID = GameID;
         this.Name = Name;
         this.Price = Price;
@@ -119,6 +122,14 @@ public class Game {
 
     public void setDate(Date Date) {
         this.Date = Date;
+    }
+
+    public int getDiscount() {
+        return Discount;
+    }
+
+    public void setDiscount(int Discount) {
+        this.Discount = Discount;
     }
     
     

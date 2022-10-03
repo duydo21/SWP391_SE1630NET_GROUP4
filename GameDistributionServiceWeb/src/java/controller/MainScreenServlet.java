@@ -64,7 +64,7 @@ public class MainScreenServlet extends HttpServlet {
         gameDAO gd = new gameDAO();
         List<Game> glist = gd.getGame();
         List<GameCategory> cglist = gd.getCategory();
-        Media m = gd.getGamePosterByGameID(glist.indexOf(0));
+        Media m = gd.getGamePosterByGameID(glist.get(0).getGameID());
         request.setAttribute("categorylist", cglist);
         request.setAttribute("gamelist", glist);
         request.getRequestDispatcher("MainScreen.jsp").forward(request, response);
@@ -91,5 +91,11 @@ public class MainScreenServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    public static void main(String[] args) {
+        gameDAO gd = new gameDAO();
+        List<Game> glist = gd.getGame();
+        Media m = gd.getGamePosterByGameID(glist.get(0).getGameID());
+        System.out.println(glist.get(0).getGameID());
+    }
 }

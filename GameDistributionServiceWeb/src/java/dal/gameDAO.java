@@ -145,8 +145,31 @@ public class gameDAO extends DBContext {
         return list;
     }
 
-    public Media getGamePosterByGameID(int indexOf) {
-        String sql = "";
+    public Media getGamePosterByGameID(int id) {
+        String sql = "SELECT * FROM [dbo].[Media] where Type = 2 AND GameID = ?";
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Game g = getGameById(rs.getInt("GameID"));
+                Media m = new Media(g, rs.getString("Link"), rs.getInt("Type"));
+                return m;
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
         return null;
+    }
+    
+    public static void main(String[] args) {
+        gameDAO gdd = new gameDAO();
+        List<Game> list = gdd.getGame();
+        Media m = gdd.getGamePosterByGameID(3);
+        for(Game g : list){
+            System.out.println(g.getName());
+        }
+        
     }
 }

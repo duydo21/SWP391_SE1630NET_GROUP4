@@ -70,7 +70,8 @@ create table [Game]
 	Rate float,
 	[Status] int,
 	[Description] nvarchar(max),
-	Developer nvarchar(300)
+	Developer nvarchar(300),
+	[Date] date
 )
 go
 create table [User-Game-Comment]
@@ -121,3 +122,4 @@ create table [Media]
 	[Type] int
 )
 go
+

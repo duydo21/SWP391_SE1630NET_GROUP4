@@ -71,7 +71,8 @@ create table [Game]
 	[Status] int,
 	[Description] nvarchar(max),
 	Developer nvarchar(300),
-	[Date] date
+	[Date] date,
+	Poster nvarchar(max)
 )
 go
 create table [User-Game-Comment]

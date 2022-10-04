@@ -130,7 +130,7 @@
                                     <img src="${i.avatar}"
                                          alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                          style="width: 150px; z-index: 1">
-                                    <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                                    <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
                                             style="z-index: 1;">
                                         Edit profile
                                     </button>                                        

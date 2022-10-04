@@ -53,3 +53,12 @@ INSERT INTO Game ([Name], Price, PublishedBy, Download, Rate, [Status], [Descrip
 INSERT INTO Game ([Name], Price, PublishedBy, Download, Rate, [Status], [Description], Developer, [Date]) VALUES ('The Death | Thần Trùng', '75000', 'DUT Studio', '100032', '9.4', '1', 'Thần Trùng | The Death là trò chơi phiêu lưu kinh dị tâm lý do 3 người Việt phát triển. Game lấy bối cảnh thành phố Hà Nội năm 2021.', 'DUT Studio', '2022-9-15');
 INSERT INTO Game ([Name], Price, PublishedBy, Download, Rate, [Status], [Description], Developer, [Date]) VALUES ('Persona 4 Golden', '380000', 'SEGA', '2015487', '9.7', '1', 'A coming of age story that sets the protagonist and his friends on a journey kickstarted by a chain of serial murders.', 'ATLUS', '2020-6-14');
 
+--select * from Media
+--
+insert into Media (GameID,Link,[Type]) values (1,'games/Cuphead.jpg',2)
+insert into Media (GameID,Link,[Type]) values (2,'games/Hollow Knight.jpg',2)
+insert into Media (GameID,Link,[Type]) values (3,'games/Anger Foot.jpg',2)
+insert into Media (GameID,Link,[Type]) values (4,'games/Cult of the Lamb.jpg',2)
+insert into Media (GameID,Link,[Type]) values (5,'games/TBOI Rebirth.jpg',2)
+insert into Media (GameID,Link,[Type]) values (6,'games/TBOI.jpg',2)
+insert into Media (GameID,Link,[Type]) values (7,'games/DOOM.jpg',2)

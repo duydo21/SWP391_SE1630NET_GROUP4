@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="ms-3" style="margin-top: 130px;">
                                     <h5>${i.nickname}</h5>
-                                    <p>${i.country}k</p>
+                                    <p>${i.country}</p>
                                 </div>
                             </div>
                         </div>

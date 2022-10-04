@@ -166,12 +166,27 @@ public class userDAO extends DBContext {
         }
         return null;
     }
+    public int updateProfileUser(User u) {
+        int count = 0;
+        try {
+            String sql = "update [User] set [Name]=?, Nickname=?, Country =?, AccountBalance = ?,  [Email] =?, Avatar =?, IsDev = ? where UserID=?";
+            PreparedStatement ps = connection.prepareStatement(sql);           
+            ps.setObject(1, u.getUsername());
+            ps.setString(2, u.getNickname());
+            ps.setString(3, u.getCountry());
+            ps.setFloat(4, u.getAccountBalance());
+            ps.setString(5, u.getEmail());
+            ps.setString(6, "image/"+u.getAvatar());
+            ps.setBoolean(7, u.isIsDev());           
+            count = ps.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return count;
+    }
 
 //    public static void main(String[] args) {
 //        userDAO ud = new userDAO();
-//        Account a = ud.checkAccountExist("manh");
-//        System.out.println(a.getUsername());
-//        User u = ud.findUserByID(1);
-//        System.out.println(u.getUsername().getUsername());
+//        Account a = ud.updateProfileUser(u);
+//        
 //    }
 }

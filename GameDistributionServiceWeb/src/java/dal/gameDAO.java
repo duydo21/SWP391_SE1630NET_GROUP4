@@ -55,7 +55,7 @@ public class gameDAO extends DBContext {
                         rs.getString("Developer"), rs.getInt("Download"),
                         rs.getInt("Discount"), rs.getFloat("Rate"),
                         rs.getInt("Status"), rs.getString("Description"),
-                        rs.getDate("Date"));
+                        rs.getDate("Date"), rs.getString("Poster"));
                 list.add(g);
             }
 
@@ -86,11 +86,61 @@ public class gameDAO extends DBContext {
                 + "[price] = 0";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getString("PublishedBy"),
+                        rs.getString("Developer"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return null;
+        return list;
+    }
+
+    public List<Game> getBestSeller() {
+        List<Game> list = new ArrayList<>();
+        String sql = "select * from Game where [Status] != 2 order by Download desc";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getString("PublishedBy"),
+                        rs.getString("Developer"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    public List<Game> getNewRelease() {
+        List<Game> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getString("PublishedBy"),
+                        rs.getString("Developer"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
     }
 
     public Game getGameById(int id) {
@@ -100,8 +150,8 @@ public class gameDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                    //(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, int Discount, float Rate, int Status, String Description, Date Date)
-                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getString("PublishedBy"), rs.getString("Developer"), rs.getInt("Download"),rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"));
+                //(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, int Discount, float Rate, int Status, String Description, Date Date)
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getString("PublishedBy"), rs.getString("Developer"), rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
                 return g;
             }
         } catch (SQLException e) {
@@ -109,7 +159,7 @@ public class gameDAO extends DBContext {
         }
         return null;
     }
-    
+
     public Category getCateById(int id) {
         String sql = "SELECT [CategoryID]\n"
                 + "      ,[CategoryName]\n"
@@ -145,31 +195,11 @@ public class gameDAO extends DBContext {
         return list;
     }
 
-    public Media getGamePosterByGameID(int id) {
-        String sql = "SELECT * FROM [dbo].[Media] where Type = 2 AND GameID = ?";
-        try{
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                Game g = getGameById(rs.getInt("GameID"));
-                Media m = new Media(g, rs.getString("Link"), rs.getInt("Type"));
-                return m;
-            }
-        }
-        catch(SQLException e){
-            System.out.println(e);
-        }
-        return null;
-    }
-    
     public static void main(String[] args) {
         gameDAO gdd = new gameDAO();
         List<Game> list = gdd.getGame();
-        Media m = gdd.getGamePosterByGameID(3);
-        for(Game g : list){
-            System.out.println(g.getName());
+        for(Game g: list){
+            System.out.println(g);
         }
-        
     }
 }

@@ -22,26 +22,26 @@ public class Game {
     private int Status;
     private String Description;
     private Date Date;
-    
+    private String Poster;
     
     public Game() {
         
     }
 
-    public Game(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, int Discount, float Rate, int Status, String Description, Date Date) {
+    public Game(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster) {
         this.GameID = GameID;
         this.Name = Name;
         this.Price = Price;
         this.PublishedBy = PublishedBy;
         this.Developer = Developer;
         this.Download = Download;
+        this.Discount = Discount;
         this.Rate = Rate;
         this.Status = Status;
         this.Description = Description;
         this.Date = Date;
+        this.Poster = Poster;
     }
-
-
 
     public int getGameID() {
         return GameID;
@@ -91,6 +91,14 @@ public class Game {
         this.Download = Download;
     }
 
+    public int getDiscount() {
+        return Discount;
+    }
+
+    public void setDiscount(int Discount) {
+        this.Discount = Discount;
+    }
+
     public float getRate() {
         return Rate;
     }
@@ -123,13 +131,13 @@ public class Game {
         this.Date = Date;
     }
 
-    public int getDiscount() {
-        return Discount;
+    public String getPoster() {
+        return Poster;
     }
 
-    public void setDiscount(int Discount) {
-        this.Discount = Discount;
+    public void setPoster(String Poster) {
+        this.Poster = Poster;
     }
-    
+
     
 }

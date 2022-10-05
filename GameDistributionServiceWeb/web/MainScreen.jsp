@@ -88,6 +88,7 @@
             .d-flex button{
                 background-color: #a0a1b4;
             }
+
         </style>
     </head>
     <body>
@@ -165,11 +166,10 @@
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="9" aria-label="Slide 10"></button>
                 </div>
                 <div class="carousel-inner">
-                    <% boolean isFirst = true; %>
-                    <c:forEach items="${requestScope.gamelist}" var="game" begin="0" end ="9">
-                        <% Media m = gd.getGamePosterByGameID(${game.gameID}); %>
-                        <div class="carousel-item <%= isFirst ? "active" : ""%> ">
-                            <img src="<%= m.link %>" class="d-block w-100" alt="Poster">
+                    <% boolean isFirst = true;%>
+                    <c:forEach items="${requestScope.gamelist}" var="game" begin="0" end="9" varStatus="count">  
+                        <div class="carousel-item <%= isFirst ? "active" : ""%>">
+                            <img src="${game.poster}" class="d-block w-100" alt="Poster">
                             <div class="text">
                                 <p>${game.price}</p>
                                 <button class="btn">More Detail</button>
@@ -177,7 +177,6 @@
                         </div>
                         <% isFirst = false; %>  
                     </c:forEach>
-
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -194,80 +193,19 @@
                 </span>
             </div>
             <div id="carouselExampleControls2" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="cards-wrapper">
+                <div class="carousel-inner" style="display: flex; overflow: auto">
+                    <c:forEach items="${requestScope.newrelease}" var="game" begin="0" end="9">
+                        <div class="item active">
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
+                                <img class="card-img-top" src="${game.poster}" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title">Cuphead</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>   
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
+                                    <h5 class="card-title">${game.name}</h5>
+                                    <p class="card-text">${game.price}</p>
                                 </div>
                             </div>
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>    
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>  
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="cards-wrapper">
-                            <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Cuphead</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>   
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>    
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>  
-                        </div>
-                    </div>
+                        </div>                  
+                    </c:forEach>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
             <div style="width: 100%; height: 20px; border-bottom: 1px solid black;">
                 <span style="font-size: 30px; background-color: #d9d9d9; padding: 0 10px;">
@@ -275,80 +213,19 @@
                 </span>
             </div>
             <div id="carouselExampleControls3" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="cards-wrapper">
+                <div class="carousel-inner" style="display: flex; overflow: auto">
+                    <c:forEach items="${requestScope.bestseller}" var="game" begin="0" end="9">
+                        <div class="item active">
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
+                                <img class="card-img-top" src="${game.poster}" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title">Cuphead</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>   
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
+                                    <h5 class="card-title">${game.name}</h5>
+                                    <p class="card-text">${game.price}</p>
                                 </div>
                             </div>
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>    
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>  
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="cards-wrapper">
-                            <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Cuphead</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>   
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.cloudflare.steamstatic.com/steam/apps/268910/capsule_616x353.jpg?t=1661955091" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>    
-                            <div class="card d-none d-md-block" style="width: 18rem;">
-                                <img class="card-img-top" src="https://cdn.akamai.steamstatic.com/steam/apps/250900/capsule_616x353.jpg?t=16171746631" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Price: 100000</p>
-                                </div>
-                            </div>  
-                        </div>
-                    </div>
+                        </div>                  
+                    </c:forEach>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls3" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls3" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
         </section>
         <footer class="bg-light text-center text-lg-start">

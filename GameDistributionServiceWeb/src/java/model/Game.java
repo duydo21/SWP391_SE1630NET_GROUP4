@@ -67,6 +67,10 @@ public class Game {
         this.Price = Price;
     }
 
+    public float getPriceAfterDiscount() {
+        return Price/100*getDiscount();
+    }
+    
     public String getPublishedBy() {
         return PublishedBy;
     }

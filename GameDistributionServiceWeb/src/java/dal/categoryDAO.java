@@ -7,15 +7,19 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Category;
+import model.GameCategory;
 
 /**
  *
  * @author ACER
  */
-public class categoryDAO extends DBContext{
+public class categoryDAO extends DBContext {
+
     //get Category by ID
-    public Category getCategoryByID(int id){
+    public Category getCategoryByID(int id) {
         String sql = "SELECT * FROM [dbo].[Category]"
                 + "  where [CategoryID]=?";
         try {
@@ -29,5 +33,29 @@ public class categoryDAO extends DBContext{
             System.out.println(e);
         }
         return null;
+    }
+
+    public List<Category> getCategory() {
+        List<Category> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[Category]";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Category c = new Category(rs.getInt("CategoryID"), rs.getString("CategoryName"));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        categoryDAO cd = new categoryDAO();
+
+        List<Category> list = cd.getCategory();
+
+        System.out.println(list.size());
     }
 }

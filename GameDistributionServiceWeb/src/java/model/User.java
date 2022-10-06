@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Strongest
@@ -17,11 +19,12 @@ public class User {
     private String Email;
     private String Avatar;
     private boolean IsDev;
-
+    private Date date;
+    
     public User() {
     }
 
-    public User(int UserID, Account Username, String Nickname, String Country, float AccountBalance, String Email, String Avatar, boolean IsDev) {
+    public User(int UserID, Account Username, String Nickname, String Country, float AccountBalance, String Email, String Avatar, boolean IsDev, Date date) {
         this.UserID = UserID;
         this.Username = Username;
         this.Nickname = Nickname;
@@ -30,6 +33,7 @@ public class User {
         this.Email = Email;
         this.Avatar = Avatar;
         this.IsDev = IsDev;
+        this.date = date;
     }
 
     public User(String Nickname, String Country, String Email, String Avatar) {
@@ -101,6 +105,14 @@ public class User {
 
     public void setIsDev(boolean IsDev) {
         this.IsDev = IsDev;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
     
     

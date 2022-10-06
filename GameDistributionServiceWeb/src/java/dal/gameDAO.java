@@ -176,40 +176,6 @@ public class gameDAO extends DBContext {
         }
         return list;
     }
-    public Category getCateById(int id) {
-        String sql = "SELECT [CategoryID]\n"
-                + "      ,[CategoryName]\n"
-                + "  FROM [dbo].[Category] where CatagoryID = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                Category c = new Category(rs.getInt("CategoryID"), rs.getString("CategoryName"));
-                return c;
-            }
-        } catch (SQLException e) {
-
-        }
-        return null;
-    }
-
-    public List<GameCategory> getCategory() {
-        List<GameCategory> list = new ArrayList<>();
-        String sql = "SELECT [GameID]\n"
-                + "      ,[CategoryID]\n"
-                + "  FROM [dbo].[Game-Category]";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
 
     public static void main(String[] args) {
         gameDAO gdd = new gameDAO();

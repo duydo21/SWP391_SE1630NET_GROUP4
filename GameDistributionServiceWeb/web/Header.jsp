@@ -25,10 +25,10 @@
                             Store
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="">New Release</a>
+                            <a class="dropdown-item" href="news">New Release</a>
                             <a class="dropdown-item" href="#">Deals</a>
-                            <a class="dropdown-item" href="#">Best Selling</a>
-                            <a class="dropdown-item" href="#">Free to play</a>
+                            <a class="dropdown-item" href="best">Best Selling</a>
+                            <a class="dropdown-item" href="free">Free to play</a>
                             <a class="dropdown-item" href="#">Coming Soon</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Genre</a>

@@ -23,8 +23,8 @@ import model.Game;
  *
  * @author Strongest
  */
-@WebServlet(name="GamesServlet", urlPatterns={"/games"})
-public class GamesServlet extends HttpServlet {
+@WebServlet(name="NewReleaseServlet", urlPatterns={"/news"})
+public class NewReleaseServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -41,15 +41,15 @@ public class GamesServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GamesServlet</title>");  
+            out.println("<title>Servlet NewReleaseServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GamesServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet NewReleaseServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     } 
-    List<Game> list;
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -62,15 +62,12 @@ public class GamesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         gameDAO gd = new gameDAO();
-        categoryDAO cd = new categoryDAO();
-        list = gd.getGame();
+        List<Game> list = gd.getNewRelease();
         List<Category> clist = new ArrayList<>();
-        clist = cd.getCategory();
         int size = list.size();
-        request.setAttribute("cate", clist);
         request.setAttribute("size", size);
         request.setAttribute("getgames", list);
-        request.setAttribute("text", "All Games");
+        request.setAttribute("text", "Newest Games");
         request.getRequestDispatcher("games.jsp").forward(request, response);
     } 
 
@@ -84,7 +81,7 @@ public class GamesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /** 

@@ -71,12 +71,13 @@
         </header>
         <section>
             <div>
-                <h1>All Games (${requestScope.size})</h1>
+                <h1>${requestScope.text}</h1>
             </div>
             <div class=" container" style="padding: 0">
                 <div class="row">
+                    <p>there are ${requestScope.size} result</p>
                     <div style="width: 70%;">
-                        <table class="table table-hover">
+                        <table class="table table-secondary table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 20%">Title</th>
@@ -94,7 +95,7 @@
                                             </div>
                                         </th>
                                         <th scope="col" style="text-align: center">
-                                                    ${game.price}
+                                            ${game.price}
                                         </th>
                                     </tr>
                                 </c:forEach>
@@ -103,12 +104,24 @@
                     </div>
                     <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
                         <h5>Choose your price range</h5>
-                        <form action="games" method="post">
+                        <form action="searchfilter" method="post">
                             <div>
-                                <input type="number" name="first" placeholder="0" style="width: 40%;display: inline"/> 
+                                <input type="number" name="first" placeholder="0" value="0" style="width: 40%;display: inline"/> 
                                 <p style="display: inline">-</p>
-                                <input type="number" name="second" placeholder="0" style="width: 40%;display: inline"/>           
+                                <input type="number" name="second" placeholder="0" value="0" style="width: 40%;display: inline"/>      
+                                <button class="btn btn-outline-success" type="submit">Search</button>
                             </div>
+                        </form>
+
+                        <form style="overflow: auto;">
+                            <c:forEach items="${requestScope.cate}" var="c">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        ${c.categoryName}
+                                    </label>    
+                                </div>
+                            </c:forEach>
                         </form>
                     </div>
                 </div>

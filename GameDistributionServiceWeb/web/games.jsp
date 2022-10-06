@@ -69,61 +69,7 @@
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-                <a class="navbar-brand" href="mainscreen"><img src="image/logo.png" alt="alt" class="navbar-brand" style="height: 100px"/></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                Store
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="">New Release</a>
-                                <a class="dropdown-item" href="#">Deals</a>
-                                <a class="dropdown-item" href="#">Best Selling</a>
-                                <a class="dropdown-item" href="#">Free to play</a>
-                                <a class="dropdown-item" href="#">Coming Soon</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Genre</a>
-                                <a class="dropdown-item" href="games">All games</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Support</a>
-                        </li>
-                        <c:if test="${(sessionScope.acc == null)}">
-                            <li class="nav-item">
-                                <a class="nav-link" href="login">Sign in</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="register">Sign up</a>
-                            </li>                            
-                        </c:if>
-                        <c:if test="${(sessionScope.acc != null)}"> 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Welcome ${sessionScope.userlogin.nickname}
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
-                                    <a class="dropdown-item" href="logout">Sign out</a>
-                                    <a class="dropdown-item" href="#">Payment</a>
-                                </div>
-                            </li>
-                        </c:if>                 
-                    </ul>
-                    <form class="d-flex" action="search" method = "get">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
-            </nav>
+            <jsp:include page="Header.jsp" />
         </header>
         <section>
             <div>
@@ -149,7 +95,9 @@
                                                 <img src="${game.poster}" alt="alt" style="width: 100%;height: 100%"/>
                                             </div>
                                         </th>
-                                        <th scope="col" style="text-align: center">${game.price}</th>
+                                        <th scope="col" style="text-align: center">
+                                                    ${game.price}
+                                        </th>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -159,9 +107,9 @@
                         <h5>Choose your price range</h5>
                         <form action="games" method="post">
                             <div>
-                                    <input type="number" name="first" placeholder="0" style="width: 40%;display: inline"/> 
-                                    <p style="display: inline">-</p>
-                                    <input type="number" name="second" placeholder="0" style="width: 40%;display: inline"/>           
+                                <input type="number" name="first" placeholder="0" style="width: 40%;display: inline"/> 
+                                <p style="display: inline">-</p>
+                                <input type="number" name="second" placeholder="0" style="width: 40%;display: inline"/>           
                             </div>
                         </form>
                     </div>

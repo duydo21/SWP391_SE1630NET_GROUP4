@@ -63,6 +63,8 @@
             .d-flex button{
                 background-color: #a0a1b4;
             }
+
+
         </style>
     </head>
     <body>
@@ -71,36 +73,41 @@
         </header>
         <section>
             <div>
-                <h1>All Games (${requestScope.size})</h1>
+                <h1>Search result for (${requestScope.keyword})</h1>
             </div>
-            <div class=" container" style="padding: 0">
+            <div class=" container" style="padding: 0; min-height: 800px;">
                 <div class="row">
-                    <div style="width: 70%;">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="width: 20%">Title</th>
-                                    <th scope="col"></th>
-                                    <th scope="col" style="text-align: center" >Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${requestScope.getgames}" var="game">
-                                    <tr onclick="window.location.href = 'game?gameID=${game.gameID}'">
-                                        <th scope="col">${game.name}</th>
-                                        <th scope="col"> 
-                                            <div style="width:200px; height: 100px; display: table-cell" >
-                                                <img src="${game.poster}" alt="alt" style="width: 100%;height: 100%"/>
-                                            </div>
-                                        </th>
-                                        <th scope="col" style="text-align: center">
-                                                    ${game.price}
-                                        </th>
+                    <c:if test="${requestScope.size == 0}">
+                        <div style="width: 70%;">
+                            Oof,sorry we cannot find any game that have that name!
+                        </div>
+                    </c:if>
+                    <c:if test="${requestScope.size != 0}">
+                        <div style="width: 70%;">
+                            <table class="table table-active" >
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 20%">Title</th>
+                                        <th scope="col"></th>
+                                        <th scope="col" style="text-align: center" >Price</th>
                                     </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>                    
-                    </div>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${requestScope.gamesearch}" var="game">
+                                        <tr onclick="window.location.href = 'game?gameID=${game.gameID}'">
+                                            <th scope="col">${game.name}</th>
+                                            <th scope="col"> 
+                                                <div style="width:200px; height: 100px; display: table-cell" >
+                                                    <img src="${game.poster}" alt="alt" style="width: 100%;height: 100%" />
+                                                </div>
+                                            </th>
+                                            <th scope="col" style="text-align: center">${game.price}</th>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>                    
+                        </div>              
+                    </c:if>
                     <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
                         <h5>Choose your price range</h5>
                         <form action="games" method="post">

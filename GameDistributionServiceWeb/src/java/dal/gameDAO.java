@@ -160,6 +160,22 @@ public class gameDAO extends DBContext {
         return null;
     }
 
+    public List<Game> searchGamesByName(String name){
+        List<Game> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%"+name+"%'";
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getString("PublishedBy"), rs.getString("Developer"), rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        }
+        catch(Exception ex){
+            
+        }
+        return list;
+    }
     public Category getCateById(int id) {
         String sql = "SELECT [CategoryID]\n"
                 + "      ,[CategoryName]\n"
@@ -197,9 +213,10 @@ public class gameDAO extends DBContext {
 
     public static void main(String[] args) {
         gameDAO gdd = new gameDAO();
-        List<Game> list = gdd.getGame();
+        List<Game> list = gdd.searchGamesByName("asdasdasdsa");
         for(Game g: list){
-            System.out.println(g);
+            System.out.println(g.getName());
         }
+        System.out.println(list.size());
     }
 }

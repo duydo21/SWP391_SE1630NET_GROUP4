@@ -71,7 +71,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                 Store
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -82,7 +82,7 @@
                                 <a class="dropdown-item" href="#">Coming Soon</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Genre</a>
-                                <a class="dropdown-item" href="#">Deals</a>
+                                <a class="dropdown-item" href="games">All games</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -112,8 +112,8 @@
                             </li>                          
                         </c:if>                 
                     </ul>
-                    <form class="d-flex search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex search" action="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>

@@ -20,8 +20,8 @@ import model.Game;
  *
  * @author Strongest
  */
-@WebServlet(name="SearchServlet", urlPatterns={"/search"})
-public class SearchServlet extends HttpServlet {
+@WebServlet(name="GamesServlet", urlPatterns={"/games"})
+public class GamesServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +38,10 @@ public class SearchServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchServlet</title>");  
+            out.println("<title>Servlet GamesServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet GamesServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,13 +59,11 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         gameDAO gd = new gameDAO();
-        String searchString = request.getParameter("search");
-        List<Game> list = gd.searchGamesByName(searchString);
+        List<Game> list = gd.getGame();
         int size = list.size();
         request.setAttribute("size", size);
-        request.setAttribute("keyword", searchString);
-        request.setAttribute("gamesearch", list);
-        request.getRequestDispatcher("Search.jsp").forward(request, response);
+        request.setAttribute("getgames", list);
+        request.getRequestDispatcher("games.jsp").forward(request, response);
     } 
 
     /** 

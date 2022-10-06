@@ -102,7 +102,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Store
+                                Store 
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">New Release</a>
@@ -112,8 +112,7 @@
                                 <a class="dropdown-item" href="#">Coming Soon</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Genre</a>
-                                <a class="dropdown-item" href="#">Deals</a>
-                                <a class="dropdown-item" href="#">All games</a>
+                                <a class="dropdown-item" href="games">All games</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -143,8 +142,8 @@
                             </li>
                         </c:if>                 
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex" action="search" method = "get">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
@@ -152,6 +151,11 @@
 
         </header>
         <section>
+            <div style="width: 100%; height: 20px; border-bottom: 1px solid black;">
+                <span style="font-size: 30px; background-color: #d9d9d9; padding: 0 20px;">
+                    Featured <!--Padding is optional-->
+                </span>
+            </div>
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="padding-top: 20px;width: 70%; margin: 0 auto;">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -172,7 +176,7 @@
                             <img src="${game.poster}" class="d-block w-100" alt="Poster">
                             <div class="text">
                                 <p>${game.price}</p>
-                                <button class="btn">More Detail</button>
+                                <button class="btn" onclick="window.location.href = 'game?gameID=${game.gameID}'">More Detail</button>
                             </div>
                         </div>
                         <% isFirst = false; %>  
@@ -197,7 +201,7 @@
                     <c:forEach items="${requestScope.newrelease}" var="game" begin="0" end="9">
                         <div class="item active">
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="${game.poster}" alt="Card image cap">
+                                <img class="card-img-top" src="${game.poster}" alt="Card image cap" style="width: 288px;height: 165px">
                                 <div class="card-body">
                                     <h5 class="card-title">${game.name}</h5>
                                     <p class="card-text">${game.price}</p>
@@ -217,7 +221,7 @@
                     <c:forEach items="${requestScope.bestseller}" var="game" begin="0" end="9">
                         <div class="item active">
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="${game.poster}" alt="Card image cap">
+                                <img class="card-img-top" src="${game.poster}" alt="Card image cap" style="width: 288px;height: 165px">
                                 <div class="card-body">
                                     <h5 class="card-title">${game.name}</h5>
                                     <p class="card-text">${game.price}</p>

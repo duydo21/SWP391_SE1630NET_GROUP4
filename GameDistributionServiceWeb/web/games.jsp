@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,6 +20,7 @@
             section{
                 width: 70%;
                 margin: 0 auto;
+                padding-top: 20px;
 
             }
             body{
@@ -61,6 +63,8 @@
             .d-flex button{
                 background-color: #a0a1b4;
             }
+
+
         </style>
     </head>
     <body>
@@ -73,7 +77,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                 Store
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -84,8 +88,7 @@
                                 <a class="dropdown-item" href="#">Coming Soon</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Genre</a>
-                                <a class="dropdown-item" href="#">Deals</a>
-                                <a class="dropdown-item" href="#">All games</a>
+                                <a class="dropdown-item" href="games">All games</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -115,18 +118,68 @@
                             </li>
                         </c:if>                 
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex" action="search" method = "get">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
             </nav>
         </header>
         <section>
-           
+            <div>
+                <h1>All Games (${requestScope.size})</h1>
+            </div>
+            <div class=" container" style="padding: 0">
+                <div class="row">
+                    <div style="width: 70%;">
+                        <table class="table table-active" >
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 20%">Title</th>
+                                    <th scope="col"></th>
+                                    <th scope="col" style="text-align: center" >Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${requestScope.getgames}" var="game">
+                                    <tr onclick="window.location.href = 'game?gameID=${game.gameID}'">
+                                        <th scope="col">${game.name}</th>
+                                        <th scope="col"> 
+                                            <div style="width:200px; height: 100px; display: table-cell" >
+                                                <img src="${game.poster}" alt="alt" style="width: 100%;height: 100%"/>
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="text-align: center">${game.price}</th>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>                    
+                    </div>
+                    <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
+                        <h5>Choose your price range</h5>
+                        <form action="games" method="post">
+                            <div>
+                                    <input type="number" name="first" placeholder="0" style="width: 40%;display: inline"/> 
+                                    <p style="display: inline">-</p>
+                                    <input type="number" name="second" placeholder="0" style="width: 40%;display: inline"/>           
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </section>              
-        <footer>
-
+        <footer class="bg-light text-center text-lg-start">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: #6c757d;">
+                This website is created by group 4 SWP391.<br>
+                Pham Tien Manh<br>
+                Do Ngoc Duy<br>
+                Nguyen Hoang Anh<br>
+                Dang Minh Hieu <br>
+                Vu Hoang Minh Quan<br>
+                <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
+            </div>
+            <!-- Copyright -->
         </footer>
     </body>
 </html>

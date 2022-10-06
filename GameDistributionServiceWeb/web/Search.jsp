@@ -1,15 +1,16 @@
 <%-- 
-    Document   : Profile
-    Created on : Sep 28, 2022, 2:15:15 PM
+    Document   : games
+    Created on : Oct 4, 2022, 5:04:29 PM
     Author     : Strongest
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${sessionScope.account.username}'s profile</title>
+        <title>Welcome to WHG</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -19,6 +20,7 @@
             section{
                 width: 70%;
                 margin: 0 auto;
+                padding-top: 20px;
 
             }
             body{
@@ -33,7 +35,9 @@
                 width: 100%;
                 height: auto;
             }
-
+            .d-flex{
+                margin-left: auto;
+            }
             /* Style the button and place it in the middle of the container/image */
             .text .btn {
                 position: absolute;
@@ -59,6 +63,8 @@
             .d-flex button{
                 background-color: #a0a1b4;
             }
+
+
         </style>
     </head>
     <body>
@@ -75,7 +81,7 @@
                                 Store
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">New Release</a>
+                                <a class="dropdown-item" href="">New Release</a>
                                 <a class="dropdown-item" href="#">Deals</a>
                                 <a class="dropdown-item" href="#">Best Selling</a>
                                 <a class="dropdown-item" href="#">Free to play</a>
@@ -99,7 +105,7 @@
                                 <a class="nav-link" href="register">Sign up</a>
                             </li>                            
                         </c:if>
-                        <c:if test="${(sessionScope.acc != null)}">
+                        <c:if test="${(sessionScope.acc != null)}"> 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Welcome ${sessionScope.userlogin.nickname}
@@ -109,10 +115,10 @@
                                     <a class="dropdown-item" href="logout">Sign out</a>
                                     <a class="dropdown-item" href="#">Payment</a>
                                 </div>
-                            </li>                          
+                            </li>
                         </c:if>                 
                     </ul>
-                    <form class="d-flex search" action="search">
+                    <form class="d-flex" action="search" method = "get">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
@@ -120,30 +126,67 @@
             </nav>
         </header>
         <section>
-            <c:set var="i" scope="request" value="${here}"/>
-            <div class="container py-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col col-lg-9 col-xl-9">
-                        <div class="card">
-                            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
-                                <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                                    <img src="${i.avatar}"
-                                         alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
-                                         style="width: 150px; z-index: 1">
-                                    <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
-                                            style="z-index: 1;">
-                                        Edit profile
-                                    </button>                                        
-                                </div>
-                                <div class="ms-3" style="margin-top: 130px;">
-                                    <h5>${i.nickname}</h5>
-                                    <p>${i.country}</p>
-                                </div>
-                            </div>
+            <div>
+                <h1>Search result for (${requestScope.keyword})</h1>
+            </div>
+            <div class=" container" style="padding: 0; min-height: 800px;">
+                <div class="row">
+                    <c:if test="${requestScope.size == 0}">
+                        <div style="width: 70%;">
+                            Oof,sorry we cannot find any game that have that name!
                         </div>
+                    </c:if>
+                    <c:if test="${requestScope.size != 0}">
+                        <div style="width: 70%;">
+                            <table class="table table-active" >
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 20%">Title</th>
+                                        <th scope="col"></th>
+                                        <th scope="col" style="text-align: center" >Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${requestScope.gamesearch}" var="game">
+                                        <tr onclick="window.location.href = 'game?gameID=${game.gameID}'">
+                                            <th scope="col">${game.name}</th>
+                                            <th scope="col"> 
+                                                <div style="width:200px; height: 100px; display: table-cell" >
+                                                    <img src="${game.poster}" alt="alt" style="width: 100%;height: 100%" />
+                                                </div>
+                                            </th>
+                                            <th scope="col" style="text-align: center">${game.price}</th>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>                    
+                        </div>              
+                    </c:if>
+                    <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
+                        <h5>Choose your price range</h5>
+                        <form action="games" method="post">
+                            <div>
+                                <input type="number" name="first" placeholder="0" style="width: 40%;display: inline"/> 
+                                <p style="display: inline">-</p>
+                                <input type="number" name="second" placeholder="0" style="width: 40%;display: inline"/>           
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </section>
+        </section>              
+        <footer class="bg-light text-center text-lg-start">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: #6c757d;">
+                This website is created by group 4 SWP391.<br>
+                Pham Tien Manh<br>
+                Do Ngoc Duy<br>
+                Nguyen Hoang Anh<br>
+                Dang Minh Hieu <br>
+                Vu Hoang Minh Quan<br>
+                <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
     </body>
 </html>

@@ -34,7 +34,7 @@
                 position: relative;
             }
 
-            /* Make the image responsive */
+            /*Make the image responsive*/
             .text img {
                 width: 100%;
                 height: auto;
@@ -42,7 +42,7 @@
             .d-flex{
                 margin-left: auto;
             }
-            /* Style the button and place it in the middle of the container/image */
+            /*Style the button and place it in the middle of the container/image*/
             .text .btn {
                 position: absolute;
                 top: -130%;
@@ -81,7 +81,7 @@
                         <div id="selected-game">
                             <!--lay tu 1 list anh-->
                             <div id="game-picture">
-                                <div id="big-pic">
+                                <div id="big-pic" >
                                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/268910/ss_380296effbf1073bbedfd480e50cf246eb542b66.600x338.jpg?t=1661955091" alt="">
                                 </div>
                                 <div id="small-pic">
@@ -104,7 +104,7 @@
 
                             </div>
                             <div id="game-details">
-                                <div id="game-poster">
+                                <div id="game-poster" >
                                     <!--lay tu game-poster-->
                                     <img src="https://cdn.akamai.steamstatic.com/steam/apps/268910/header.jpg?t=1661955091" alt="">
                                 </div>
@@ -184,33 +184,37 @@
                                     <div class="price">200$</div>
                                 </div>
                             </div>
-                            <div class="game">
-                                <div class="overview-pic">
-                                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg?t=1664817530" alt="">
+                            <div class="game" style="transform: translateY(-8.35px)">
+                                <div class="overview-pic" >
+                                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg?t=1664817530"  alt="">
                                 </div>
-                                <div class="overview-info">
+                                <div class="overview-info" >
                                     <div class="game-name">Kenshi</div>
-                                    <div class="price">200$</div>
+                                    <div class="price" >200$</div>
                                 </div>
                             </div>
+                            <div class="clear"></div>
                         </div>
                     </div>
                     <div class="clear"></div>
                 </div>
             </div>           
         </section>
-        <footer class="bg-light text-center text-lg-start">
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: #6c757d;">
-                This website is created by group 4 SWP391.<br>
-                Pham Tien Manh<br>
-                Do Ngoc Duy<br>
-                Nguyen Hoang Anh<br>
-                Dang Minh Hieu <br>
-                Vu Hoang Minh Quan<br>
-                <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
-            </div>
-            <!-- Copyright -->
-        </footer>
+        <!--        <footer class="bg-light text-center text-lg-start">
+                     Copyright 
+                    <div class="text-center p-3" style="background-color: #6c757d;">
+                        This website is created by group 4 SWP391.<br>
+                        Pham Tien Manh<br>
+                        Do Ngoc Duy<br>
+                        Nguyen Hoang Anh<br>
+                        Dang Minh Hieu <br>
+                        Vu Hoang Minh Quan<br>
+                        <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
+                    </div>
+                     Copyright 
+                </footer>-->
     </body>
+    <footer>
+        <%@include file="footer.jsp"%>
+    </footer>
 </html>

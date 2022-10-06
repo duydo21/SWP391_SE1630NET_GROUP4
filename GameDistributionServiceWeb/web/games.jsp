@@ -63,8 +63,6 @@
             .d-flex button{
                 background-color: #a0a1b4;
             }
-
-
         </style>
     </head>
     <body>
@@ -78,7 +76,7 @@
             <div class=" container" style="padding: 0">
                 <div class="row">
                     <div style="width: 70%;">
-                        <table class="table table-active" >
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 20%">Title</th>

@@ -25,7 +25,8 @@ create table [User]
 	AccountBalance float,
 	[Email] nvarchar(70),
 	Avatar nvarchar(100),
-	IsDev bit
+	IsDev bit,
+	[Date] date
 )
 go
 create table Payment
@@ -115,7 +116,7 @@ create table [Game-Category]
 	CategoryID int foreign key references Category(CategoryID)
 )
 go
---type 1: anh demo trong game, 2: poster, 3: video demo trong game
+--type 1: anh demo trong game, 2: video demo trong game
 create table [Media]
 (
 	GameID int foreign key references [Game](GameID),

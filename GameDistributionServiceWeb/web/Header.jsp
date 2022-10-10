@@ -4,6 +4,7 @@
     Author     : Strongest
 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -62,7 +63,7 @@
                         </li>
                     </c:if>                 
                 </ul>
-                <form class="d-flex" action="search" method = "get">
+                <form class="search d-flex " action="search" method = "get">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>

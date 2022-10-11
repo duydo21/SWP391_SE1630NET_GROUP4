@@ -66,15 +66,22 @@ create table [Game]
 	GameID int IDENTITY(1,1) primary key,
 	[Name] nvarchar(100),
 	Price float,
-	PublishedBy nvarchar(50),
+	--PublishedBy nvarchar(50),
 	Download int,
 	Discount int,
 	Rate float,
 	[Status] int,
 	[Description] nvarchar(max),
-	Developer nvarchar(300),
+	--Developer nvarchar(300),
 	[Date] date,
 	Poster nvarchar(max)
+)
+go
+
+create table[User-Game-Developer]
+(
+	UserID int foreign key references [User](UserID),
+	GameID int foreign key references [Game](GameID)
 )
 go
 create table [User-Game-Comment]

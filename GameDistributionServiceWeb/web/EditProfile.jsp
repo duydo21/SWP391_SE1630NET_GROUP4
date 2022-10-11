@@ -30,18 +30,23 @@
                                     <h2 class="text-uppercase text-center mb-5">Edit Profile</h2>
                                     <h5 class="fw-normal mb-3 pb-3" style="color: black;">${requestScope.msr}</h5>
                                     <form action="editprofile" class="register" method="post">
+                                       <div class="form-outline mb-2">
+                                           <input type="number" name ="id" id="form3Example1cg"  required="" value="${sessionScope.userlogin.userID}" />
+                                            <label class="form-label" for="form3Example1cg">ID</label>
+                                        </div>
+                                            
                                         <div class="form-outline mb-2">
                                             <input type="text" name ="nickname" id="form3Example1cg" class="form-control form-control-lg" required="" value="${sessionScope.userlogin.nickname}" />
                                             <label class="form-label" for="form3Example1cg">Nickname</label>
                                         </div>
 
                                         <div class="form-outline mb-2">
-                                            <input type="email" name="email" id="form3Example4cg" class="form-control form-control-lg" />
+                                            <input type="email" name="email" id="form3Example4cg" class="form-control form-control-lg" value="${sessionScope.userlogin.email}"/>
                                             <label class="form-label" for="form3Example4cg">Email</label>
                                         </div>
 
-                                        <div class="form-outline mb-2">
-                                            <select name="country" id="form3Example4cdg" class="form-select form-control-lg">
+                                        <div class="form-outline mb-2" >
+                                            <select name="country" id="form3Example4cdg" class="form-select form-control-lg" >
                                                 <option value="none">none</option>
                                                 <option value="USA">USA</option>
                                                 <option value="Canada">Canada</option>
@@ -59,14 +64,19 @@
                                         <div id="selectedBanner"></div>
                                         <div class="form-outline mb-2">
                                             <div class="form-group">
-                                                <input type="file" id="img" class="form-control" name="avatar"/>
+                                                <input type="file" id="img" class="form-control" name="avatar" value="${sessionScope.userlogin.email} />
                                                 <label class="form-label" for="form3Example4cg">Avatar</label>
                                             </div>
                                         </div>
                                         
                                         <div class="form-outline mb-2">
-                                            <input type="checkbox" name="show" id="form3Example4cdg" class="form-checkbox " />
-                                            <label class="form-label" for="form3Example4cdg">Show information</label>
+                                            <input type="text" name="decription" id="form3Example4cg" class="form-control form-control-lg" value="${sessionScope.userlogin.decription}" />
+                                            <label class="form-label" for="form3Example4cg">Decription</label>
+                                        </div>
+                                        
+                                        <div class="form-outline mb-2">
+                                            <input type="checkbox" name="private" id="form3Example4cdg" class="form-checkbox " />
+                                            <label class="form-label" for="form3Example4cdg">Private Information</label>
                                         </div>
 
                                         <div class="d-flex justify-content-center">

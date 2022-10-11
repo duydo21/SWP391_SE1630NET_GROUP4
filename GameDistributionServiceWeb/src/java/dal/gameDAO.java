@@ -8,13 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import model.Category;
 import model.Game;
-import model.GameCategory;
 import model.Media;
 import model.UserGameComment;
+import model.UserGameRate;
 
 /**
  *
@@ -122,6 +120,7 @@ public class gameDAO extends DBContext {
         }
         return list;
     }
+
     public List<Game> getNewRelease() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
@@ -160,19 +159,75 @@ public class gameDAO extends DBContext {
         return null;
     }
 
-    public List<Game> searchGamesByName(String name){
+    public List<Media> getGameMediaByGameID(int id) {
+        String sql = "SELECT * FROM [dbo].[Media] where GameID = ?";
+        List<Media> mediaList = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Media m = new Media(getGameById(rs.getInt("GameID")), rs.getString("Link"), rs.getInt("Type"));
+                mediaList.add(m);
+            }
+        } catch (SQLException e) {
+
+        }
+        return mediaList;
+    }
+
+    public List<UserGameComment> getGameCommentByGameID(int id) {
+        String sql = "SELECT * FROM [dbo].[User-Game-Comment] where GameID = ?";
+        List<UserGameComment> list = new ArrayList<>();
+        userDAO userDao = new userDAO();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                UserGameComment cmt = new UserGameComment(userDao.findUserByID(rs.getInt("UserIDs")), getGameById(rs.getInt("GameID")), rs.getString("Content"));
+                list.add(cmt);
+            }
+        } catch (SQLException e) {
+
+        }
+        return list;
+    }
+
+    public float getGameRateByID(int id) {
+        String sql = "SELECT * FROM [dbo].[User-Game-Rate] where GameID = ?";
+        List<UserGameRate> list = new ArrayList<>();
+        userDAO userDao = new userDAO();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                UserGameRate rate = new UserGameRate(userDao.findUserByID(rs.getInt("UserIDs")), getGameById(rs.getInt("GameID")), rs.getInt("Rate"));
+                list.add(rate);
+            }
+        } catch (SQLException e) {
+
+        }
+        float r = 0;
+        for (UserGameRate i : list) {
+            r += i.getRate();
+        }
+        return r / list.size();
+    }
+
+    public List<Game> searchGamesByName(String name) {
         List<Game> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%"+name+"%'";
-        try{
+        String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getString("PublishedBy"), rs.getString("Developer"), rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
                 list.add(g);
             }
-        }
-        catch(Exception ex){
-            
+        } catch (Exception ex) {
+
         }
         return list;
     }
@@ -180,9 +235,10 @@ public class gameDAO extends DBContext {
     public static void main(String[] args) {
         gameDAO gdd = new gameDAO();
         List<Game> list = gdd.searchGamesByName("asdasdasdsa");
-        for(Game g: list){
+        for (Game g : list) {
             System.out.println(g.getName());
         }
         System.out.println(list.size());
     }
+
 }

@@ -12,15 +12,15 @@ public class UserGameRate {
 
     private User UserID;
     private Game GameID;
-    private String content;
+    private int Rate;
 
     public UserGameRate() {
     }
 
-    public UserGameRate(User UserID, Game GameID, String content) {
+    public UserGameRate(User UserID, Game GameID, int Rate) {
         this.UserID = UserID;
         this.GameID = GameID;
-        this.content = content;
+        this.Rate = Rate;
     }
 
     public User getUserID() {
@@ -39,12 +39,12 @@ public class UserGameRate {
         this.GameID = GameID;
     }
 
-    public String getContent() {
-        return content;
+    public int getRate() {
+        return Rate;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setRate(int Rate) {
+        this.Rate = Rate;
     }
 
 }

@@ -12,7 +12,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.User;
 
 /**
@@ -61,9 +63,11 @@ public class EditProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int Id = Integer.parseInt(request.getParameter("UserID"));
+
         User user = new userDAO().findUserByID(Id);
         request.setAttribute("user", user);
         request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
+
     }
 
     /**
@@ -77,20 +81,22 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-       
-        String nickname = request.getParameter("nickname");
-        String country = request.getParameter("country");                 
-        String email = request.getParameter("email");
-        String avatar = request.getParameter("avatar");
-        User u = new User(nickname, country, email, avatar);
 
-        // Goi ham o DAO de insert
-        if (new userDAO().updateProfileUser(u) > 0) {
-
-//req.getRequestDispatcher("../movies.jsp").forward(req, resp);
-            response.sendRedirect("login");
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String nickname = request.getParameter("nickname");
+            String country = request.getParameter("country");
+            String email = request.getParameter("email");
+            String avatar = request.getParameter("avatar");
+            String decription = request.getParameter("decription");
+            boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
+            User u = new User(id, nickname, country, email, avatar, decription, isPrivate);
+            if (new userDAO().updateProfileUser(u) > 0) {
+                response.sendRedirect("profile?UserID=" + id);
+            }
+        } catch (NumberFormatException e) {
         }
+
     }
 
     /**

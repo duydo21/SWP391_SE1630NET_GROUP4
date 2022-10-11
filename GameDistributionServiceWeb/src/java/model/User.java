@@ -40,6 +40,19 @@ public class User {
         this.isPrivate = isPrivate;
     }
 
+    public User(int UserID, String Nickname, String Country, String Email, String Avatar, String Decription, boolean isPrivate) {
+        this.UserID = UserID;
+        this.Nickname = Nickname;
+        this.Country = Country;
+        this.Email = Email;
+        this.Avatar = Avatar;
+        this.Decription = Decription;
+        this.isPrivate = isPrivate;
+    }
+
+    
+    
+
     public User(int UserID, Account Username, String Nickname, String Country, float AccountBalance, String Email, String Avatar, boolean IsDev, Date date) {
         this.UserID = UserID;
         this.Username = Username;

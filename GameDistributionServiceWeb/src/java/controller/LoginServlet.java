@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = request.getParameter("user");
+        String user = request.getParameter("user").trim();
         String pass = request.getParameter("pass");
         userDAO ud = new userDAO();
         Account a = ud.checkLogin(user, pass);

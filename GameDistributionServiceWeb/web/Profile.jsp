@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : Profile
     Created on : Sep 28, 2022, 2:15:15 PM
@@ -130,7 +131,7 @@
                                     <p>${i.country}</p>
                                 </div>
                                 <div class="user-decription">
-                                    Decription:
+                                    Decription:${i.decription}
                                 </div>
                             </div>
                         </div>
@@ -194,3 +195,4 @@
         </footer>
     </body>
 </html>
+

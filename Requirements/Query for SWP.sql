@@ -52,6 +52,27 @@ INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date
 INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('The Death | Thần Trùng', '75000',  '100032', '9.4', '1', 'Thần Trùng | The Death là trò chơi phiêu lưu kinh dị tâm lý do 3 người Việt phát triển. Game lấy bối cảnh thành phố Hà Nội năm 2021.',  '2022-9-15','games/The Death.jpg');
 INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('Persona 4 Golden', '380000', '2015487', '9.7', '1', 'A coming of age story that sets the protagonist and his friends on a journey kickstarted by a chain of serial murders.',  '2020-6-14','games/Persona 4 Golden.jpg');
 
+--database for user-game-developer
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,1) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,2) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,3) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,4) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,5) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,6) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,7) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,8) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,9) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,10) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,11) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,12) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,13) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,14) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,15) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,16) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,17) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,18) ;
+--INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,19) ;
+
 update Game set Discount = 0 
 --select * from Media
 --type 1: anh demo trong game, 2: video demo trong game

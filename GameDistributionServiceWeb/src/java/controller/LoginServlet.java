@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Account;
 import model.User;
 
@@ -79,13 +82,15 @@ public class LoginServlet extends HttpServlet {
         String user = request.getParameter("user").trim();
         String pass = request.getParameter("pass");
         userDAO ud = new userDAO();
-        Account a = ud.checkLogin(user, pass);
+        Account a = null;
+        a = ud.checkLogin(user, pass);
         if (a == null) {
             request.setAttribute("ms", "username or password invalid!!! ");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
-            User u = ud.findUserByName(a.getUsername());
+            User u = null;
+            u = ud.findUserByName(a.getUsername());
             session.setAttribute("userlogin", u);
             session.setAttribute("acc", a);
             response.sendRedirect("mainscreen");

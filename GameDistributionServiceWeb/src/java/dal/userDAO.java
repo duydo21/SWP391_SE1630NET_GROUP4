@@ -52,7 +52,7 @@ public class userDAO extends DBContext {
 //        }
 //        return null;
 //    }
-    public Account checkAccountExist(String username)  {
+    public Account checkAccountExist(String username) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
                 + "      ,[Type]\n"
@@ -66,12 +66,12 @@ public class userDAO extends DBContext {
                 return a;
             }
         } catch (SQLException e) {
-            
-        } 
+
+        }
         return null;
     }
 
-    public Account checkLogin(String username, String password)  {
+    public Account checkLogin(String username, String password) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
                 + "      ,[Type]\n"
@@ -86,8 +86,8 @@ public class userDAO extends DBContext {
                 return a;
             }
         } catch (SQLException e) {
-            
-        } 
+
+        }
         return null;
     }
 
@@ -138,12 +138,12 @@ public class userDAO extends DBContext {
             }
 
         } catch (SQLException e) {
-            
-        } 
+
+        }
         return null;
     }
 
-    public User findUserByID(int id)  {
+    public User findUserByID(int id) {
         String sql = "SELECT * FROM [dbo].[User] where [UserID] = ?";
         User u = new User();
         try {
@@ -160,12 +160,11 @@ public class userDAO extends DBContext {
                 u.setEmail(rs.getString("Email"));
                 u.setAvatar(rs.getString("Avatar"));
                 u.setIsDev(rs.getBoolean("IsDev"));
-                return u;
             }
-
+            return u;
         } catch (SQLException e) {
-            
-        } 
+
+        }
         return null;
     }
 
@@ -180,13 +179,27 @@ public class userDAO extends DBContext {
             ps.setString(1, u.getNickname());
             ps.setString(2, u.getCountry());
             ps.setString(3, u.getEmail());
-            ps.setString(4, "image/" + u.getAvatar());
+            ps.setString(4, u.getAvatar());
             ps.setString(5, u.getDecription());
             ps.setBoolean(6, u.isIsPrivate());
             ps.setInt(7, u.getUserID());
             count = ps.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
+        }
+        return count;
+    }
 
+    public int changePassUser(Account a) {
+        int count = 0;
+        String sql = "update [Account] set Username = ? , "
+                + "[Password] = ? where Username=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, a.getUsername());
+            ps.setString(2, a.getPassword());
+            ps.setString(3, a.getUsername());
+            count = ps.executeUpdate();
+        } catch (SQLException ex) {
         }
         return count;
     }
@@ -196,4 +209,5 @@ public class userDAO extends DBContext {
 //        Account a = ud.updateProfileUser(u);
 //        
 //    }
+    
 }

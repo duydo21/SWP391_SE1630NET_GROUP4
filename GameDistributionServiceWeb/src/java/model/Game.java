@@ -14,8 +14,8 @@ public class Game {
     private int GameID;
     private String Name;
     private float Price;
-    private String PublishedBy;
-    private String Developer;
+//    private String PublishedBy;
+//    private String Developer;
     private int Download;
     private int Discount;
     private float Rate;
@@ -28,12 +28,12 @@ public class Game {
         
     }
 
-    public Game(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster) {
+    public Game(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster) {
         this.GameID = GameID;
         this.Name = Name;
         this.Price = Price;
-        this.PublishedBy = PublishedBy;
-        this.Developer = Developer;
+//        this.PublishedBy = PublishedBy;
+//        this.Developer = Developer;
         this.Download = Download;
         this.Discount = Discount;
         this.Rate = Rate;
@@ -71,21 +71,21 @@ public class Game {
         return Price/100*getDiscount();
     }
     
-    public String getPublishedBy() {
-        return PublishedBy;
-    }
-
-    public void setPublishedBy(String PublishedBy) {
-        this.PublishedBy = PublishedBy;
-    }
-
-    public String getDeveloper() {
-        return Developer;
-    }
-
-    public void setDeveloper(String Developer) {
-        this.Developer = Developer;
-    }
+//    public String getPublishedBy() {
+//        return PublishedBy;
+//    }
+//
+//    public void setPublishedBy(String PublishedBy) {
+//        this.PublishedBy = PublishedBy;
+//    }
+//
+//    public String getDeveloper() {
+//        return Developer;
+//    }
+//
+//    public void setDeveloper(String Developer) {
+//        this.Developer = Developer;
+//    }
 
     public int getDownload() {
         return Download;

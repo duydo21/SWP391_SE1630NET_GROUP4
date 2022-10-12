@@ -26,6 +26,7 @@ public class User {
     public User() {
     }
 
+    
     public User(int UserID, Account Username, String Nickname, String Country, float AccountBalance, String Email, String Avatar, boolean IsDev, Date date, String Decription, boolean IsPrivate) {
         this.UserID = UserID;
         this.Username = Username;
@@ -49,14 +50,7 @@ public class User {
         this.Decription = Decription;
         this.IsPrivate = IsPrivate;
     }
-
    
-
-    
-    
-
-    
-    
 
     public User(int UserID, Account Username, String Nickname, String Country, float AccountBalance, String Email, String Avatar, boolean IsDev, Date date) {
         this.UserID = UserID;

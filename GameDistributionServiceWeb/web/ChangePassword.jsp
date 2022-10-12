@@ -29,10 +29,10 @@
                                 <div class="card-body p-5">
                                     <h2 class="text-uppercase text-center mb-5">Change Password</h2>
                                     <h5 class="fw-normal mb-3 pb-3" style="color: black;">${requestScope.msr}</h5>
-                                    <form action="editprofile" class="register" method="post">
+                                    <form action="changepass" class="register" method="post">
 
                                         <div class="form-outline mb-2">
-                                            <input type="text" name ="nickname" id="form3Example1cg" class="form-control form-control-lg" required=""  />
+                                            <input type="text" name ="username" id="form3Example1cg" class="form-control form-control-lg" required=""  />
                                             <label class="form-label" for="form3Example1cg">User name</label>
                                         </div>
 

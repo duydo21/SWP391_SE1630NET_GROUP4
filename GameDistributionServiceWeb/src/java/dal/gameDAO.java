@@ -51,8 +51,7 @@ public class gameDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
-                        rs.getFloat("Price"), rs.getString("PublishedBy"),
-                        rs.getString("Developer"), rs.getInt("Download"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
                         rs.getInt("Discount"), rs.getFloat("Rate"),
                         rs.getInt("Status"), rs.getString("Description"),
                         rs.getDate("Date"), rs.getString("Poster"));
@@ -89,8 +88,7 @@ public class gameDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
-                        rs.getFloat("Price"), rs.getString("PublishedBy"),
-                        rs.getString("Developer"), rs.getInt("Download"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
                         rs.getInt("Discount"), rs.getFloat("Rate"),
                         rs.getInt("Status"), rs.getString("Description"),
                         rs.getDate("Date"), rs.getString("Poster"));
@@ -110,8 +108,7 @@ public class gameDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
-                        rs.getFloat("Price"), rs.getString("PublishedBy"),
-                        rs.getString("Developer"), rs.getInt("Download"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
                         rs.getInt("Discount"), rs.getFloat("Rate"),
                         rs.getInt("Status"), rs.getString("Description"),
                         rs.getDate("Date"), rs.getString("Poster"));
@@ -131,8 +128,7 @@ public class gameDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
-                        rs.getFloat("Price"), rs.getString("PublishedBy"),
-                        rs.getString("Developer"), rs.getInt("Download"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
                         rs.getInt("Discount"), rs.getFloat("Rate"),
                         rs.getInt("Status"), rs.getString("Description"),
                         rs.getDate("Date"), rs.getString("Poster"));
@@ -151,8 +147,8 @@ public class gameDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                //(int GameID, String Name, float Price, String PublishedBy, String Developer, int Download, int Discount, float Rate, int Status, String Description, Date Date)
-                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getString("PublishedBy"), rs.getString("Developer"), rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
+                //(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date)
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"),  rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
                 return g;
             }
         } catch (SQLException e) {
@@ -249,7 +245,7 @@ public class gameDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getString("PublishedBy"), rs.getString("Developer"), rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
                 list.add(g);
             }
         } catch (Exception ex) {

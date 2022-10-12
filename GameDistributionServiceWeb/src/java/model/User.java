@@ -21,12 +21,12 @@ public class User {
     private boolean IsDev;
     private Date date;
     private String Decription;
-    private boolean isPrivate;
+    private boolean IsPrivate;
     
     public User() {
     }
 
-    public User(int UserID, Account Username, String Nickname, String Country, float AccountBalance, String Email, String Avatar, boolean IsDev, Date date, String Decription, boolean isPrivate) {
+    public User(int UserID, Account Username, String Nickname, String Country, float AccountBalance, String Email, String Avatar, boolean IsDev, Date date, String Decription, boolean IsPrivate) {
         this.UserID = UserID;
         this.Username = Username;
         this.Nickname = Nickname;
@@ -37,18 +37,23 @@ public class User {
         this.IsDev = IsDev;
         this.date = date;
         this.Decription = Decription;
-        this.isPrivate = isPrivate;
+        this.IsPrivate = IsPrivate;
     }
 
-    public User(int UserID, String Nickname, String Country, String Email, String Avatar, String Decription, boolean isPrivate) {
+    public User(int UserID, String Nickname, String Country, String Email, String Avatar, String Decription, boolean IsPrivate) {
         this.UserID = UserID;
         this.Nickname = Nickname;
         this.Country = Country;
         this.Email = Email;
         this.Avatar = Avatar;
         this.Decription = Decription;
-        this.isPrivate = isPrivate;
+        this.IsPrivate = IsPrivate;
     }
+
+   
+
+    
+    
 
     
     
@@ -153,12 +158,13 @@ public class User {
     }
 
     public boolean isIsPrivate() {
-        return isPrivate;
+        return IsPrivate;
     }
 
-    public void setIsPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
+    public void setIsPrivate(boolean IsPrivate) {
+        this.IsPrivate = IsPrivate;
     }
+
     
     
 }

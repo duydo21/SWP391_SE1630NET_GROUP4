@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,6 +93,9 @@ public class EditProfileServlet extends HttpServlet {
             boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
             User u = new User(id, nickname, country, email, avatar, decription, isPrivate);
             if (new userDAO().updateProfileUser(u) > 0) {
+                HttpSession session = request.getSession();
+                session.removeAttribute("userlogin");                
+                session.setAttribute("userlogin", u);               
                 response.sendRedirect("profile?UserID=" + id);
             }
         } catch (NumberFormatException e) {

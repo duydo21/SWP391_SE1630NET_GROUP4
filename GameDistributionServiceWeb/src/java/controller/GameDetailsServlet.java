@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.categoryDAO;
 import dal.gameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,7 +67,7 @@ public class GameDetailsServlet extends HttpServlet {
         String gameID_raw = request.getParameter("gameID");
         int gameID = Integer.parseInt(gameID_raw);
         gameDAO gameDao = new gameDAO();
-
+        categoryDAO cat_DAO = new categoryDAO();
         //get game info
         Game game = gameDao.getGameById(gameID);
         //get game media
@@ -78,11 +79,14 @@ public class GameDetailsServlet extends HttpServlet {
         //get game comment
         List<UserGameComment> cmtList = new ArrayList<>();
         cmtList = gameDao.getGameCommentByGameID(gameID);
-
+        //get recommend game list
+        List<Game> gameList = new ArrayList<>();
+        gameList = gameDao.getGameByCategory(cat_DAO.getCategoryOfA_Game(gameID));
         //send info to jsp page
         request.setAttribute("game", game);
         request.setAttribute("gameComment", cmtList);
         request.setAttribute("gameMedias", gameMedias);
+        request.setAttribute("gameList", gameList);
         request.getRequestDispatcher("GameDetails.jsp").forward(request, response);
     }
 

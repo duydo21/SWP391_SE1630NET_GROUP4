@@ -9,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Category;
 import model.Game;
+import model.GameCategory;
 import model.Media;
 import model.UserGameComment;
 import model.UserGameRate;
@@ -216,6 +218,30 @@ public class gameDAO extends DBContext {
         return r / list.size();
     }
 
+    public List<Game> getGameByCategory(Category category) {
+        //list chua game
+        List<Game> list = new ArrayList<>();
+        //list chua game-category
+        List<GameCategory> list_gameID = new ArrayList<>();
+        categoryDAO cat_DAO = new categoryDAO();
+        String sql = "SELECT * FROM [dbo].[Game-Category] where CategoryID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, category.getCategoryID());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                GameCategory gc = new GameCategory(getGameById(rs.getInt("GameID")), cat_DAO.getCategoryByID(rs.getInt("CategoryID")));
+                list_gameID.add(gc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        for (GameCategory gameCategory : list_gameID) {
+            list.add(gameCategory.getGameID());
+        }
+        return list;
+    }
+    
     public List<Game> searchGamesByName(String name) {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";

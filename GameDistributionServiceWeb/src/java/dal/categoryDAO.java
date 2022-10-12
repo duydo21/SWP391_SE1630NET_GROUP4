@@ -51,6 +51,23 @@ public class categoryDAO extends DBContext {
         return list;
     }
 
+    public Category getCategoryOfA_Game(int gameID){
+        gameDAO gameDao = new gameDAO();
+        String sql = "SELECT * FROM [dbo].[GameCategory] where GameID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, gameID);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new GameCategory(gameDao.getGameById(rs.getInt("GameID")), 
+                        getCategoryByID(rs.getInt("CategoryID")))
+                        .getCategoryID();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     public static void main(String[] args) {
         categoryDAO cd = new categoryDAO();
 

@@ -63,7 +63,13 @@ public class gameDAO extends DBContext {
         }
         return list;
     }
-
+    public List<Game> getGameByPage(List<Game> list,int start,int end ){
+        List<Game> pGame = new ArrayList<>();
+        for(int i=start;i<end;i++){
+            pGame.add(list.get(i));
+        }
+        return pGame;
+    }
     //sort gameList dc truyen vao by Download/price/discount
     public List<Game> sortGameList(List<Game> gameList, int sortType) {
 //        sortType = 1,2,3 -> download, price, discount

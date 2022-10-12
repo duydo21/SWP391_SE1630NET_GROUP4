@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.categoryDAO;
@@ -23,36 +22,40 @@ import model.Game;
  *
  * @author Strongest
  */
-@WebServlet(name="GamesServlet", urlPatterns={"/games"})
+@WebServlet(name = "GamesServlet", urlPatterns = {"/games"})
 public class GamesServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GamesServlet</title>");  
+            out.println("<title>Servlet GamesServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GamesServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet GamesServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
     List<Game> list;
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -60,22 +63,37 @@ public class GamesServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         gameDAO gd = new gameDAO();
-        categoryDAO cd = new categoryDAO();
         list = gd.getGame();
-        List<Category> clist = new ArrayList<>();
-        clist = cd.getCategory();
+
         int size = list.size();
-        request.setAttribute("cate", clist);
+        int page, numpage = 10;
+        int num = (size % numpage == 0 ? (size / 6) : (size / 6) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numpage;
+        end = Math.min(page * numpage, size);
+        List<Game> plist = gd.getGameByPage(list, start, end);
         request.setAttribute("size", size);
-        request.setAttribute("getgames", list);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.setAttribute("getgames", plist);
+
+        request.setAttribute("link", "games");
+
         request.setAttribute("text", "All Games");
         request.getRequestDispatcher("games.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -83,12 +101,13 @@ public class GamesServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
 
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

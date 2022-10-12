@@ -62,10 +62,27 @@ public class BestSellingServlet extends HttpServlet {
             throws ServletException, IOException {
         gameDAO gd = new gameDAO();
         List<Game> list = gd.getBestSeller();
+        
         int size = list.size();
+        int page, numpage = 10;
+        int num = (size % numpage == 0 ? (size / 6) : (size / 6) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numpage;
+        end = Math.min(page * numpage, size);
+        List<Game> plist = gd.getGameByPage(list, start, end);
         request.setAttribute("size", size);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.setAttribute("getgames", plist);
+        
+        request.setAttribute("link", "best");
         request.setAttribute("text", "Best seller");
-        request.setAttribute("getgames", list);
         request.getRequestDispatcher("games.jsp").forward(request, response);
     }
 

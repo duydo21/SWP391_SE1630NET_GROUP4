@@ -62,10 +62,28 @@ public class FreeServlet extends HttpServlet {
             throws ServletException, IOException {
         gameDAO gd = new gameDAO();
         List<Game> list = gd.getFreeGames();
+        
         int size = list.size();
+        int page, numpage = 10;
+        int num = (size % numpage == 0 ? (size / 6) : (size / 6) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numpage;
+        end = Math.min(page * numpage, size);
+        List<Game> plist = gd.getGameByPage(list, start, end);
         request.setAttribute("size", size);
-        request.setAttribute("text", "Free to play");
-        request.setAttribute("getgames", list);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.setAttribute("getgames", plist);
+        
+        request.setAttribute("link", "free");
+
+        request.setAttribute("text", "Free Games");
         request.getRequestDispatcher("FreeGames.jsp").forward(request, response);
     }
 

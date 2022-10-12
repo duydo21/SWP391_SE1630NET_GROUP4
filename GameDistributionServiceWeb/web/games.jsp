@@ -76,6 +76,7 @@
             <div class=" container" style="padding: 0">
                 <div class="row">
                     <p>there are ${requestScope.size} result</p>
+                    <c:set var="page" value="${requestScope.page}"/>
                     <div style="width: 70%;">
                         <table class="table table-secondary table-hover">
                             <thead>
@@ -100,7 +101,12 @@
                                     </tr>
                                 </c:forEach>
                             </tbody>
-                        </table>                    
+                        </table>
+                        <div>
+                            <c:forEach begin="${1}" end="${requestScope.num}" var="i">
+                                <a href="${requestScope.link}?page=${i}">${i}</a>
+                            </c:forEach>
+                        </div>
                     </div>
                     <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
                         <h5>Choose your price range</h5>

@@ -30,11 +30,11 @@
                                     <h2 class="text-uppercase text-center mb-5">Edit Profile</h2>
                                     <h5 class="fw-normal mb-3 pb-3" style="color: black;">${requestScope.msr}</h5>
                                     <form action="editprofile" class="register" method="post">
-                                       <div class="form-outline mb-2">
-                                           <input type="number" name ="id" id="form3Example1cg"  required="" value="${sessionScope.userlogin.userID}" />
+                                        <div class="form-outline mb-2">
+                                            <input type="number" name ="id" id="form3Example1cg"  required="" value="${sessionScope.userlogin.userID}" />
                                             <label class="form-label" for="form3Example1cg">ID</label>
                                         </div>
-                                            
+
                                         <div class="form-outline mb-2">
                                             <input type="text" name ="nickname" id="form3Example1cg" class="form-control form-control-lg" required="" value="${sessionScope.userlogin.nickname}" />
                                             <label class="form-label" for="form3Example1cg">Nickname</label>
@@ -47,35 +47,35 @@
 
                                         <div class="form-outline mb-2" >
                                             <select name="country" id="form3Example4cdg" class="form-select form-control-lg" >
-                                                <option value="none">none</option>
-                                                <option value="USA">USA</option>
-                                                <option value="Canada">Canada</option>
-                                                <option value="Congo">Congo</option>
-                                                <option value="Switzerland">Switzerland</option>
-                                                <option value="China">China</option>
-                                                <option value="Germany">Germany</option>
-                                                <option value="Egypt">Egypt</option>
-                                                <option value="Spain">Spain</option>
-                                                <option value="VietNam">VietNam</option>
+                                                <option value="No Information" ${sessionScope.userlogin.country== "No Information"?"selected":""} >none</option>
+                                                <option value="USA" ${sessionScope.userlogin.country== "USA"?"selected":""}>USA</option>
+                                                <option value="Canada" ${sessionScope.userlogin.country== "Canada"?"selected":""}>Canada</option>
+                                                <option value="Congo" ${sessionScope.userlogin.country== "Congo"?"selected":""}>Congo</option>
+                                                <option value="Switzerland" ${sessionScope.userlogin.country== "Switzerland"?"selected":""}>Switzerland</option>
+                                                <option value="China" ${sessionScope.userlogin.country== "China"?"selected":""}>China</option>
+                                                <option value="Germany" ${sessionScope.userlogin.country== "Germany"?"selected":""}>Germany</option>
+                                                <option value="Egypt" ${sessionScope.userlogin.country== "Egypt"?"selected":""}>Egypt</option>
+                                                <option value="Spain" ${sessionScope.userlogin.country== "Spain"?"selected":""}>Spain</option>
+                                                <option value="VietNam" ${sessionScope.userlogin.country== "VietNam"?"selected":""}>VietNam</option>
                                             </select>
                                             <label class="form-label" for="form3Example4cdg">Country</label>
                                         </div>
-                                        
+
                                         <div id="selectedBanner"></div>
                                         <div class="form-outline mb-2">
                                             <div class="form-group">
                                                 <input type="file" id="img" class="form-control" name="avatar" value="${sessionScope.userlogin.email} />
-                                                <label class="form-label" for="form3Example4cg">Avatar</label>
+                                                       <label class="form-label" for="form3Example4cg">Avatar</label>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-outline mb-2">
                                             <input type="text" name="decription" id="form3Example4cg" class="form-control form-control-lg" value="${sessionScope.userlogin.decription}" />
                                             <label class="form-label" for="form3Example4cg">Decription</label>
                                         </div>
-                                        
+
                                         <div class="form-outline mb-2">
-                                            <input type="checkbox" name="private" id="form3Example4cdg" class="form-checkbox " />
+                                            <input type="checkbox" name="private" id="form3Example4cdg" class="form-checkbox " value="true" ${sessionScope.userlogin.isPrivate == true ? "checked":""} />
                                             <label class="form-label" for="form3Example4cdg">Private Information</label>
                                         </div>
 

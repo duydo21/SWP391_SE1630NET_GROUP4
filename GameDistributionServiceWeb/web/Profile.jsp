@@ -118,7 +118,7 @@
                         <div class="card">
                             <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px">
                                 <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
-                                    <c:if test="${sessionScope.userlogin.avatar=='image/'}"><img src="image/Default Avatar.jpg"</c:if>
+                                    <c:if test="${sessionScope.userlogin.avatar==''}"><img src="image/Default Avatar.jpg"</c:if>
                                     <img src="${i.avatar}"
                                          alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
                                          style="width: 150px; z-index: 1">

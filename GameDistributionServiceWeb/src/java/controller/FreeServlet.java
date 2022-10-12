@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.categoryDAO;
 import dal.gameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Category;
 import model.Game;
 
 /**
@@ -61,8 +63,9 @@ public class FreeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         gameDAO gd = new gameDAO();
+        categoryDAO cd = new categoryDAO();
         List<Game> list = gd.getFreeGames();
-        
+        List<Category> clist = cd.getCategory();
         int size = list.size();
         int page, numpage = 10;
         int num = (size % numpage == 0 ? (size / 6) : (size / 6) + 1);
@@ -80,6 +83,7 @@ public class FreeServlet extends HttpServlet {
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.setAttribute("getgames", plist);
+        request.setAttribute("cate", clist);
         
         request.setAttribute("link", "free");
 

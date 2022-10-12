@@ -14,10 +14,37 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Welcome to WHG</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <script>
+            var multipleCardCarousel = document.querySelector(
+                    "#carouselBest"
+                    );
+
+            var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+                interval: false
+            });
+            var carouselWidth = $("#carouselBest .carousel-inner")[0].scrollWidth;
+            var cardWidth = $("#carouselBest .carousel-inner .carousel-item").width();
+            var scrollPosition = 0;
+            $("#carouselBest .carousel-control-next").on("click", function () {
+                if (scrollPosition < carouselWidth - cardWidth * 4) {
+                    scrollPosition += cardWidth;
+                    $("#carouselBest .carousel-inner").animate({scrollLeft: scrollPosition}, 600);
+                }
+            });
+            $("#carouselBest .carousel-control-prev").on("click", function () {
+                if (scrollPosition > 0) {
+                    scrollPosition -= cardWidth;
+                    $("#carouselBest .carousel-inner").animate(
+                            {scrollLeft: scrollPosition},
+                            600
+                            );
+                }
+            });
+
+        </script>
         <style>
             section{
                 width: 70%;
@@ -87,6 +114,11 @@
 
             .d-flex button{
                 background-color: #a0a1b4;
+            }
+            #carouselBest .carousel-inner .carousel-item{
+                margin-right: 0;
+                flex: 0 0 0;
+                display: block;
             }
 
         </style>
@@ -161,10 +193,11 @@
                     Best seller <!--Padding is optional-->
                 </span>
             </div>
-            <div id="carouselExampleControls3" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
-                <div class="carousel-inner" style="display: flex; overflow: auto">
+            <div id="carouselBest" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
+                <div class="carousel-inner" style="display: flex;">
+                    <% boolean isFirst3 = true;%>
                     <c:forEach items="${requestScope.bestseller}" var="game" begin="0" end="9">
-                        <div class="item active">
+                        <div class="carousel-item <%= isFirst3 ? "active" : ""%> best">
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="${game.poster}" alt="Card image cap" style="width: 288px;height: 165px">
                                 <div class="card-body">
@@ -172,8 +205,17 @@
                                     <p class="card-text">${game.price}</p>
                                 </div>
                             </div>
-                        </div>                  
+                        </div>  
+                        <% isFirst3 = false; %> 
                     </c:forEach>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBest" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselBest" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
         </section>

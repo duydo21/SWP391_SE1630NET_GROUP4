@@ -65,11 +65,12 @@ public class GamesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         gameDAO gd = new gameDAO();
+        categoryDAO cd = new categoryDAO();
         list = gd.getGame();
-
+        List<Category> clist = cd.getCategory();
         int size = list.size();
         int page, numpage = 10;
-        int num = (size % numpage == 0 ? (size / 6) : (size / 6) + 1);
+        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
         String xpage = request.getParameter("page");
         if (xpage == null) {
             page = 1;
@@ -84,7 +85,8 @@ public class GamesServlet extends HttpServlet {
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.setAttribute("getgames", plist);
-
+        request.setAttribute("cate", clist);
+        
         request.setAttribute("link", "games");
 
         request.setAttribute("text", "All Games");

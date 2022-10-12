@@ -102,13 +102,18 @@
                                 </c:forEach>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <c:forEach begin="${1}" end="${requestScope.num}" var="i">
+                                    <li class="page-item"><a class="page-link" href="${requestScope.link}?page=${i}">${i}</a></li>
+                                    </c:forEach>
+                            </ul>
+                        </nav>
                         <div>
-                            <c:forEach begin="${1}" end="${requestScope.num}" var="i">
-                                <a href="${requestScope.link}?page=${i}">${i}</a>
-                            </c:forEach>
+
                         </div>
                     </div>
-                    <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
+                    <div class="overflow-auto" style=" background-color: #a0a1b4; width: 20%; height: 700px;">
                         <h5>Choose your price range</h5>
                         <form action="searchfilter" method="post">
                             <div>
@@ -118,7 +123,8 @@
                                 <button class="btn btn-outline-success" type="submit">Search</button>
                             </div>
                         </form>
-
+                        
+                        <h5>Category:</h5>
                         <form style="overflow: auto;">
                             <c:forEach items="${requestScope.cate}" var="c">
                                 <div class="form-check">

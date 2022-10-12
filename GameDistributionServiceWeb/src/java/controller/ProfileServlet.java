@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import model.User;
 
@@ -66,6 +67,9 @@ public class ProfileServlet extends HttpServlet {
         User u = null;
         u = ud.findUserByID(id);
         request.setAttribute("here", u);
+        HttpSession session = request.getSession();
+        session.removeAttribute("userlogin");
+        session.setAttribute("userlogin", u);
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
 

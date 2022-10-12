@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : Header
     Created on : Oct 6, 2022, 2:36:12 PM
@@ -50,13 +51,14 @@
                             <a class="nav-link" href="register">Sign up</a>
                         </li>                            
                     </c:if>
-                    <c:if test="${(sessionScope.acc != null)}"> 
+                    <c:if test="${(sessionScope.acc != null)}">                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Welcome ${sessionScope.userlogin.nickname}
+                                Welcome ${sessionScope.userlogin.nickname} 
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
+                                <a class="dropdown-item" href="changepass?acc=${sessionScope.acc.username}">Change Password</a>
                                 <a class="dropdown-item" href="logout">Sign out</a>
                                 <a class="dropdown-item" href="#">Payment</a>
                             </div>

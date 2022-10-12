@@ -98,7 +98,7 @@
             h2{
                 text-align: center;
             }
-            
+
             .user-decription{
                 display: inline;
                 margin-left: 50px;
@@ -119,13 +119,27 @@
                             <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px">
                                 <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
                                     <c:if test="${sessionScope.userlogin.avatar==''}"><img src="image/Default Avatar.jpg"</c:if>
-                                    <img src="${i.avatar}"
+                                         <img src="${i.avatar}"
                                          alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
                                          style="width: 150px; z-index: 1">
                                     <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
                                             style="z-index: 1;">
                                         Edit profile
-                                    </button>                                        
+                                    </button>
+
+ <!--them nut isDev-->                                            
+                                    <c:if test="${(sessionScope.userlogin.isDev == true)}">
+                                        <h4 style="color: black">Your are the Developer</h4>
+                                    </c:if>
+                                    <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
+                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
+                                                style="z-index: 1;">
+                                            Edit profile dev
+                                        </button> 
+                                    </c:if>
+ <!------->
+
+
                                 </div>
                                 <div class="ms-3" style="margin-top: 60px;">
                                     <h5>${i.nickname}</h5>

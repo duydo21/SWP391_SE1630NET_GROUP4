@@ -22,6 +22,12 @@ public class Account {
         this.Type = Type;
     }
 
+    public Account(String Username, String Password) {
+        this.Username = Username;
+        this.Password = Password;
+    }
+    
+
 
     public String getUsername() {
         return Username;

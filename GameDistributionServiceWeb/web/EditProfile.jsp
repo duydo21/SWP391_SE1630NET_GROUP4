@@ -64,7 +64,7 @@
                                         <div id="selectedBanner"></div>
                                         <div class="form-outline mb-2">
                                             <div class="form-group">
-                                                <input type="file" id="img" class="form-control" name="avatar" value="${sessionScope.userlogin.email} />
+                                                <input type="file" id="img" class="form-control" name="avatar"   />
                                                        <label class="form-label" for="form3Example4cg">Avatar</label>
                                             </div>
                                         </div>

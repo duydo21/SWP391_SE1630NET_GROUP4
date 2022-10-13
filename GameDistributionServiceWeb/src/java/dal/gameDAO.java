@@ -125,6 +125,25 @@ public class gameDAO extends DBContext {
         }
         return list;
     }
+        public List<Game> get10BestSeller() {
+        List<Game> list = new ArrayList<>();
+        String sql = "select top 10 * from Game where [Status] != 2 order by Download desc";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 
     public List<Game> getNewRelease() {
         List<Game> list = new ArrayList<>();
@@ -145,7 +164,26 @@ public class gameDAO extends DBContext {
         }
         return list;
     }
-
+        public List<Game> get10NewRelease() {
+        List<Game> list = new ArrayList<>();
+        String sql = "SELECT top 10 * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
     public Game getGameById(int id) {
         String sql = "SELECT * FROM [dbo].[Game] where GameID = ?";
         try {
@@ -262,7 +300,7 @@ public class gameDAO extends DBContext {
 
     public static void main(String[] args) {
         gameDAO gdd = new gameDAO();
-        List<Game> list = gdd.searchGamesByName("asdasdasdsa");
+        List<Game> list = gdd.get10BestSeller();
         for (Game g : list) {
             System.out.println(g.getName());
         }

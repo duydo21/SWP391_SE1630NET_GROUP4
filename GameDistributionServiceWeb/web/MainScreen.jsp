@@ -26,23 +26,16 @@
             }
         </style>
         <script>
-            var multipleCardCarousel = document.querySelector(
-                    "#carouselBest"
-                    );
-
-            var carousel = new bootstrap.Carousel(multipleCardCarousel, {
-                interval: false
-            });
-            var carouselWidth = $("#carouselBest .carousel-inner")[0].scrollWidth;
-            var cardWidth = $("#carouselBest .carousel-inner .carousel-item").width();
+            var carouselWidth = $(".bestrow .carousel-inner")[0].scrollWidth;
+            var cardWidth = $(".bestrow .carousel-inner .carousel-item").width();
             var scrollPosition = 0;
-            $("#carouselBest .carousel-control-next").on("click", function () {
+            $(".bestrow .carousel-control-next").on("click", function () {
                 if (scrollPosition < carouselWidth - cardWidth * 4) {
                     scrollPosition += cardWidth;
                     $("#carouselBest .carousel-inner").animate({scrollLeft: scrollPosition}, 600);
                 }
             });
-            $("#carouselBest .carousel-control-prev").on("click", function () {
+            $(".bestrow .carousel-control-prev").on("click", function () {
                 if (scrollPosition > 0) {
                     scrollPosition -= cardWidth;
                     $("#carouselBest .carousel-inner").animate(
@@ -84,7 +77,7 @@
                             <img src="${game.poster}" class="d-block w-100" alt="Poster">
                             <div class="text">
                                 <p>${game.price}</p>
-                                <button class="btn" onclick="window.location.href = 'game?gameID=${game.gameID}'">More Detail</button>
+                                <button class="btn" onclick="window.location.href = 'gameDetails?GameID=${game.gameID}'">More Detail</button>
                             </div>
                         </div>
                         <% isFirst = false; %>  
@@ -104,11 +97,11 @@
                     New Release <!--Padding is optional-->
                 </span>
             </div>
-            <div id="carouselExampleControls2" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
+            <div id="carouselExampleControls2" class="carousel slide" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
                 <div class="carousel-inner" style="display: flex; overflow: auto">
                     <c:forEach items="${requestScope.newrelease}" var="game" begin="0" end="9">
                         <div class="item active">
-                            <div class="card" style="width: 18rem;">
+                            <div class="card" style="width: 18rem;" onclick="window.location.href='gameDetails?GameID=${game.gameID}'">
                                 <img class="card-img-top" src="${game.poster}" alt="Card image cap" style="width: 288px;height: 165px">
                                 <div class="card-body">
                                     <h5 class="card-title">${game.name}</h5>
@@ -124,12 +117,12 @@
                     Best seller <!--Padding is optional-->
                 </span>
             </div>
-            <div id="carouselBest" class="carousel slide gamerow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
+            <div id="carouselBest" class="carousel slide bestrow" data-interval="false" data-bs-ride="carousel" style="padding-top: 20px;">
                 <div class="carousel-inner" style="display: flex;">
                     <% boolean isFirst3 = true;%>
                     <c:forEach items="${requestScope.bestseller}" var="game" begin="0" end="9">
                         <div class="carousel-item <%= isFirst3 ? "active" : ""%> best">
-                            <div class="card" style="width: 18rem;">
+                            <div class="card" style="width: 18rem;" onclick="window.location.href='gameDetails?GameID=${game.gameID}'">
                                 <img class="card-img-top" src="${game.poster}" alt="Card image cap" style="width: 288px;height: 165px">
                                 <div class="card-body">
                                     <h5 class="card-title">${game.name}</h5>

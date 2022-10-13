@@ -73,6 +73,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
             }
             #carouselBest .carousel-inner .carousel-item{
                 margin-right: 0;
-                flex: 0 0 0;
-                display: block;
+                display: flex;
             }

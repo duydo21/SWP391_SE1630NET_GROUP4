@@ -63,10 +63,8 @@ public class MainScreenServlet extends HttpServlet {
     throws ServletException, IOException {
         gameDAO gd = new gameDAO();
         List<Game> glist = gd.getGame();
-        List<Game> gBestSeller = gd.getBestSeller();
-        List<Game> gFreeGame = gd.getFreeGames();
-        List<Game> gNewRelease = gd.getNewRelease();
-        request.setAttribute("freegames", gFreeGame);
+        List<Game> gBestSeller = gd.get10BestSeller();
+        List<Game> gNewRelease = gd.get10NewRelease();
         request.setAttribute("bestseller", gBestSeller);
         request.setAttribute("gamelist", glist);
         request.setAttribute("newrelease", gNewRelease);

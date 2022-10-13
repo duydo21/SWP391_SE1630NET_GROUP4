@@ -66,9 +66,8 @@ public class GameDetailsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String gameID_raw = request.getParameter("gameID");
-//        int gameID = Integer.parseInt(gameID_raw);
-        int gameID =9;
+        String gameID_raw = request.getParameter("GameID");
+        int gameID = Integer.parseInt(gameID_raw);
         gameDAO gameDao = new gameDAO();
         categoryDAO cat_DAO = new categoryDAO();
         //get game info

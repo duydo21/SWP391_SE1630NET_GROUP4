@@ -49,7 +49,7 @@ INSERT INTO Game ([Name], Price,  Download, Rate, [Status], [Description],  [Dat
 INSERT INTO Game ([Name], Price,  Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('Madden NFL 23', '990000',  '22301', '3.9', '1', 'Play your way into the history books. Control your impact with every decision in all-new ways. Call the shots in Franchise with free agency and trade logic updates, leave a legacy in Face of the Franchise: The League, and assemble the most powerful roster in all of Madden Ultimate Team™.',  '2022-8-19','games/Madden NFL 23.jpg');
 INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('Left 4 Dead 2', '120000', '32541200', '9.7', '1', 'Set in the zombie apocalypse, Left 4 Dead 2 (L4D2) is the highly anticipated sequel to the award-winning Left 4 Dead, the #1 co-op game of 2008. This co-operative action horror FPS takes you and your friends through the cities, swamps and cemeteries of the Deep South, from Savannah to New Orleans across five expansive campaigns.',  '2009-11-17','games/Left 4 Dead 2.jpg');
 INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('Resident Evil 2', '538000',  '4230158', '9.7', '1', 'A deadly virus engulfs the residents of Raccoon City in September of 1998, plunging the city into chaos as flesh eating zombies roam the streets for survivors. An unparalleled adrenaline rush, gripping storyline, and unimaginable horrors await you. Witness the return of Resident Evil 2.',  '2019-1-25','games/Resident Evil 2.jpg');
-INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('The Death | Thần Trùng', '75000',  '100032', '9.4', '1', 'Thần Trùng | The Death là trò chơi phiêu lưu kinh dị tâm lý do 3 người Việt phát triển. Game lấy bối cảnh thành phố Hà Nội năm 2021.',  '2022-9-15','games/The Death.jpg');
+INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('The Death | Thần Trùng', '75000',  '100032', '9.4', '1', 'Thần Trùng | The Death là trò chơi phiêu lưu kinh dị tâm lý do 3 ngư�?i Việt phát triển. Game lấy bối cảnh thành phố Hà Nội năm 2021.',  '2022-9-15','games/The Death.jpg');
 INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date], Poster) VALUES ('Persona 4 Golden', '380000', '2015487', '9.7', '1', 'A coming of age story that sets the protagonist and his friends on a journey kickstarted by a chain of serial murders.',  '2020-6-14','games/Persona 4 Golden.jpg');
 
 --database for user-game-developer
@@ -266,3 +266,90 @@ INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (20,'asset/Persona 4 
 INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (20,'asset/Persona 4 Golden/c10.jpg',1)
 INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (20,'asset/Persona 4 Golden/movie480_vp9.webm',2)
 
+--INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (,'asset/',)
+--select * from Game
+--select * from Media order by GameID
+
+--select * from [Game-Category]
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (1,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (1,10)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (1,11)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (2,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (2,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (2,6)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (2,9)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (2,10)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (2,11)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (3,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (3,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (3,7)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (4,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (4,24)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (4,25)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (5,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (5,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (5,24)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (6,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (6,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (6,24)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (7,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (7,7)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (7,13)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (8,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (8,15)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (9,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (9,20)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (9,22)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (9,24)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (10,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (10,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (10,4)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (10,11)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (10,24)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (11,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (11,7)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (11,13)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (12,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (12,11)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (13,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (13,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (13,11)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (13,24)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (14,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (14,7)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (14,13)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (15,12)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (15,21)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (15,26)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (16,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (16,7)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (16,13)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (16,15)
+
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (17,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (17,8)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (17,15)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (18,1)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (18,2)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (18,5)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (18,15)
+
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (19,4)
+INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (19,20)

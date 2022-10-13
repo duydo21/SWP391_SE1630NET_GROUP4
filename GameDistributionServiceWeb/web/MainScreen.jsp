@@ -17,6 +17,14 @@
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/Header.css"/>
+        <style>
+            section{
+                width: 70%;
+                margin: 0 auto;
+
+            }
+        </style>
         <script>
             var multipleCardCarousel = document.querySelector(
                     "#carouselBest"
@@ -45,83 +53,6 @@
             });
 
         </script>
-        <style>
-            section{
-                width: 70%;
-                margin: 0 auto;
-
-            }
-            body{
-                background-color: #d9d9d9;
-            }
-            .text {
-                position: relative;
-            }
-
-            /* Make the image responsive */
-            .text img {
-                width: 100%;
-                height: auto;
-            }
-
-            /* Style the button and place it in the middle of the container/image */
-            .text .btn {
-                position: absolute;
-                top: -130%;
-                left: 82%;
-                transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                background-color: #555;
-                color: white;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-                background-color: #b721ff;
-                border: none;
-            }
-            .navbar-expand-lg{
-                padding-left:15%;
-                padding-right:15%;
-            }
-            .d-flex{
-                margin-left: auto;
-            }
-            .cards-wrapper {
-                display: flex;
-            }
-            .card img {
-                max-width: 100%;
-                max-height: 100%;
-            }
-            .card {
-                margin: 0 0.5em;
-                box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-                border: none;
-                border-radius: 0;
-            }
-            .carousel-inner {
-                padding: 1em;
-            }
-            .gamerow .carousel-control-prev,
-            .gamerow .carousel-control-next {
-                background-color: #e1e1e1;
-                width: 5vh;
-                height: 5vh;
-                border-radius: 50%;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-
-            .d-flex button{
-                background-color: #a0a1b4;
-            }
-            #carouselBest .carousel-inner .carousel-item{
-                margin-right: 0;
-                flex: 0 0 0;
-                display: block;
-            }
-
-        </style>
     </head>
     <body>
         <header>

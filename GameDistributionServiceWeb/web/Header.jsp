@@ -63,7 +63,15 @@
                                 <a class="dropdown-item" href="#">Payment</a>
                             </div>
                         </li>
-                    </c:if>                 
+                    </c:if>
+                    <c:if test="${(sessionScope.userlogin.isDev == true)}">
+                        <div class="bg-success ">
+                            <p> is Developer</p>
+                        </div>
+                    </c:if>
+                    <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
+                         <a class="nav-link bg-danger" href="/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}">Dev Register</a>
+                    </c:if>
                 </ul>
                 <form class="search d-flex " action="search" method = "get">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">

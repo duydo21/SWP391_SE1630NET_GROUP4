@@ -68,7 +68,7 @@ public class GameDetailsServlet extends HttpServlet {
             throws ServletException, IOException {
         String gameID_raw = request.getParameter("gameID");
 //        int gameID = Integer.parseInt(gameID_raw);
-        int gameID =11;
+        int gameID =9;
         gameDAO gameDao = new gameDAO();
         categoryDAO cat_DAO = new categoryDAO();
         //get game info

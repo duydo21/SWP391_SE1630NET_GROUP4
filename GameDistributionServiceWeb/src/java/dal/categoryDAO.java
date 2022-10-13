@@ -60,7 +60,7 @@ public class categoryDAO extends DBContext {
             st.setInt(1, gameID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Category c = new GameCategory(gameDao.getGameById(rs.getInt("GameID")), 
+                Category c = new GameCategory(gameDao.getGameById(gameID), 
                         getCategoryByID(rs.getInt("CategoryID")))
                         .getCategoryID();
                 list.add(c);
@@ -69,7 +69,7 @@ public class categoryDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return null;
+        return list;
     }
     public static void main(String[] args) {
         categoryDAO cd = new categoryDAO();

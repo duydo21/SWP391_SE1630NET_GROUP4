@@ -15,8 +15,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import model.Category;
 import model.Game;
 import model.Media;
+import model.User;
 import model.UserGameComment;
 
 /**
@@ -65,7 +67,8 @@ public class GameDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String gameID_raw = request.getParameter("gameID");
-        int gameID = Integer.parseInt(gameID_raw);
+//        int gameID = Integer.parseInt(gameID_raw);
+        int gameID =11;
         gameDAO gameDao = new gameDAO();
         categoryDAO cat_DAO = new categoryDAO();
         //get game info
@@ -73,20 +76,27 @@ public class GameDetailsServlet extends HttpServlet {
         //get game media
         List<Media> gameMedias = new ArrayList<>();
         gameMedias = gameDao.getGameMediaByGameID(gameID);
-        //get game rate
+//        //get game rate
         float gameRate = gameDao.getGameRateByID(gameID);
         game.setRate(gameRate);
-        //get game comment
+//        //get game comment
         List<UserGameComment> cmtList = new ArrayList<>();
         cmtList = gameDao.getGameCommentByGameID(gameID);
-        //get recommend game list
+//        //get recommend game list
         List<Game> gameList = new ArrayList<>();
-        gameList = gameDao.getGameByCategory(cat_DAO.getCategoryOfA_Game(gameID));
+        List<Category> cateList = cat_DAO.getCategoryOfA_Game(gameID);
+        for (Category i : cateList) {
+            gameList.addAll(gameDao.getGameByCategory(i));
+        }
+        
+        //get developer
+//        List<User> devList = new ArrayList<>();
         //send info to jsp page
         request.setAttribute("game", game);
         request.setAttribute("gameComment", cmtList);
         request.setAttribute("gameMedias", gameMedias);
         request.setAttribute("gameList", gameList);
+//        request.setAttribute("devList", devList);
         request.getRequestDispatcher("GameDetails.jsp").forward(request, response);
     }
 

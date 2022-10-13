@@ -43,7 +43,21 @@
                                     <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
                                             style="z-index: 1;">
                                         Edit profile
-                                    </button>                                        
+                                    </button>
+
+ <!--them nut isDev-->                                            
+                                    <c:if test="${(sessionScope.userlogin.isDev == true)}">
+                                        <h4 style="color: black">Your are the Developer</h4>
+                                    </c:if>
+                                    <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
+                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
+                                                style="z-index: 1;">
+                                            Edit profile dev
+                                        </button> 
+                                    </c:if>
+ <!------->
+
+
                                 </div>
                                 <div class="ms-3" style="margin-top: 60px;">
                                     <h5>${i.nickname}</h5>

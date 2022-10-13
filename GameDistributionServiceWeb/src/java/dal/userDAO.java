@@ -203,6 +203,23 @@ public class userDAO extends DBContext {
         }
         return count;
     }
+    
+    public void updateisDevUser(User u) {
+        int count = 0;
+        String sql = "update [User] set  "
+                + "IsDev = ?  "
+                + "where UserID=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            
+            ps.setBoolean(1, true);
+            ps.setInt(2, u.getUserID());
+            count = ps.executeUpdate();
+        } catch (SQLException e) {
+
+        }
+//        return count;
+    }
 
 //    public static void main(String[] args) {
 //        userDAO ud = new userDAO();

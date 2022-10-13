@@ -266,6 +266,3 @@ INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (20,'asset/Persona 4 
 INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (20,'asset/Persona 4 Golden/c10.jpg',1)
 INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (20,'asset/Persona 4 Golden/movie480_vp9.webm',2)
 
---INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (,'asset/',)
---select * from Game
---select * from Media order by GameID

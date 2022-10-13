@@ -20,7 +20,6 @@
             section{
                 width: 70%;
                 margin: 0 auto;
-
             }
         </style>
     </head>

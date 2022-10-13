@@ -33,7 +33,7 @@
                             <a class="dropdown-item" href="free">Free to play</a>
                             <a class="dropdown-item" href="#">Coming Soon</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Genre</a>
+                            <a class="dropdown-item" href="genre">Genre</a>
                             <a class="dropdown-item" href="games">All games</a>
                         </div>
                     </li>

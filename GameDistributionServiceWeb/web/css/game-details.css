@@ -8,7 +8,7 @@ html{
 }
 
 #content{
-    background-color: #c6d4df;
+    background-color: #d9d9d9;
 }
 .clear{
     clear: both;
@@ -22,7 +22,7 @@ html{
     cursor: pointer;
 }
 
-.full-width{
+.full_width{
     width: 100%;
 }
 #game-info .heading{
@@ -31,17 +31,22 @@ html{
     font-size: 26px;
     line-height: 32px;
 }
-
+#game-info{
+    position: relative;
+}
 .pic-container{
-    /*position: relative;*/
+
 }
 
 #selected-game{
+
     width: 65%;
 }
 
 #game-details{
-    width: 35%;
+    width: 34%;
+    position: absolute;
+    right: 0;
 }
 
 #game-info #selected-game,
@@ -51,19 +56,73 @@ html{
 
 .pic-container .mySlides{
     display: none;
+    position: relative;
+}
+
+.mySlides img,
+.mySlides video{
+    width: 100%;
 }
 
 .row1{
-    width: 65%;
+    width: 100%;
+}
+
+.row1 img,
+.row1 video{
+    width: 16%;
+    padding: 0 1px;
+}
+
+.row1 column1{
+    float: left;
+    width: 16%;
 }
 
 /* Add a transparency effect for thumnbail images */
 .demo {
-  opacity: 0.6;
+    opacity: 0.6;
 }
 
 .active,
 .demo:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
+#game-poster img{
+    width: 100%;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 16px;
+    margin-top: -10px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+    text-decoration: none;
+}
+
+/* Position the "next button" to the right */
+
+.prev{
+    left:0;
+}
+.next {
+    right:0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}

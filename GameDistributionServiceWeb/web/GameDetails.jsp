@@ -15,56 +15,15 @@
         <link rel="stylesheet" href="css/game-details.css">
         <link rel="stylesheet" href="css/fonts/themify-icons/themify-icons.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/Header.css"/>
         <style>
             section{
                 width: 70%;
                 margin: 0 auto;
-                padding-top: 20px;
-            }
-            body{
-                background-color: #d9d9d9;
-            }
-            .text {
-                position: relative;
-            }
 
-            /*Make the image responsive*/
-            .text img {
-                width: 100%;
-                height: auto;
-            }
-            .d-flex{
-                margin-left: auto;
-            }
-            /*Style the button and place it in the middle of the container/image*/
-            .text .btn {
-                position: absolute;
-                top: -130%;
-                left: 82%;
-                transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                background-color: #555;
-                color: white;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-                background-color: #b721ff;
-                border: none;
-            }
-            .navbar-expand-lg{
-                padding-left:15%;
-                padding-right:15%;
-            }
-            .search{
-                margin-left: auto;
-            }
-            .d-flex button{
-                background-color: #a0a1b4;
             }
         </style>
     </head>
@@ -90,19 +49,21 @@
                                                 <source src="${pic.getLink()}" >
                                             </video>
                                         </c:if>
+                                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
                                     </div>
                                 </c:forEach>
-                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                                <div class="row1">
-                                    <div class="column1">
+
+                                <div id="carouselExampleControls2" class="row1 carousel slide gamerow" data-interval="false" data-bs-ride="carousel">
+                                    <div class="column1 carousel-inner" style="display: flex; overflow: auto">
                                         <c:forEach var="pic" items="${requestScope.gameMedias}">
                                             <c:if test="${(pic.getType()==1)}">
                                                 <img class="demo cursor" src="${pic.getLink()}" class="full-width" onclick="currentSlide(1)">
                                             </c:if>
                                             <c:if test="${(pic.getType()==2)}">
-<!--                                                <video controls class="demo cursor" poster="${game.getPoster()}" class="full-width" onclick="currentSlide(1)">
-                                                </video>-->
+                                                <video controls class="demo cursor" poster="${game.getPoster()}" onclick="currentSlide(1)">
+                                                    <source src="${pic.getLink()}" class="full_width">
+                                                </video>
                                             </c:if>
                                         </c:forEach>
                                     </div>
@@ -113,7 +74,7 @@
                         <div id="game-details">
                             <div id="game-poster" >
                                 <!--lay tu game-poster-->
-                                <!--<img src="${game.getPoster()}" alt="">-->
+                                <img src="${game.getPoster()}" alt="">
                             </div>
                             <div id="game-detail-info">
 
@@ -218,7 +179,40 @@
         </div>           
     </section>
     <script>
-        
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+// Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+// Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("demo");
+            let captionText = document.getElementById("caption");
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            captionText.innerHTML = dots[slideIndex - 1].alt;
+        }
     </script>
 </body>
 <footer>

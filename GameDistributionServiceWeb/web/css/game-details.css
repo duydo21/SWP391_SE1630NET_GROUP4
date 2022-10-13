@@ -1,124 +1,69 @@
-/**{
+*{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 html{
     font-family: Arial, Helvetica, sans-serif;
-}*/
+}
 
-
-/*#content{
+#content{
     background-color: #c6d4df;
 }
 .clear{
     clear: both;
 }
-#selected-game #game-picture,
-#selected-game #game-details{
-    display: inline-block;
-}
 
-#selected-game #game-picture{
-    transform: translateY(-18px);
-}
-#selected-game{
-    display: flex;
-     position: absolute; 
-    text-align: center  ;
-    
-}
-#game-info,
-#more-game{
-    margin-left: 10%;
-    margin-right: 10%;
-}
- #game-info{
-    position: relative;
-} 
-#game-info #selected-game,
-#game-info #game-details{
-    display: inline-block;
-    }
-.heading{
-    font-size: 26px;
-    font-weight: normal;
-    margin-bottom: 14px;
-}
-
-#small-pic .pic {
-    display: inline-block;
-}
-
-#small-pic .pic img{
-    height: 65px;
-    width: 115px;
-}
-#game-poster img,
-#game-detail-info{
-    width: 400px;
-}
-
-#game-detail-info{
-    text-align: justify;
-    line-height: 1.4;
-}
-#game-details{
-     height: 411px; 
-}
-#action #rating,
-#action #btn{
-     display: inline-block; 
-    width: 50%;
-    float: left;
-}
-#action #btn{
-    transform: translateX(-30px);
-}
-#rating p,#rating span{
-    display: inline-block;
-}
-
-#game-info #btn #discount,
-#game-info #btn .price,
-#game-info #btn #buy{
-    float: right;
-}
-#discount,#buy{
-    line-height: 36.5px;
-}
-#buy{
-    cursor: pointer;
-}
-#btn .price{
-    height: 36.5px;
-}
-.line-through{
+.line_through{
     text-decoration: line-through;
 }
 
-.heading-content{
-    font-size: 26px;
+.cursor{
+    cursor: pointer;
+}
+
+.full-width{
+    width: 100%;
+}
+#game-info .heading{
+    font-family: "Motiva Sans", Sans-serif;
     font-weight: normal;
+    font-size: 26px;
+    line-height: 32px;
 }
-#see-all-link{
-    float:right;
-    transform: translateY(-20px);
+
+.pic-container{
+    /*position: relative;*/
 }
-.game{
-    width: 25%;
+
+#selected-game{
+    width: 65%;
+}
+
+#game-details{
+    width: 35%;
+}
+
+#game-info #selected-game,
+#game-info #game-details{
     float:left;
 }
-.game img{
-    width: 97%;
-    border-radius: 4px;
+
+.pic-container .mySlides{
+    display: none;
 }
 
-.overview-info .game-name,
-.overview-info .price{
-    display: inline-block;
+.row1{
+    width: 65%;
 }
-.overview-info .price{
 
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
 }
-*/
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+

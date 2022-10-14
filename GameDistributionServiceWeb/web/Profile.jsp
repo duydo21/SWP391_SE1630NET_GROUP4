@@ -34,7 +34,7 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col col-lg-12 col-xl-12">
                         <div class="card">
-                            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px">
+                            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ;margin: 0">
                                 <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
                                     <c:if test="${sessionScope.userlogin.avatar==''}"><img src="image/Default Avatar.jpg"</c:if>
                                          <img src="${i.avatar}"

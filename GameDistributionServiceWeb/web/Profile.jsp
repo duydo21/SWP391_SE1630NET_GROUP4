@@ -53,7 +53,7 @@
                                     <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
                                         <img src="${i.avatar}"
                                              alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
-                                             style="width: 150px; z-index: 1">
+                                             style="width: 150px;height:150px ; z-index: 1">
                                         <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
                                                 style="z-index: 1;">
                                             Edit profile

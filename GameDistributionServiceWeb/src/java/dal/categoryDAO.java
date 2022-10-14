@@ -54,7 +54,7 @@ public class categoryDAO extends DBContext {
     public List<Category> getCategoryOfA_Game(int gameID){
         gameDAO gameDao = new gameDAO();
         List<Category> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[GameCategory] where GameID = ?";
+        String sql = "SELECT * FROM [dbo].[Game-Category] where GameID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, gameID);

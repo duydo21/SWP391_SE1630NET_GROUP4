@@ -25,14 +25,27 @@ html{
 .full_width{
     width: 100%;
 }
-#game-info .heading{
+#game-info .heading,
+#user-comment .heading-content,
+#more-game .heading .heading-content
+{
     font-family: "Motiva Sans", Sans-serif;
     font-weight: normal;
     font-size: 26px;
     line-height: 32px;
 }
+
+/*#user-comment .heading-content{
+    font-size: 26px;
+    font-weight: normal;
+}*/
 #game-info{
     position: relative;
+    margin-bottom: 1px;
+}
+
+#game-details {
+    max-height: 100%;
 }
 .pic-container{
 
@@ -47,6 +60,7 @@ html{
     width: 34%;
     position: absolute;
     right: 0;
+    /*padding-bottom: 1px;*/
 }
 
 #game-info #selected-game,
@@ -125,4 +139,54 @@ html{
 .prev:hover,
 .next:hover {
     background-color: rgba(0, 0, 0, 0.8);
+}
+
+#rating p,
+#rating span,
+#action #rating,
+#action #btn{
+    float: left;
+}
+
+#btn #buy,
+#btn .price,
+#btn #discount{
+    float: right;
+    margin: 0 1px;
+    color: #ffe7c3;
+}
+#btn #buy{
+    line-height: 36px;
+}
+#btn #discount{
+    line-height: 40px;
+}
+#btn #buy:hover{
+    opacity: 0.7;
+}
+
+
+#action{
+    position: relative;
+    margin-top: 20px;
+}
+
+#btn{
+    right :0;
+    position: absolute;
+}
+
+#user-comment,
+#more-game{
+    margin-top: 20px;
+}
+
+#games .game{
+    float: left;
+    width: 25%;
+    padding: 0 3px;
+}
+
+#games .game img{
+    width: 100%;
 }

@@ -67,11 +67,16 @@ public class GameDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String gameID_raw = request.getParameter("GameID");
-        int gameID = Integer.parseInt(gameID_raw);
+//        int gameID = Integer.parseInt(gameID_raw);
+        int gameID = 7;
         gameDAO gameDao = new gameDAO();
         categoryDAO cat_DAO = new categoryDAO();
         //get game info
         Game game = gameDao.getGameById(gameID);
+        
+        if(game.getDescription().length()>300){
+            game.setDescription(game.getDescription().substring(0, 295).concat("..."));
+        }
         //get game media
         List<Media> gameMedias = new ArrayList<>();
         gameMedias = gameDao.getGameMediaByGameID(gameID);
@@ -84,10 +89,17 @@ public class GameDetailsServlet extends HttpServlet {
 //        //get recommend game list
         List<Game> gameList = new ArrayList<>();
         List<Category> cateList = cat_DAO.getCategoryOfA_Game(gameID);
-        for (Category i : cateList) {
-            gameList.addAll(gameDao.getGameByCategory(i));
+        for (int i = 0; i < 4; i++) {
+            gameList.add(gameDao.getGameByCategory(cateList.get(0)).get(i));
         }
-        
+
+        for (int i = 0; i < gameList.size(); i++) {
+            if (gameList.get(i).getGameID() == gameID) {
+                gameList.remove(gameList.get(i));
+                i--;
+            }
+        }
+
         //get developer
 //        List<User> devList = new ArrayList<>();
         //send info to jsp page
@@ -95,8 +107,10 @@ public class GameDetailsServlet extends HttpServlet {
         request.setAttribute("gameComment", cmtList);
         request.setAttribute("gameMedias", gameMedias);
         request.setAttribute("gameList", gameList);
+        request.setAttribute("catList", cateList);
 //        request.setAttribute("devList", devList);
         request.getRequestDispatcher("GameDetails.jsp").forward(request, response);
+        gameList.clear();
     }
 
     /**
@@ -123,4 +137,9 @@ public class GameDetailsServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+//    public static void main(String[] args) {
+//        gameDAO gameDao = new gameDAO();
+//        Game g = gameDao.getGameById(1);
+//        System.out.println(g.getDescription().length());
+//    }
 }

@@ -29,6 +29,9 @@
     </head>
     <body>
         <c:set var="game" value = "${requestScope.game}"/>
+        <c:set var="mediaList" value = "${requestScope.gameMedias}"/>
+        <c:set var="gameList" value = "${requestScope.gameList}"/>
+        <c:set var="catList" value = "${requestScope.catList}"/>
         <header>
             <jsp:include page="Header.jsp" />
         </header>
@@ -56,15 +59,17 @@
 
                                 <div id="carouselExampleControls2" class="row1 carousel slide gamerow" data-interval="false" data-bs-ride="carousel">
                                     <div class="column1 carousel-inner" style="display: flex; overflow: auto">
-                                        <c:forEach var="pic" items="${requestScope.gameMedias}">
+                                        <% int i=1; %>
+                                        <c:forEach var="pic" items="${mediaList}">
                                             <c:if test="${(pic.getType()==1)}">
-                                                <img class="demo cursor" src="${pic.getLink()}" class="full-width" onclick="currentSlide(1)">
+                                                <img class="demo cursor" src="${pic.getLink()}" class="full-width" onclick="currentSlide(<%=i%>)">
                                             </c:if>
                                             <c:if test="${(pic.getType()==2)}">
-                                                <video controls class="demo cursor" poster="${game.getPoster()}" onclick="currentSlide(1)">
+                                                <video controls class="demo cursor" poster="${game.getPoster()}" onclick="currentSlide(<%=i%>)">
                                                     <source src="${pic.getLink()}" class="full_width">
                                                 </video>
                                             </c:if>
+                                            <% i++; %>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -86,7 +91,11 @@
                                         ${dev.getNickname()}. 
                                     </c:forEach>
                                 </p>
-
+                                <p>Category: 
+                                    <c:forEach var="cat" items="${requestScope.catList}">
+                                        <a href="url" style="text-decoration: none">${cat.getCategoryName()}</a>
+                                    </c:forEach>
+                                </p>
                             </div>
                         </div>
                         <div class="clear"></div>
@@ -106,15 +115,19 @@
                         <div id="btn">
                             <button id="buy" style="background-color: rgb(92, 92, 198);">BUY</button>
 
-                            <div class="price" style="background-color: green;">
-                                <c:if test ="${(game.getDiscount()==0)}">
+
+                            <c:if test ="${(game.getDiscount()==0)}">
+                                <div class="price" style="background-color: green; line-height: 40px">
                                     <div class="first-price"">${game.getPrice()}$</div>
-                                </c:if>
-                                <c:if test ="${(game.getDiscount()!=0)}">
+                                </div>
+                            </c:if>
+                            <c:if test ="${(game.getDiscount()!=0)}">
+                                <div class="price" style="background-color: green; line-height: 20px">
                                     <div class="first-price line_through">${game.getPrice()}$</div>
                                     <div class="after-price">${game.getPriceAfterDiscount()}$</div>
-                                </c:if>
-                            </div>
+                                </div>
+                            </c:if>
+
                             <c:if test ="${(game.getDiscount()!=0)}">
                                 <div id="discount" style="background-color: purple;">${game.getDiscount()}%</div>
                             </c:if>
@@ -128,49 +141,25 @@
                 <div id="more-game">
                     <div class="heading">
                         <div class="heading-content">More like this</div>
-                        <div id="see-all-link" style="font-size: 15px">
-                            <a href="" >See all</a>
-                            <icon class="ti-arrow-right"></icon>
-                        </div>
+                        <!--                        <div id="see-all-link" style="font-size: 15px">
+                                                    <a href="" >See all</a>
+                                                    <icon class="ti-arrow-right"></icon>
+                                                </div>-->
                     </div>
                     <!--lay tu 1 list gom 4 game cung category voi game nay-->
                     <div id="games">
-                        <div class="game">
-                            <div class="overview-pic">
-                                <img src="https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg?t=1664817530" alt="">
+                        <c:forEach var="m_game" items= "${gameList}" begin="0" end ="3">
+                            <div class="game">
+                                <div class="overview-pic">
+                                    <img src="${m_game.getPoster()}" >
+                                </div>
+                                <div class="overview-info">
+                                    <div class="game-name">${m_game.getName()}</div>
+                                    <div class="price">${m_game.getPrice()}</div>
+                                </div>
                             </div>
-                            <div class="overview-info">
-                                <div class="game-name">Kenshi</div>
-                                <div class="price">200$</div>
-                            </div>
-                        </div>
-                        <div class="game">
-                            <div class="overview-pic">
-                                <img src="https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg?t=1664817530" alt="">
-                            </div>
-                            <div class="overview-info">
-                                <div class="game-name">Kenshi</div>
-                                <div class="price">200$</div>
-                            </div>
-                        </div>
-                        <div class="game">
-                            <div class="overview-pic">
-                                <img src="https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg?t=1664817530" alt="">
-                            </div>
-                            <div class="overview-info">
-                                <div class="game-name">Kenshi</div>
-                                <div class="price">200$</div>
-                            </div>
-                        </div>
-                        <div class="game" style="transform: translateY(-8.35px)">
-                            <div class="overview-pic" >
-                                <img src="https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg?t=1664817530"  alt="">
-                            </div>
-                            <div class="overview-info" >
-                                <div class="game-name">Kenshi</div>
-                                <div class="price" >200$</div>
-                            </div>
-                        </div>
+                            <!--                        <div class="clear"></div>-->
+                        </c:forEach>
                         <div class="clear"></div>
                     </div>
                 </div>

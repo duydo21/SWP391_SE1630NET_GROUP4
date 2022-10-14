@@ -27,7 +27,7 @@
                 margin: 10px;
                 margin-bottom: 20px;
                 border-radius: 10px;
-                
+
             }
             .container-game a{
                 text-decoration: none;
@@ -48,24 +48,43 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col col-lg-12 col-xl-12">
                         <div class="card">
-                            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
-                                <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
-                                         <img src="${i.avatar}"
-                                         alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
-                                         style="width: 150px; z-index: 1">
-                                    <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
-                                            style="z-index: 1;">
-                                        Edit profile
-                                    </button>
+                            <c:if test="${sessionScope.userlogin.isPrivate==false}"> 
+                                <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
+                                    <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
+                                        <img src="${i.avatar}"
+                                             alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
+                                             style="width: 150px; z-index: 1">
+                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
+                                                style="z-index: 1;">
+                                            Edit profile
+                                        </button>
+                                    </div>
 
+                                    <div class="user-detail ms-3" style="margin-top: 60px;">
+                                        <h5>${i.nickname}</h5>
+                                        <p>${i.country}</p>
+                                        <p>Decription:${i.decription}</p>
+                                    </div>
 
                                 </div>
-                                <div class="user-detail ms-3" style="margin-top: 60px;">
-                                    <h5>${i.nickname}</h5>
-                                    <p>${i.country}</p>
-                                    <p>Decription:${i.decription}</p>
+                            </c:if>
+                            <c:if test="${sessionScope.userlogin.isPrivate==true}"> 
+                                <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
+                                    <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
+                                        <img src="image/Default Avatar.jpg"
+                                             alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
+                                             style="width: 150px; z-index: 1">
+                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
+                                                style="z-index: 1;">
+                                            Edit profile
+                                        </button>
+                                    </div>
+
+                                    <div class="user-detail ms-3" style="margin-top: 60px;">
+                                        <h5>${i.nickname}</h5>
+                                    </div>
                                 </div>
-                            </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>

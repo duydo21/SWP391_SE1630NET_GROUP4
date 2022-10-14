@@ -15,7 +15,7 @@ import model.User;
  * @author Strongest
  */
 public class userDAO extends DBContext {
-
+    
     public void createAccount(Account a) {
         String sql = "INSERT INTO [dbo].[Account]\n"
                 + "           ([Username]\n"
@@ -66,11 +66,11 @@ public class userDAO extends DBContext {
                 return a;
             }
         } catch (SQLException e) {
-
+            
         }
         return null;
     }
-
+    
     public Account checkLogin(String username, String password) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
@@ -86,11 +86,11 @@ public class userDAO extends DBContext {
                 return a;
             }
         } catch (SQLException e) {
-
+            
         }
         return null;
     }
-
+    
     public void createUser(String name) {
         String sql = "INSERT INTO [dbo].[User]\n"
                 + "           ([Name]\n"
@@ -116,7 +116,7 @@ public class userDAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    
     public User findUserByName(String Username) {
         String sql = "SELECT * FROM [dbo].[User] where [Name] = ?";
         User u = new User();
@@ -136,13 +136,13 @@ public class userDAO extends DBContext {
                 u.setIsDev(rs.getBoolean("IsDev"));
                 return u;
             }
-
+            
         } catch (SQLException e) {
-
+            
         }
         return null;
     }
-
+    
     public User findUserByID(int id) {
         String sql = "SELECT * FROM [dbo].[User] where [UserID] = ?";
         User u = new User();
@@ -160,14 +160,17 @@ public class userDAO extends DBContext {
                 u.setEmail(rs.getString("Email"));
                 u.setAvatar(rs.getString("Avatar"));
                 u.setIsDev(rs.getBoolean("IsDev"));
+                u.setIsPrivate(rs.getBoolean("IsPrivate"));
+                u.setDecription(rs.getString("Description"));
+                
             }
             return u;
         } catch (SQLException e) {
-
+            
         }
         return null;
     }
-
+    
     public int updateProfileUser(User u) {
         int count = 0;
         String sql = "update [User] set  "
@@ -188,7 +191,7 @@ public class userDAO extends DBContext {
         }
         return count;
     }
-
+    
     public int changePassUser(Account a) {
         int count = 0;
         String sql = "update [Account] set Username = ? , "
@@ -216,15 +219,18 @@ public class userDAO extends DBContext {
             ps.setInt(2, u.getUserID());
             count = ps.executeUpdate();
         } catch (SQLException e) {
-
+            
         }
 //        return count;
     }
-
-//    public static void main(String[] args) {
-//        userDAO ud = new userDAO();
-//        Account a = ud.updateProfileUser(u);
-//        
-//    }
+    
+    public static void main(String[] args) {
+       
+            User u = new userDAO().findUserByID(4);
+        
+        System.out.println(u);
+       
+        
+    }
     
 }

@@ -8,14 +8,15 @@ import dal.userDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jakarta.servlet.http.Part;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import model.User;
 
 /**
@@ -23,6 +24,7 @@ import model.User;
  * @author ADMIN
  */
 @WebServlet(name = "EditProfileServlet", urlPatterns = {"/editprofile"})
+@MultipartConfig
 public class EditProfileServlet extends HttpServlet {
 
     /**
@@ -63,10 +65,11 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int Id = Integer.parseInt(request.getParameter("UserID"));
+        String id_raw = request.getParameter("UserID");
+        int id = Integer.parseInt(id_raw);
+        userDAO u = new userDAO();
+        u.findUserByID(id);
 
-        User user = new userDAO().findUserByID(Id);
-        request.setAttribute("user", user);
         request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
 
     }
@@ -83,22 +86,30 @@ public class EditProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String nickname = request.getParameter("nickname");
-            String country = request.getParameter("country");
-            String email = request.getParameter("email");
-            String avatar = request.getParameter("avatar");
-            String decription = request.getParameter("decription");
-            boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
-            User u = new User(id, nickname, country, email, avatar, decription, isPrivate);
-            if (new userDAO().updateProfileUser(u) > 0) {
-                HttpSession session = request.getSession();
-                session.removeAttribute("userlogin");                
-                session.setAttribute("userlogin", u);               
-                response.sendRedirect("profile?UserID=" + id);
-            }
-        } catch (NumberFormatException e) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String nickname = request.getParameter("nickname");
+        String country = request.getParameter("country");
+        String email = request.getParameter("email");
+
+        String decription = request.getParameter("decription");
+        boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
+
+        Part part = request.getPart("avatar");
+        String realPath = request.getServletContext().getRealPath("/image");
+        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+        
+        if ( filename.isEmpty()) {
+            filename ="Default Avatar.jpg";
+        }
+        part.write(realPath + "/" + filename);
+        
+
+        User u = new User(id, nickname, country, email, "image" + "/" + filename, decription, isPrivate);
+        if (new userDAO().updateProfileUser(u) > 0) {
+            HttpSession session = request.getSession();
+            session.removeAttribute("userlogin");
+            session.setAttribute("userlogin", u);
+            response.sendRedirect("profile?UserID=" + id);
         }
 
     }

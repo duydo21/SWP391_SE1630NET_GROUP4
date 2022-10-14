@@ -22,6 +22,20 @@
                 margin: 0 auto;
 
             }
+            .item{
+                background-color: #a5a5a5;
+                margin: 10px;
+                margin-bottom: 20px;
+                border-radius: 10px;
+                
+            }
+            .container-game a{
+                text-decoration: none;
+                color: black;
+            }
+            .user-detail{
+
+            }
         </style>
     </head>
     <body>
@@ -34,7 +48,7 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col col-lg-12 col-xl-12">
                         <div class="card">
-                            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ;margin: 0">
+                            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
                                 <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
                                     <c:if test="${sessionScope.userlogin.avatar==''}"><img src="image/Default Avatar.jpg"</c:if>
                                          <img src="${i.avatar}"
@@ -44,15 +58,13 @@
                                             style="z-index: 1;">
                                         Edit profile
                                     </button>
-                                        
-                                        
+
+
                                 </div>
-                                <div class="ms-3" style="margin-top: 60px;">
+                                <div class="user-detail ms-3" style="margin-top: 60px;">
                                     <h5>${i.nickname}</h5>
                                     <p>${i.country}</p>
-                                </div>
-                                <div class="user-decription">
-                                    Decription:${i.decription}
+                                    <p>Decription:${i.decription}</p>
                                 </div>
                             </div>
                         </div>
@@ -66,16 +78,19 @@
                     <div class="col-sm-8" style="border: 5px ridge #a5a5a5">
                         <h1>Game To Buy</h1>
                         <c:forEach begin="0" end="8">
-                            <div class="row item" >
-                                <div class="item-image ">
-                                    <img src="image/Default Avatar.jpg" width="300" height="100" >  
-                                </div>  
-                                <div class="item-detail ">
-                                    <a  href="#">name</a>
-                                    <p>Description: </p>  
-                                    <p>Discount: </p> 
+                            <a  href="#">
+                                <div class="row item" >
+                                    <div class="item-image ">
+                                        <img src="image/Default Avatar.jpg" width="200" height="80" >  
+                                    </div>  
+                                    <div class="item-detail ">
+                                        <p>Name:</p>
+                                        <p>Discount:</p>
+                                        <p>Price:</p>
+                                        <p>Date:</p>
+                                    </div>
                                 </div>
-                            </div>  
+                            </a>
                         </c:forEach>
                     </div>
                     <!-- Kết thúc cột trái -->
@@ -87,7 +102,7 @@
                             <div class="row item" >
                                 <div class="item-image ">
                                     <a href="#">
-                                        <img src="image/Default Avatar.jpg" width="150" height="60" >  
+                                        <img src="image/Default Avatar.jpg" width="100" height="40" >  
                                     </a>
                                 </div>  
                                 <div class="item-detail ">

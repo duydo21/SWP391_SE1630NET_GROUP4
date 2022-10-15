@@ -30,6 +30,7 @@ create table [User]
 	IsPrivate bit
 )
 go
+--payment method 1: paypal 2: credit card 3: banking 4: buy game 5: sell game
 create table Payment
 (
 	PaymentID int IDENTITY(1,1) primary key,

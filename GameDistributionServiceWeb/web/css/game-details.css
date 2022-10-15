@@ -186,7 +186,9 @@ html{
     width: 25%;
     padding: 0 3px;
 }
-
+#games .game:hover{
+    background-color: rgb(108,117,125);
+}
 #games .game img{
     width: 100%;
 }

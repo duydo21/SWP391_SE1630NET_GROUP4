@@ -26,7 +26,7 @@
                                 <div class="card-body p-5">
                                     <h2 class="text-uppercase text-center mb-5">Edit Profile</h2>
                                     <h5 class="fw-normal mb-3 pb-3" style="color: black;">${requestScope.msr}</h5>
-                                    <form action="editprofile" class="register" method="post">
+                                    <form action="editprofile" class="register" method="post" enctype='multipart/form-data'>
                                         <div class="form-outline mb-2">
                                             <input type="number" name ="id" id="form3Example1cg"  required="" value="${sessionScope.userlogin.userID}" />
                                             <label class="form-label" for="form3Example1cg">ID</label>

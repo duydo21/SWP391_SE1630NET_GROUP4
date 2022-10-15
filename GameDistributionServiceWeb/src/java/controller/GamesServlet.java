@@ -50,7 +50,23 @@ public class GamesServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-    List<Game> list;
+    gameDAO gd = new gameDAO();
+    List<Game> list = gd.getGame();
+    categoryDAO cd = new categoryDAO();
+    List<Category> clist = cd.getCategory();
+
+    private boolean ischeck(int d, int[] id) {
+        if (id == null) {
+            return false;
+        } else {
+            for (int i = 0; i < id.length; i++) {
+                if (id[i] == d) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -64,10 +80,15 @@ public class GamesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        gameDAO gd = new gameDAO();
-        categoryDAO cd = new categoryDAO();
+        
+        String price = request.getParameter("Price");
+        String name = request.getParameter("Name");
         list = gd.getGame();
-        List<Category> clist = cd.getCategory();
+        if(price != null || name != null){
+            
+        }
+        
+        //phan trang
         int size = list.size();
         int page, numpage = 10;
         int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
@@ -81,14 +102,13 @@ public class GamesServlet extends HttpServlet {
         start = (page - 1) * numpage;
         end = Math.min(page * numpage, size);
         List<Game> plist = gd.getGameByPage(list, start, end);
+
         request.setAttribute("size", size);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.setAttribute("getgames", plist);
         request.setAttribute("cate", clist);
-        
         request.setAttribute("link", "games");
-
         request.setAttribute("text", "All Games");
         request.getRequestDispatcher("games.jsp").forward(request, response);
     }
@@ -104,7 +124,14 @@ public class GamesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String price = request.getParameter("Price");
+        String name = request.getParameter("Name");
+        if (price == null && name == null) {
+            list = gd.getGame();
+        } else if (price == "1") {
+            list = gd.sortGameByPrice();
+        }
+        request.getRequestDispatcher("games.jsp").forward(request, response);
     }
 
     /**

@@ -42,7 +42,7 @@
                                 <tr>
                                     <th scope="col" style="width: 20%">Title</th>
                                     <th scope="col"></th>
-                                    <th scope="col" style="text-align: center" >Price</th>
+                                    <th scope="col" style="text-align: center">Price</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,26 +68,46 @@
                                     </c:forEach>
                             </ul>
                         </nav>
-                        <div>
-
-                        </div>
                     </div>
                     <div class="overflow-auto" style=" background-color: #a0a1b4; width: 20%; height: 700px;">
                         <h5>Choose your price range</h5>
-                        <form action="searchfilter" method="post">
+                        <form action="games" method="post" id="f1">
                             <div>
                                 <input type="number" name="first" placeholder="0" value="0" style="width: 40%;display: inline"/> 
                                 <p style="display: inline">-</p>
                                 <input type="number" name="second" placeholder="0" value="0" style="width: 40%;display: inline"/>      
                                 <button class="btn btn-outline-success" type="submit">Search</button>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="Prize" id="1" value="1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Prize(low-high)
+                                </label>
+                            </div> 
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="Prize" id="2" value="2">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Prize(high-low)
+                                </label>
+                            </div> 
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="Name" id="3" value="1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Name(A-Z)
+                                </label>
+                            </div>   
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="Name" id="4" value="2">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Name(Z-A)
+                                </label>
+                            </div>
                         </form>
-
                         <h5>Category:</h5>
-                        <form style="overflow: auto;">
+                        <form style="overflow: auto;" ction="games" method="post" id="f2">
                             <c:forEach items="${requestScope.cate}" var="c">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <input class="form-check-input" type="checkbox" value="">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ${c.categoryName}
                                     </label>    
@@ -97,19 +117,10 @@
                     </div>
                 </div>
             </div>
-        </section>              
-        <footer class="bg-light text-center text-lg-start">
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: #6c757d;">
-                This website is created by group 4 SWP391.<br>
-                Pham Tien Manh<br>
-                Do Ngoc Duy<br>
-                Nguyen Hoang Anh<br>
-                Dang Minh Hieu <br>
-                Vu Hoang Minh Quan<br>
-                <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
-            </div>
-            <!-- Copyright -->
+        </section>  
+
+        <footer>
+            <jsp:include page="footer.jsp"/>
         </footer>
     </body>
 </html>

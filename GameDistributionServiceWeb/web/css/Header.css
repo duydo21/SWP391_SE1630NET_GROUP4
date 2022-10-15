@@ -58,20 +58,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
             .carousel-inner {
                 padding: 1em;
             }
-            .gamerow .carousel-control-prev,
-            .gamerow .carousel-control-next {
-                background-color: #e1e1e1;
-                width: 5vh;
-                height: 5vh;
-                border-radius: 50%;
-                top: 50%;
-                transform: translateY(-50%);
-            }
+
 
             .d-flex button{
                 background-color: #a0a1b4;
             }
-            #carouselBest .carousel-inner .carousel-item{
-                margin-right: 0;
-                display: flex;
-            }
+

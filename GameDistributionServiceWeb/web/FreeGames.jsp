@@ -61,9 +61,17 @@
                             </tbody>
                         </table>                    
                     </div>
-                    <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
-                        <form action="searchfilter" method="post">
-
+                    <div class="overflow-auto" style=" background-color: #a0a1b4; width: 20%; height: 700px;">
+                        <h5>Category:</h5>
+                        <form style="overflow: auto;">
+                            <c:forEach items="${requestScope.cate}" var="c">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        ${c.categoryName}
+                                    </label>    
+                                </div>
+                            </c:forEach>
                         </form>
                     </div>
                 </div>

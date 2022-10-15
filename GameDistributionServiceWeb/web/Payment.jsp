@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,10 +49,18 @@
             #method,#amount,#type{
                 margin: 10px 0;
             }
-            
+            .submit{
+                margin-bottom: 7px;
+            }
         </style>
     </head>
     <body>
+        <c:set var="acc" value="${sessionScope.acc}"/>
+        <c:if test="${acc==null}">
+            <%
+                response.sendRedirect("login");
+            %>
+        </c:if>
         <header>
             <jsp:include page="Header.jsp" />
         </header>
@@ -62,13 +71,13 @@
                     <div id="method">
                         <label>Method:</label>
                         <select class="meth" name="meth">
-                            <option value="paypal">Paypal</option>
-                            <option value="cre">Credit Card</option>
-                            <option value="bank">Banking</option>
+                            <option value="1">Paypal</option>
+                            <option value="2">Credit Card</option>
+                            <option value="3">Banking</option>
                         </select>
                     </div>
                     <div id="amount">
-                        <label>Amount of money:</label>
+                        <label>Amount:</label>
                         <input class="amount" type="text" name="amount">
                     </div>
                     <div id="type">
@@ -78,6 +87,8 @@
                     <input class="submit" type="submit" value="Perform">
                 </div>
             </form>
+            <p style="color: red;font-size: 20px">${requestScope.msf}</p>
+            <p style="color: green;font-size: 20px">${requestScope.mss}</p>
         </section>
         <footer>
             <%@include file="footer.jsp"%>

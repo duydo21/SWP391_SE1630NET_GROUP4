@@ -232,5 +232,19 @@ public class userDAO extends DBContext {
        
         
     }
+
+    public void manageAccBalance(User u) {
+        String sql = "UPDATE [dbo].[User]\n"
+                + "   SET [AccountBalance] = ?\n"
+                + " WHERE name= ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setFloat(1, u.getAccountBalance());
+            st.setString(2, u.getUsername().getUsername());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
     
 }

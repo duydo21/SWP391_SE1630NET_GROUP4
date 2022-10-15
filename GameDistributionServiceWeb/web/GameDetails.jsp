@@ -148,8 +148,8 @@
                     </div>
                     <!--lay tu 1 list gom 4 game cung category voi game nay-->
                     <div id="games">
-                        <c:forEach var="m_game" items= "${gameList}" begin="0" end ="3">
-                            <div class="game">
+                        <c:forEach var="m_game" items= "${gameList}">
+                            <div class="game" onclick="window.location.href = 'gameDetails?GameID=${m_game.getGameID()}'" style="cursor: pointer">
                                 <div class="overview-pic">
                                     <img src="${m_game.getPoster()}" >
                                 </div>

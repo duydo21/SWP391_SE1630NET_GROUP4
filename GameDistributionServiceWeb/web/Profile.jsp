@@ -134,18 +134,8 @@
                 </div>
             </div>
         </section>
-        <footer class="bg-light text-center text-lg-start">
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: #6c757d;">
-                This website is created by group 4 SWP391.<br>
-                Pham Tien Manh<br>
-                Do Ngoc Duy<br>
-                Nguyen Hoang Anh<br>
-                Dang Minh Hieu <br>
-                Vu Hoang Minh Quan<br>
-                <a class="text-white" href="https://github.com/traitimtrongvang21/SWP-Project">Github</a>
-            </div>
-            <!-- Copyright -->
+       <footer>
+            <jsp:include page="footer.jsp"/>
         </footer>
     </body>
 </html>

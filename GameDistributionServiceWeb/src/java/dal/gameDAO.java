@@ -321,6 +321,7 @@ public class gameDAO extends DBContext {
         }
         return list;
     }
+
     public List<Game> sortGameByPrice() {
         String sql = "SELECT * FROM [dbo].[Game] order by Price ASC";
         List<Game> list = new ArrayList<>();
@@ -340,13 +341,16 @@ public class gameDAO extends DBContext {
         }
         return list;
     }
+
     public static void main(String[] args) {
         gameDAO gdd = new gameDAO();
         List<Game> list = gdd.get10BestSeller();
+        Game loz = gdd.getGameById(1);
         for (Game g : list) {
             System.out.println(g.getName());
         }
         System.out.println(list.size());
+        System.out.println(loz.getName());
     }
 
 }

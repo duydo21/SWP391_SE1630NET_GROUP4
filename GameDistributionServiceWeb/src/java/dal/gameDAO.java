@@ -13,6 +13,8 @@ import model.Category;
 import model.Game;
 import model.GameCategory;
 import model.Media;
+import model.User;
+import model.UserGameBuy;
 import model.UserGameComment;
 import model.UserGameRate;
 
@@ -342,15 +344,60 @@ public class gameDAO extends DBContext {
         return list;
     }
 
+    public List<UserGameBuy> getUserGameBuybyId(int userid) {
+        userDAO usAO = new userDAO();
+        gameDAO gAO = new gameDAO();
+        List<UserGameBuy> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[User-Game-Buy] where UserID =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, userid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                User u = usAO.findUserByID(rs.getInt("UserID"));
+                Game g = gAO.getGameById(rs.getInt("GameID"));
+
+                UserGameBuy ug = new UserGameBuy(u, g, rs.getDate("Date"));
+                list.add(ug);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<UserGameBuy> getUserGameBuy() {
+        userDAO usAO = new userDAO();
+        List<UserGameBuy> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[User-Game-Buy]";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                User u = usAO.findUserByID(rs.getInt("UserID"));
+                Game g = getGameById(rs.getInt("GameID"));
+
+                UserGameBuy ug = new UserGameBuy(u, g, rs.getDate("Date"));
+                list.add(ug);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         gameDAO gdd = new gameDAO();
-        List<Game> list = gdd.get10BestSeller();
-        Game loz = gdd.getGameById(1);
-        for (Game g : list) {
-            System.out.println(g.getName());
+
+        List<UserGameBuy> list = gdd.getUserGameBuy();
+        for (UserGameBuy g : list) {
+            System.out.println(g.getUserID().getUserID());
+            System.out.println(g.getGameID().getGameID());
+            System.out.println(g.getContent());
         }
         System.out.println(list.size());
-        System.out.println(loz.getName());
     }
 
 }

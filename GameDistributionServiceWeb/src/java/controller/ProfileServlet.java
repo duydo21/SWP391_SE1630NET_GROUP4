@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.gameDAO;
 import dal.userDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,8 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import model.Game;
+import model.Media;
 
 import model.User;
+import model.UserGameBuy;
 
 /**
  *
@@ -64,8 +70,16 @@ public class ProfileServlet extends HttpServlet {
         userDAO ud = new userDAO();
         String id_raw = request.getParameter("UserID");
         int id = Integer.parseInt(id_raw);
-        User u = null;
-        u = ud.findUserByID(id);
+        User u =  ud.findUserByID(id);
+
+        gameDAO gd = new gameDAO();
+        List<Game> glist =  new ArrayList<>();
+        glist = gd.getGame();
+        List<UserGameBuy> uglist = new ArrayList<>();
+        uglist = gd.getUserGameBuybyId(id);
+        request.setAttribute("gamelist", glist);
+        request.setAttribute("usergamebylist", uglist);
+
         request.setAttribute("here", u);
         HttpSession session = request.getSession();
         session.removeAttribute("userlogin");

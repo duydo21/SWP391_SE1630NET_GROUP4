@@ -116,18 +116,18 @@
                     <!-- Cột phải -->
                     <div class="col-sm-3 " style="border: 5px ridge #a5a5a5">
                         <h2>Game Owned</h2>
-                        <c:forEach var="i" items="${requestScope.usergamebylist}">                        
+                         <c:forEach var="i" items="${requestScope.usergamebylist}">
                                 <div class="row item" >
                                     <div class="item-image ">
                                         <a href="#">
-                                            <img src="image/Default Avatar.jpg" width="100" height="40" >  
+                                            <img src="${i.gameID.poster}" width="100" height="40" >  
                                         </a>
                                     </div> 
-                                    ${i.gameID.gameID}
+                                   
                                     <div class="item-detail ">
-                                        <a  href="#">${i.userID.userID}</a>                                   
+                                        <a  href="#">${i.gameID.name}</a>                                   
                                     </div>
-                                </div>                           
+                                </div>
                         </c:forEach>
                         <!-- Kết thúc cột phải -->
                     </div>

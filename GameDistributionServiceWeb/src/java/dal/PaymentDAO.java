@@ -6,7 +6,10 @@ package dal;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
+import model.Game;
 import model.Payment;
+import model.User;
 
 /**
  *
@@ -28,6 +31,14 @@ public class PaymentDAO extends DBContext{
 
         }
     
+    }
+    
+    public void addPaymentBuyGame(User u, Game g) {
+        Payment p = new Payment();
+        p.setUserID(u);
+        p.setPaymentMethod(4);
+        p.setMoney(-g.getPriceAfterDiscount());
+        insertPayment(p);
     }
     
 }

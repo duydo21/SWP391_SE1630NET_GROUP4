@@ -112,6 +112,7 @@ public class PaymentServlet extends HttpServlet {
             }
             
             userDao.manageAccBalance(u);
+            session.setAttribute("userlogin", u);
         } catch (NumberFormatException e) {
             request.setAttribute("msf", "Invalid money!!");
         }

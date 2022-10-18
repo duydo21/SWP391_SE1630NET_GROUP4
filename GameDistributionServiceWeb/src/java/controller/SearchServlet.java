@@ -5,7 +5,7 @@
 
 package controller;
 
-import dal.gameDAO;
+import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -58,7 +58,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        gameDAO gd = new gameDAO();
+        GameDAO gd = new GameDAO();
         String searchString = request.getParameter("search");
         List<Game> list = gd.searchGamesByName(searchString);
         int size = list.size();

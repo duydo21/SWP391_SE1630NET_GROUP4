@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.userDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -79,7 +79,7 @@ public class RegisterServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         String pass2 = request.getParameter("pass2");
 
-        userDAO ud = new userDAO();
+        UserDAO ud = new UserDAO();
         Account a = ud.checkAccountExist(user);
         if (a != null){
             request.setAttribute("msr", "this username is existed!!! ");

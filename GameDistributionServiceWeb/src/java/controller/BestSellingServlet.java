@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dal.categoryDAO;
-import dal.gameDAO;
+import dal.CategoryDAO;
+import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -62,10 +62,12 @@ public class BestSellingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        gameDAO gd = new gameDAO();
-        categoryDAO cd = new categoryDAO();
+        GameDAO gd = new GameDAO();
+        CategoryDAO cd = new CategoryDAO();
         List<Game> list = gd.getBestSeller();
         List<Category> clist = cd.getCategory();
+
+        //phan trang
         int size = list.size();
         int page, numpage = 10;
         int num = (size % numpage == 0 ? (size / 6) : (size / 6) + 1);
@@ -79,12 +81,17 @@ public class BestSellingServlet extends HttpServlet {
         start = (page - 1) * numpage;
         end = Math.min(page * numpage, size);
         List<Game> plist = gd.getGameByPage(list, start, end);
+        //
+
+        List<Game> glist = gd.getGame();
+        request.setAttribute("gamelist", glist);
+
         request.setAttribute("size", size);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.setAttribute("getgames", plist);
         request.setAttribute("cate", clist);
-        
+
         request.setAttribute("link", "best");
         request.setAttribute("text", "Best seller");
         request.getRequestDispatcher("games.jsp").forward(request, response);

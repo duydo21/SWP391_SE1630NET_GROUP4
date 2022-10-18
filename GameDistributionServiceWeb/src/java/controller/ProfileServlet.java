@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dal.gameDAO;
-import dal.userDAO;
+import dal.GameDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -67,19 +67,19 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        userDAO ud = new userDAO();
+        UserDAO ud = new UserDAO();
         String id_raw = request.getParameter("UserID");
         int id = Integer.parseInt(id_raw);
         User u =  ud.findUserByID(id);
 
-        gameDAO gd = new gameDAO();
+        GameDAO gd = new GameDAO();
         List<Game> glist =  new ArrayList<>();
         glist = gd.getGame();
         List<UserGameBuy> uglist = new ArrayList<>();
         uglist = gd.getUserGameBuybyId(id);
         request.setAttribute("gamelist", glist);
         request.setAttribute("usergamebylist", uglist);
-
+          
         request.setAttribute("here", u);
         HttpSession session = request.getSession();
         session.removeAttribute("userlogin");

@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dal.categoryDAO;
-import dal.gameDAO;
+import dal.CategoryDAO;
+import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,7 +13,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 import model.Game;
@@ -50,9 +49,9 @@ public class GamesServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-    gameDAO gd = new gameDAO();
+    GameDAO gd = new GameDAO();
     List<Game> list = gd.getGame();
-    categoryDAO cd = new categoryDAO();
+    CategoryDAO cd = new CategoryDAO();
     List<Category> clist = cd.getCategory();
 
     private boolean ischeck(int d, int[] id) {

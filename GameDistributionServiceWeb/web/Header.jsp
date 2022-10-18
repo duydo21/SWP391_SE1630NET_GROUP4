@@ -12,7 +12,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            #dropdown{
+                position: absolute;
+                display: block;
+                min-height: max-content;
+                max-height: 500px;
+                width: 100%;
+                overflow: auto;
+                background-color: white;
+                margin-top: 13%;
+                z-index: 2;
+            }
 
+            #game:hover{
+                background-color: #e6e6e6;
+            }
+            #dropdown #game{
+                height: 50px;
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
@@ -65,14 +84,50 @@
                         </li>
                     </c:if>
                     <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
-                         <a class="nav-link bg-danger" href="/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}">Dev Register</a>
+                        <a class="nav-link bg-danger" href="/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}">Dev Register</a>
                     </c:if>
                 </ul>
-                <form class="search d-flex " action="search" method = "get">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <form class="search d-flex " action="search" method = "get" style="position: relative">
+                    <input class="form-control me-2" id="input" type="search" placeholder="Search" aria-label="Search" name="search" onkeyup="filterFunction()">
                     <button class="btn btn-outline-success" type="submit">Search</button>
+                    <div id="dropdown">
+                        <c:forEach items="${requestScope.gamelist}" var="g">
+                            <div id="game" onclick="window.location.href = 'gameDetails?GameID=${g.gameID}'" style="display: flex">
+                                <div style="width: 20%">
+                                    <img src="${g.poster}" alt="alt" style="width: 100%"/>
+                                </div>
+                                <div>
+                                    <p>${g.name}</p>                                 
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </form>
+
             </div>
         </nav>
+        <script>
+            /* When the user clicks on the button,
+             toggle between hiding and showing the dropdown content */
+
+            function filterFunction() {
+
+                var input, filter, a, i;
+                input = document.getElementById("input");
+                filter = input.value.toUpperCase();
+                div = document.getElementById("dropdown");
+                a = div.getElementsByTagName("div");
+                for (i = 0; i < a.length; i++) {
+                    document.getElementById("dropdown").style.display = "block";
+                    txtValue = a[i].textContent || a[i].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        a[i].style.display = "";
+                    } else {
+                        a[i].style.display = "none";
+                    }
+                }
+
+            }
+        </script> 
     </body>
 </html>

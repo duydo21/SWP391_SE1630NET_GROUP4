@@ -5,7 +5,7 @@
 package controller;
 
 import dal.PaymentDAO;
-import dal.userDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -78,7 +78,7 @@ public class PaymentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            userDAO userDao = new userDAO();
+            UserDAO userDao = new UserDAO();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
             User u = userDao.findUserByName(acc.getUsername());

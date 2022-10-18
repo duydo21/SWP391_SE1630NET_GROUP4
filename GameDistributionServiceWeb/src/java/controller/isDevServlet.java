@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.userDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -63,7 +63,7 @@ public class isDevServlet extends HttpServlet {
             throws ServletException, IOException {
         int Id = Integer.parseInt(request.getParameter("UserID"));
 
-        User user = new userDAO().findUserByID(Id);
+        User user = new UserDAO().findUserByID(Id);
         request.setAttribute("user", user);
         request.getRequestDispatcher("isdev.jsp").forward(request, response);
     }
@@ -79,7 +79,7 @@ public class isDevServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        userDAO d = new userDAO();
+        UserDAO d = new UserDAO();
         try {
             String name = request.getParameter("name");
             User u = d.findUserByName(name);
@@ -89,7 +89,7 @@ public class isDevServlet extends HttpServlet {
             response.sendRedirect("mainscreen");
         } catch (NumberFormatException e) {
         }
-//        userDAO d = new userDAO();
+//        UserDAO d = new UserDAO();
 //        try {
 //            int id = Integer.parseInt(request.getParameter("id"));
 //            //boolean isDev = Boolean.parseBoolean(request.getParameter("isdev"));

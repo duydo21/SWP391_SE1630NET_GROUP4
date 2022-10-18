@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.userDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -67,7 +67,7 @@ public class EditProfileServlet extends HttpServlet {
             throws ServletException, IOException {
         String id_raw = request.getParameter("UserID");
         int id = Integer.parseInt(id_raw);
-        userDAO u = new userDAO();
+        UserDAO u = new UserDAO();
         u.findUserByID(id);
 
         request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
@@ -105,7 +105,7 @@ public class EditProfileServlet extends HttpServlet {
         
 
         User u = new User(id, nickname, country, email, "image" + "/" + filename, decription, isPrivate);
-        if (new userDAO().updateProfileUser(u) > 0) {
+        if (new UserDAO().updateProfileUser(u) > 0) {
             HttpSession session = request.getSession();
             session.removeAttribute("userlogin");
             session.setAttribute("userlogin", u);

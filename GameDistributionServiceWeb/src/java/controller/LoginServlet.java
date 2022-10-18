@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.userDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -81,7 +81,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String user = request.getParameter("user").trim();
         String pass = request.getParameter("pass");
-        userDAO ud = new userDAO();
+        UserDAO ud = new UserDAO();
         Account a = null;
         a = ud.checkLogin(user, pass);
         if (a == null) {

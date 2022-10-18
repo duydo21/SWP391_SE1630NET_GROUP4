@@ -19,8 +19,8 @@ import model.UserGameBuy;
  */
 public class UserGameBuyDAO extends DBContext{
     public UserGameBuy isGameIDBoughtByUserID(int userID, int gameID){
-        gameDAO g_Dao = new gameDAO();
-        userDAO u_Dao = new userDAO();
+        GameDAO g_Dao = new GameDAO();
+        UserDAO u_Dao = new UserDAO();
         String sql = "SELECT * FROM [dbo].[User-Game-Buy]"
                 + "  where [GameID]=? and [UserID] =?";
         try {

@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.userDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -78,7 +78,7 @@ public class ChangePassServlet extends HttpServlet {
         String user = request.getParameter("username").trim();
         String pass = request.getParameter("pass");
         String repass = request.getParameter("repass");
-        userDAO ud = new userDAO();
+        UserDAO ud = new UserDAO();
         Account a = ud.checkAccountExist(user);
          if (a == null) {
             request.setAttribute("msr", "username must match ");

@@ -6,9 +6,9 @@ package controller;
 
 import dal.PaymentDAO;
 import dal.UserGameBuyDAO;
-import dal.categoryDAO;
-import dal.gameDAO;
-import dal.userDAO;
+import dal.CategoryDAO;
+import dal.GameDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -71,10 +71,10 @@ public class BuyGameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        gameDAO gameDao = new gameDAO();
-        categoryDAO cat_DAO = new categoryDAO();
+        GameDAO gameDao = new GameDAO();
+        CategoryDAO cat_DAO = new CategoryDAO();
         UserGameBuyDAO ugbDao = new UserGameBuyDAO();
-        userDAO uDao = new userDAO();
+        UserDAO uDao = new UserDAO();
         PaymentDAO pDao = new PaymentDAO();
         //get game
         String gameID_raw = request.getParameter("GameID");

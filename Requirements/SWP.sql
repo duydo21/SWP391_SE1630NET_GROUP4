@@ -36,7 +36,8 @@ create table Payment
 	PaymentID int IDENTITY(1,1) primary key,
 	Paidby int foreign key references [User](UserID),
 	PaymentMethod int,
-	[Money] float
+	[Money] float,
+	[Date] date
 )
 go
 create table Request

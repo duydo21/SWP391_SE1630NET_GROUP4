@@ -23,11 +23,14 @@
 
             }
             .item{
-                background-color: #a5a5a5;
+                background-color: #e8e8e8;
                 margin: 10px;
                 margin-bottom: 20px;
                 border-radius: 10px;
-
+            }
+            
+            .item:hover{
+                background-color: #cccccc;
             }
             .container-game a{
                 text-decoration: none;
@@ -54,7 +57,7 @@
                                         <img src="${i.avatar}"
                                              alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
                                              style="width: 150px;height:150px ; z-index: 1">
-                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = '/GameDistributionServiceWeb/editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
+                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = 'editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
                                                 style="z-index: 1;">
                                             Edit profile
                                         </button>
@@ -93,10 +96,10 @@
             <div class="container-game">
                 <div class="row justify-content-around" style="margin-bottom: 20px">
                     <!-- Cột trái -->
-                    <div class="col-sm-8" style="border: 5px ridge #a5a5a5">
+                    <div class="col-sm-8" style="box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);">
                         <h1>Game published</h1>
                         <c:forEach items="${requestScope.usergamebylist}" var="ug">
-                            <div class="row item" onclick="window.location.href='gameDetails?GameID=${ug.gameID.gameID}'">
+                            <div class="row item" onclick="window.location.href = 'gameDetails?GameID=${ug.gameID.gameID}'">
                                 <div class="col item-image">
                                     <img src="${ug.gameID.poster}" width="200px" height="100%" >  
                                 </div>  
@@ -113,17 +116,19 @@
                     <!-- Kết thúc cột trái -->
                     <div class="col-sm-1 " style="margin: auto"></div>
                     <!-- Cột phải -->
-                    <div class="col-sm-3 " style="border: 5px ridge #a5a5a5">
+                    <div class="col-sm-3 " style="box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);">
                         <h2>Game Owned</h2>
-                        <c:forEach var="i" items="${requestScope.usergamebylist}">                        
-                            <div class="row item">
-                                <div class="item-image" style="padding: 0">
-                                    <a href="gameDetails?GameID=${i.gameID.gameID}">
-                                        <img src="${i.gameID.poster}" width="100%" height="100%" >  
-                                    </a>
-                                </div> 
-                            </div>                           
-                        </c:forEach>
+                        <div style="display: inline-block">
+                            <c:forEach var="i" items="${requestScope.usergamebylist}">                        
+                                <div class="row item" style="width: 50%;">
+                                    <div class="item-image" style="padding: 0">
+                                        <a href="gameDetails?GameID=${i.gameID.gameID}">
+                                            <img src="${i.gameID.poster}" width="100%" height="100%" >  
+                                        </a>
+                                    </div> 
+                                </div>                           
+                            </c:forEach>
+                        </div>
                         <!-- Kết thúc cột phải -->
                     </div>
                 </div>

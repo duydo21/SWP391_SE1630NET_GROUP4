@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Strongest
@@ -13,14 +15,16 @@ public class Payment {
     private User UserID;
     private int PaymentMethod;
     private float Money;
+    private Date Date;
     public Payment() {
     }
 
-    public Payment(int PaymentID, User UserID, int PaymentMethod, float Money) {
+    public Payment(int PaymentID, User UserID, int PaymentMethod, float Money, Date Date) {
         this.PaymentID = PaymentID;
         this.UserID = UserID;
         this.PaymentMethod = PaymentMethod;
         this.Money = Money;
+        this.Date = Date;
     }
 
     public Payment(int PaymentMethod, float Money) {
@@ -58,6 +62,14 @@ public class Payment {
 
     public void setMoney(float Money) {
         this.Money = Money;
+    }
+
+    public Date getDate() {
+        return Date;
+    }
+
+    public void setDate(Date Date) {
+        this.Date = Date;
     }
 
     

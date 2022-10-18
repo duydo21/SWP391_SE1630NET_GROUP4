@@ -79,25 +79,25 @@
                                 <button class="btn btn-outline-success" type="submit">Search</button>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Prize" id="1" value="1">
+                                <input class="form-check-input" type="radio" name="Filter" id="1" value="1">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Prize(low-high)
                                 </label>
                             </div> 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Prize" id="2" value="2">
+                                <input class="form-check-input" type="radio" name="Filter" id="2" value="2">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Prize(high-low)
                                 </label>
                             </div> 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Name" id="3" value="1">
+                                <input class="form-check-input" type="radio" name="Filter" id="3" value="1">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Name(A-Z)
                                 </label>
                             </div>   
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Name" id="4" value="2">
+                                <input class="form-check-input" type="radio" name="Filter" id="4" value="2">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Name(Z-A)
                                 </label>

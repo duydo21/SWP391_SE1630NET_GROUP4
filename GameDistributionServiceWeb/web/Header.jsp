@@ -64,11 +64,6 @@
                             </div>
                         </li>
                     </c:if>
-                    <c:if test="${(sessionScope.userlogin.isDev == true)}">
-                        <div class="bg-success ">
-                            <p> is Developer</p>
-                        </div>
-                    </c:if>
                     <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
                          <a class="nav-link bg-danger" href="/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}">Dev Register</a>
                     </c:if>

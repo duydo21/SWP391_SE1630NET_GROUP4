@@ -63,7 +63,7 @@
                                     <div class="user-detail ms-3" style="margin-top: 60px;">
                                         <h5>${i.nickname}</h5>
                                         <p>${i.country}</p>
-                                        <p>Decription:${i.decription}</p>
+                                        <p>${i.decription}</p>
                                     </div>
 
                                 </div>
@@ -94,21 +94,20 @@
                 <div class="row justify-content-around" style="margin-bottom: 20px">
                     <!-- Cột trái -->
                     <div class="col-sm-8" style="border: 5px ridge #a5a5a5">
-                        <h1>Game To Buy</h1>
-                        <c:forEach begin="0" end="8">
-                            <a  href="#">
-                                <div class="row item" >
-                                    <div class="item-image ">
-                                        <img src="image/Default Avatar.jpg" width="200" height="80" >  
-                                    </div>  
-                                    <div class="item-detail ">
-                                        <p>Name:</p>
-                                        <p>Discount:</p>
-                                        <p>Price:</p>
-                                        <p>Date:</p>
-                                    </div>
+                        <h1>Game published</h1>
+                        <c:forEach items="${requestScope.usergamebylist}" var="ug">
+                            <div class="row item" onclick="window.location.href='gameDetails?GameID=${ug.gameID.gameID}'">
+                                <div class="col item-image">
+                                    <img src="${ug.gameID.poster}" width="200px" height="100%" >  
+                                </div>  
+                                <div class="col"style="text-align: left;">
+                                    <h5> ${ug.gameID.name} </h5>
+                                    <br>
+                                    <p>  ${ug.gameID.price}</p>
                                 </div>
-                            </a>
+                            </div>
+
+
                         </c:forEach>
                     </div>
                     <!-- Kết thúc cột trái -->
@@ -117,17 +116,13 @@
                     <div class="col-sm-3 " style="border: 5px ridge #a5a5a5">
                         <h2>Game Owned</h2>
                         <c:forEach var="i" items="${requestScope.usergamebylist}">                        
-                                <div class="row item" >
-                                    <div class="item-image ">
-                                        <a href="#">
-                                            <img src="image/Default Avatar.jpg" width="100" height="40" >  
-                                        </a>
-                                    </div> 
-                                    ${i.gameID.gameID}
-                                    <div class="item-detail ">
-                                        <a  href="#">${i.userID.userID}</a>                                   
-                                    </div>
-                                </div>                           
+                            <div class="row item">
+                                <div class="item-image" style="padding: 0">
+                                    <a href="gameDetails?GameID=${i.gameID.gameID}">
+                                        <img src="${i.gameID.poster}" width="100%" height="100%" >  
+                                    </a>
+                                </div> 
+                            </div>                           
                         </c:forEach>
                         <!-- Kết thúc cột phải -->
                     </div>

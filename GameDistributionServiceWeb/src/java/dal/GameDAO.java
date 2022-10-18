@@ -227,7 +227,7 @@ public class GameDAO extends DBContext {
     public List<UserGameComment> getGameCommentByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Comment] where GameID = ?";
         List<UserGameComment> list = new ArrayList<>();
-        userDAO userDao = new userDAO();
+        UserDAO userDao = new UserDAO();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -245,7 +245,7 @@ public class GameDAO extends DBContext {
     public float getGameRateByID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Rate] where GameID = ?";
         List<UserGameRate> list = new ArrayList<>();
-        userDAO userDao = new userDAO();
+        UserDAO userDao = new UserDAO();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -269,7 +269,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         //list chua game-category
         List<GameCategory> list_gameID = new ArrayList<>();
-        categoryDAO cat_DAO = new categoryDAO();
+        CategoryDAO cat_DAO = new CategoryDAO();
         String sql = "SELECT * FROM [dbo].[Game-Category] where CategoryID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -345,7 +345,7 @@ public class GameDAO extends DBContext {
     }
 
     public List<UserGameBuy> getUserGameBuybyId(int userid) {
-        userDAO usAO = new userDAO();
+        UserDAO usAO = new UserDAO();
         GameDAO gAO = new GameDAO();
         List<UserGameBuy> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[User-Game-Buy] where UserID =?";
@@ -368,7 +368,7 @@ public class GameDAO extends DBContext {
     }
 
     public List<UserGameBuy> getUserGameBuy() {
-        userDAO usAO = new userDAO();
+        UserDAO usAO = new UserDAO();
         List<UserGameBuy> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[User-Game-Buy]";
         try {

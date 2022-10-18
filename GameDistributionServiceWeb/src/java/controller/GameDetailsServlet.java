@@ -4,8 +4,10 @@
  */
 package controller;
 
+import dal.UserGameBuyDAO;
 import dal.categoryDAO;
 import dal.gameDAO;
+import dal.userDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,8 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import model.Account;
 import model.Category;
 import model.Game;
 import model.Media;
@@ -66,15 +70,21 @@ public class GameDetailsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String gameID_raw = request.getParameter("GameID");
-        int gameID = Integer.parseInt(gameID_raw);
-//        int gameID = 7;
         gameDAO gameDao = new gameDAO();
         categoryDAO cat_DAO = new categoryDAO();
+        UserGameBuyDAO ugb_Dao = new UserGameBuyDAO();
+        userDAO u_Dao = new userDAO();
+        HttpSession session = request.getSession();
+
+        String gameID_raw = request.getParameter("GameID");
+        int gameID = Integer.parseInt(gameID_raw);
+        Account a = (Account) session.getAttribute("acc");
+        User u = (User) session.getAttribute("userlogin");
+
         //get game info
         Game game = gameDao.getGameById(gameID);
-        
-        if(game.getDescription().length()>300){
+
+        if (game.getDescription().length() > 300) {
             game.setDescription(game.getDescription().substring(0, 295).concat("..."));
         }
         //get game media
@@ -87,30 +97,54 @@ public class GameDetailsServlet extends HttpServlet {
         List<UserGameComment> cmtList = new ArrayList<>();
         cmtList = gameDao.getGameCommentByGameID(gameID);
 //        //get recommend game list
+        List<Game> gameList_full = new ArrayList<>();
         List<Game> gameList = new ArrayList<>();
         List<Category> cateList = cat_DAO.getCategoryOfA_Game(gameID);
-        for (int i = 0; i < 5; i++) {
-            gameList.add(gameDao.getGameByCategory(cateList.get(0)).get(i));
+        for(Category cat : cateList){
+            gameList_full.addAll(gameDao.getGameByCategory(cat));
         }
 
-        for (int i = 0; i < gameList.size(); i++) {
-            if (gameList.get(i).getGameID() == gameID) {
-                gameList.remove(gameList.get(i));
+        for (int i = 0; i < gameList_full.size(); i++) {
+            if (gameList_full.get(i).getGameID() == gameID) {
+                gameList_full.remove(gameList_full.get(i));
                 i--;
             }
         }
-
+        
+        for(int i=0;i<gameList_full.size();i++){
+            for(int j=i+1;j<gameList_full.size();j++){
+                if(gameList_full.get(i).getGameID()== gameList_full.get(j).getGameID()){
+                    gameList_full.remove(j);
+                    j--;
+                }
+            }
+        }
+        
+        for(int i=0;i<gameList_full.size();i++){
+            gameList.add(gameList_full.get(i));
+            if(i==3) break;
+        }
         //get developer
 //        List<User> devList = new ArrayList<>();
+        //get bool isBought
+        boolean isBought = false;
+        if (u != null) {
+            if (ugb_Dao.isGameIDBoughtByUserID(u.getUserID(), gameID) != null) {
+                isBought = true;
+            }
+        }
+        
+        
         //send info to jsp page
         request.setAttribute("game", game);
         request.setAttribute("gameComment", cmtList);
         request.setAttribute("gameMedias", gameMedias);
         request.setAttribute("gameList", gameList);
         request.setAttribute("catList", cateList);
+        request.setAttribute("isBought", isBought);
 //        request.setAttribute("devList", devList);
         request.getRequestDispatcher("GameDetails.jsp").forward(request, response);
-        gameList.clear();
+        gameList_full.clear();
     }
 
     /**

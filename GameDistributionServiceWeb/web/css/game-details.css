@@ -148,20 +148,20 @@ html{
     float: left;
 }
 
-#btn #buy,
+#btn .buy,
 #btn .price,
 #btn #discount{
     float: right;
     margin: 0 1px;
     color: #ffe7c3;
 }
-#btn #buy{
+#btn .buy{
     line-height: 36px;
 }
 #btn #discount{
     line-height: 40px;
 }
-#btn #buy:hover{
+#btn .buy:hover{
     opacity: 0.7;
 }
 
@@ -191,4 +191,96 @@ html{
 }
 #games .game img{
     width: 100%;
+}
+
+.not-login-modal,
+.buy-successful-modal,
+.buy-fail-modal{
+    position: fixed;
+    top: 0; left: 0;right:0;bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-container{
+    background-color: #fff;
+    width: 600px;
+    max-width: calc(100% - 32px);
+    min-height: 200px;
+    position: relative;
+    animation: modalFadeIn ease 0.3s;
+}
+
+.modal-container .modal-header{
+    position: absolute;
+    left:50%;
+    top: 0;
+    font-size: 30px;
+    transform: translateX(-50%);
+    font-weight: 700;
+}
+
+.modal-container .modal-header p{
+    margin: 0;
+    margin-left: 10px;
+}
+
+.modal-container .modal-content{
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    font-size: 20px;
+    text-align:center;
+}
+
+.modal-footer .login-button{
+    position: absolute;
+    left:40%;
+    bottom: 7%;
+    transform: translateX(-50%);
+    border: none;
+    padding: 8px;
+    background-color: #000;
+    color: #fff;
+    width: 70px;
+}
+.modal-footer .cancel-button{
+    position: absolute;
+    left:60%;
+    bottom: 7%;
+    transform: translateX(-50%);
+    border: none;
+    padding: 8px;
+    background-color: #000;
+    color: #fff;
+    width: 70px;
+}
+.modal-footer .ok-button{
+    position: absolute;
+    left:50%;
+    bottom: 7%;
+    transform: translateX(-50%);
+    border: none;
+    padding: 8px;
+    background-color: #000;
+    color: #fff;
+    width: 70px;
+}
+
+.modal-footer .modal-to-payment{
+    position: absolute;
+    right: 3%;
+    bottom: 5%;
+}
+
+.modal-footer .login-button:hover,
+.modal-footer .cancel-button:hover,
+.modal-footer .ok-button:hover{
+    background-color: #ccc;
+    color: black;
+}
+
+.open{
+    display: flex !important;
 }

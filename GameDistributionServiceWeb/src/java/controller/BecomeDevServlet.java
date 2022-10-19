@@ -21,7 +21,7 @@ import model.User;
  * @author Cun
  */
 @WebServlet(name = "isDevServlet", urlPatterns = {"/isDev"})
-public class isDevServlet extends HttpServlet {
+public class BecomeDevServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -65,7 +65,7 @@ public class isDevServlet extends HttpServlet {
 
         User user = new UserDAO().findUserByID(Id);
         request.setAttribute("user", user);
-        request.getRequestDispatcher("isdev.jsp").forward(request, response);
+        request.getRequestDispatcher("BecomeDev.jsp").forward(request, response);
     }
 
     /**
@@ -100,10 +100,10 @@ public class isDevServlet extends HttpServlet {
 //            out.println("<!DOCTYPE html>");
 //            out.println("<html>");
 //            out.println("<head>");
-//            out.println("<title>Servlet isDevServlet</title>");
+//            out.println("<title>Servlet BecomeDevServlet</title>");
 //            out.println("</head>");
 //            out.println("<body>");
-//            out.println("<h1>Servlet isDevServlet at " + e.getMessage() + "</h1>");
+//            out.println("<h1>Servlet BecomeDevServlet at " + e.getMessage() + "</h1>");
 //            out.println("</body>");
 //            out.println("</html>");
 //        }

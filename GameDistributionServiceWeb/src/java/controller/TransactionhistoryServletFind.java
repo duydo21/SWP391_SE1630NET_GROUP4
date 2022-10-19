@@ -67,6 +67,7 @@ public class TransactionhistoryServletFind extends HttpServlet {
         List<Payment> list = new PaymentDAO().searchPaymentbyKey(user, key);
         request.setAttribute("listtransactionhistory", list);
         request.setAttribute("keytranhis", key);
+        request.setAttribute("size", list.size());
         request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);
     } 
 

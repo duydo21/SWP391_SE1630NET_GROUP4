@@ -70,7 +70,10 @@
                         <th style="text-align: center;"></th>
                     </tr>
                 </table>
-            </c:forEach>   
+            </c:forEach>
+            <c:if test="${requestScope.size == 0}">
+                <h1 style="margin-top: 20px">Nothing here, <a href="games">Let's buy something</a></h1>
+            </c:if>
         </div>
     </body>
 </html>

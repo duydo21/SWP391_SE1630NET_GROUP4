@@ -59,7 +59,7 @@ public class PaymentDAO extends DBContext{
     
     public List<Payment> searchPaymentbyKey(User u, String key){
         List<Payment> list = new ArrayList<>();
-        String sql = "Select * from Payment where PaymentMethod = ? or Money = ? or YEAR([Date]) = ? or MONTH([Date]) = ? or DAY([Date]) = ?";
+        String sql = "Select * from Payment where PaymentMethod = ? or Money = ? or YEAR([Date]) = ? or MONTH([Date]) = ? or DAY([Date]) = ? and PaidId = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, Integer.parseInt(key));
@@ -67,6 +67,7 @@ public class PaymentDAO extends DBContext{
             st.setInt(3, Integer.parseInt(key));
             st.setInt(4, Integer.parseInt(key));
             st.setInt(5, Integer.parseInt(key));
+            st.setInt(6, u.getUserID());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Payment c = new Payment(rs.getInt("PaymentID"),

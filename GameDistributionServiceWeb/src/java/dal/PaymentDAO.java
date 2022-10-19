@@ -5,8 +5,11 @@
 package dal;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import model.Game;
 import model.Payment;
 import model.User;
@@ -31,6 +34,27 @@ public class PaymentDAO extends DBContext{
 
         }
     
+    }
+    
+    public List<Payment> getAllTransactionHistory(User u) {
+        List<Payment> list = new ArrayList<>();
+        String sql = "select * from Payment where Paidby = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, u.getUserID());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Payment c = new Payment(rs.getInt("PaymentID"),
+                        u,
+                        rs.getInt("PaymentMethod"),
+                        rs.getFloat("Money"),
+                        rs.getDate("Date"));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
     }
     
     public void addPaymentBuyGame(User u, Game g) {

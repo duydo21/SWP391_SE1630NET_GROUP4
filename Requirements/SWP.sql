@@ -117,7 +117,8 @@ go
 create table Category
 (
 	CategoryID int IDENTITY(1,1) primary key,
-	CategoryName nvarchar(20)
+	CategoryName nvarchar(20),
+	Cover nvarchar(max)
 )
 go
 create table [Game-Category]

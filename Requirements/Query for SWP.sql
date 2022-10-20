@@ -1,33 +1,33 @@
 ﻿--database Category
-INSERT INTO Category (CategoryName) VALUES ('Indie');
-INSERT INTO Category (CategoryName) VALUES ('Action-adventure');
-INSERT INTO Category (CategoryName) VALUES ('Casual');
-INSERT INTO Category (CategoryName) VALUES ('RPG');
-INSERT INTO Category (CategoryName) VALUES ('Puzzle');
-INSERT INTO Category (CategoryName) VALUES ('Soul-like');
-INSERT INTO Category (CategoryName) VALUES ('FPS');
-INSERT INTO Category (CategoryName) VALUES ('Third-Person');
-INSERT INTO Category (CategoryName) VALUES ('Metroidvania');
-INSERT INTO Category (CategoryName) VALUES ('Platformer');
-INSERT INTO Category (CategoryName) VALUES ('2D');
-INSERT INTO Category (CategoryName) VALUES ('3D');
-INSERT INTO Category (CategoryName) VALUES ('Run N Gun');
-INSERT INTO Category (CategoryName) VALUES ('Survival');
-INSERT INTO Category (CategoryName) VALUES ('Horror');
-INSERT INTO Category (CategoryName) VALUES ('Visual novel');
-INSERT INTO Category (CategoryName) VALUES ('Rhythm');
-INSERT INTO Category (CategoryName) VALUES ('Battle Royale');
-INSERT INTO Category (CategoryName) VALUES ('Beat them up');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Indie','cover/Indie.webp');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Action-adventure','cover/Action-Adventure.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Casual','cover/Casual.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('RPG','cover/RPG.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Puzzle','cover/Puzzle.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Soul-like','cover/Soul-like.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('FPS','cover/FPS.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Third-Person','cover/Third-person.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Metroidvania','cover/Metroidvania.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Platformer','cover/Platformer.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('2D','cover/2D.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('3D','cover/3D.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Run N Gun','cover/Run n gun.webp');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Survival','cover/Survival.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Horror','cover/Horror.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Visual novel','cover/Visual novel.webp');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Rhythm','cover/Rhythm.png');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Battle Royale','cover/Battle Royale.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Beat them up','cover/Beat em up.jpg');
 
 --select * from Category
-
-INSERT INTO Category (CategoryName) VALUES ('Turn-based');
-INSERT INTO Category (CategoryName) VALUES ('Sports');
-INSERT INTO Category (CategoryName) VALUES ('Strategy');
-INSERT INTO Category (CategoryName) VALUES ('Racing');
-INSERT INTO Category (CategoryName) VALUES ('Rouge-like');
-INSERT INTO Category (CategoryName) VALUES ('Rouge-lite');
-INSERT INTO Category (CategoryName) VALUES ('Simulation');
+--delete from Category
+INSERT INTO Category (CategoryName,Cover) VALUES ('Turn-based','cover/Turn based.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Sports','cover/Sport.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Strategy','cover/Strategy.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Racing','cover/Racing.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Rouge-like','cover/Rogue-like.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Rouge-lite','cover/Rouge-lite.jpg');
+INSERT INTO Category (CategoryName,Cover) VALUES ('Simulation','cover/Simulation.webp');
 
 
 --database for games

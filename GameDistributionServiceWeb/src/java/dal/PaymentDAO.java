@@ -7,6 +7,8 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,13 +24,17 @@ public class PaymentDAO extends DBContext{
 
     public void insertPayment(Payment payment) {
         String sql = "INSERT [dbo].[Payment] "
-                + "([Paidby], [PaymentMethod], [Money]) "
-                + "VALUES (?, ?, ?)";
+                + "([Paidby], [PaymentMethod], [Money], [Date]) "
+                + "VALUES (?, ?, ?, ?)";
         try {
+            java.util.Date utilDate = new Date();
+            java.sql.Date date = new java.sql.Date(utilDate.getTime());
+            
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, payment.getUserID().getUserID());
             st.setInt(2, payment.getPaymentMethod());
             st.setFloat(3, payment.getMoney());
+            st.setDate(4, date);
             st.executeQuery();
         } catch (SQLException e) {
 

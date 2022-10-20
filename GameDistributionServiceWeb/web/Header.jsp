@@ -79,7 +79,8 @@
                                 <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
                                 <a class="dropdown-item" href="changepass?acc=${sessionScope.acc.username}">Change Password</a>
                                 <a class="dropdown-item" href="logout">Sign out</a>
-                                <a class="dropdown-item" href="transactionhistory?UserID=${sessionScope.userlogin.userID}">Payment</a>
+                                <a class="dropdown-item" href="#">Payment</a>
+                                <a class="dropdown-item" href="transactionhistory?UserID=${sessionScope.userlogin.userID}">Transaction History</a>
                             </div>
                         </li>
                     </c:if>

@@ -15,14 +15,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Category;
-import model.Game;
+import model.GameCategory;
 
 /**
  *
  * @author Strongest
  */
-@WebServlet(name = "BestSellingServlet", urlPatterns = {"/best"})
-public class BestSellingServlet extends HttpServlet {
+@WebServlet(name = "GameByCategory", urlPatterns = {"/cate"})
+public class GameByCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +41,10 @@ public class BestSellingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BestSellingServlet</title>");
+            out.println("<title>Servlet GameByCategory</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BestSellingServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GameByCategory at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,15 +62,17 @@ public class BestSellingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String cate_raw = request.getParameter("genre");
+        int id = Integer.parseInt(cate_raw);
         GameDAO gd = new GameDAO();
+        List<GameCategory> list = gd.getGameByCategory(id);
         CategoryDAO cd = new CategoryDAO();
-        List<Game> list = gd.getBestSeller();
-        List<Category> clist = cd.getCategory();
+        Category c = cd.getCategoryByID(id);
 
         //phan trang
         int size = list.size();
-        int page, numpage = 10;
-        int num = (size % numpage == 0 ? (size / 6) : (size / 6) + 1);
+        int page, numpage = 4 ;
+        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
         String xpage = request.getParameter("page");
         if (xpage == null) {
             page = 1;
@@ -80,19 +82,16 @@ public class BestSellingServlet extends HttpServlet {
         int start, end;
         start = (page - 1) * numpage;
         end = Math.min(page * numpage, size);
-        List<Game> plist = gd.getGameByPage(list, start, end);
+        List<GameCategory> plist = gd.getGameByCategoryByPage(list, start, end);
+        
+        request.setAttribute("id", id);
         request.setAttribute("size", size);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
-        request.setAttribute("getgames", plist);
-        //
+        request.setAttribute("name", c.getCategoryName());
+        request.setAttribute("games", plist);
+        request.getRequestDispatcher("gamesOnCategory.jsp").forward(request, response);
 
-        List<Game> glist = gd.getGame();
-        request.setAttribute("gamelist", glist);
-        request.setAttribute("cate", clist);
-        request.setAttribute("link", "best");
-        request.setAttribute("text", "Best seller");
-        request.getRequestDispatcher("games.jsp").forward(request, response);
     }
 
     /**

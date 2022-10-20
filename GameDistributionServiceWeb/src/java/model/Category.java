@@ -11,13 +11,14 @@ package model;
 public class Category {
     private int CategoryID;
     private String CategoryName;
-
+    private String Cover;
     public Category() {
     }
 
-    public Category(int CategoryID, String CategoryName) {
+    public Category(int CategoryID, String CategoryName, String Cover) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
+        this.Cover = Cover;
     }
 
     public int getCategoryID() {
@@ -34,6 +35,14 @@ public class Category {
 
     public void setCategoryName(String CategoryName) {
         this.CategoryName = CategoryName;
+    }
+
+    public String getCover() {
+        return Cover;
+    }
+
+    public void setCover(String Cover) {
+        this.Cover = Cover;
     }
     
     

@@ -45,6 +45,8 @@ public class GameDAO extends DBContext {
 //    private int Status;
 //    private String Description;
 //    private Date Date;
+    
+    //lay danh sach game
     public List<Game> getGame() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game]";
@@ -62,16 +64,26 @@ public class GameDAO extends DBContext {
 
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
-    }
 
+    }
+    //lay danh sach game theo trang
     public List<Game> getGameByPage(List<Game> list, int start, int end) {
         List<Game> pGame = new ArrayList<>();
         for (int i = start; i < end; i++) {
             pGame.add(list.get(i));
         }
         return pGame;
+    }
+    //lay danh sach game dua tren category theo trang
+    public List<GameCategory> getGameByCategoryByPage(List<GameCategory> list, int start, int end) {
+        List<GameCategory> cGame = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            cGame.add(list.get(i));
+        }
+        return cGame;
     }
 
     //sort gameList dc truyen vao by Download/price/discount
@@ -106,10 +118,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
-
+    
+    //lay top ban chay
     public List<Game> getBestSeller() {
         List<Game> list = new ArrayList<>();
         String sql = "select * from Game where [Status] != 2 order by Download desc";
@@ -126,10 +140,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //lay 10 game top ban chay
     public List<Game> get10BestSeller() {
         List<Game> list = new ArrayList<>();
         String sql = "select top 10 * from Game where [Status] != 2 order by Download desc";
@@ -146,10 +162,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //lay game moi nhat
     public List<Game> getNewRelease() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
@@ -166,10 +184,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //lay 10 game moi nhat
     public List<Game> get10NewRelease() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT top 10 * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
@@ -186,10 +206,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //lay game dua theo id
     public Game getGameById(int id) {
         String sql = "SELECT * FROM [dbo].[Game] where GameID = ?";
         try {
@@ -203,10 +225,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
 
+        } finally {
+            return null;
         }
-        return null;
     }
 
+    //lay anh demo, video dua tren game id
     public List<Media> getGameMediaByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[Media] where GameID = ?";
         List<Media> mediaList = new ArrayList<>();
@@ -220,10 +244,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
 
+        } finally {
+            return mediaList;
         }
-        return mediaList;
     }
 
+    //lay comment nguoi dung dua tren game id
     public List<UserGameComment> getGameCommentByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Comment] where GameID = ?";
         List<UserGameComment> list = new ArrayList<>();
@@ -238,10 +264,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
 
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //lay danh gia nguoi dung dua tren game id
     public float getGameRateByID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Rate] where GameID = ?";
         List<UserGameRate> list = new ArrayList<>();
@@ -256,15 +284,17 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
 
+        } finally {
+            float r = 0;
+            for (UserGameRate i : list) {
+                r += i.getRate();
+            }
+            return r / list.size();
         }
-        float r = 0;
-        for (UserGameRate i : list) {
-            r += i.getRate();
-        }
-        return r / list.size();
     }
 
-    public List<Game> getGameByCategory(Category category) {
+    //lay game dua theo category cua game hien tai
+    public List<Game> getRecomendByCategory(Category category) {
         //list chua game
         List<Game> list = new ArrayList<>();
         //list chua game-category
@@ -281,13 +311,36 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            for (GameCategory gameCategory : list_gameID) {
+                list.add(gameCategory.getGameID());
+            }
+            return list;
         }
-        for (GameCategory gameCategory : list_gameID) {
-            list.add(gameCategory.getGameID());
-        }
-        return list;
     }
 
+    //lay game dua theo category
+    public List<GameCategory> getGameByCategory(int cate) {
+        //list chua game-category
+        List<GameCategory> list = new ArrayList<>();
+        CategoryDAO cat_DAO = new CategoryDAO();
+        String sql = "SELECT * FROM [dbo].[Game-Category] where CategoryID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, cate);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                GameCategory gc = new GameCategory(getGameById(rs.getInt("GameID")), cat_DAO.getCategoryByID(rs.getInt("CategoryID")));
+                list.add(gc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            return list;
+        }
+    }
+
+    //tim game theo teen
     public List<Game> searchGamesByName(String name) {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";
@@ -300,10 +353,12 @@ public class GameDAO extends DBContext {
             }
         } catch (Exception ex) {
 
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //sap xep danh sach game theo ten
     public List<Game> sortGameByName() {
         String sql = "SELECT * FROM [dbo].[Game] order by Name ASC";
         List<Game> list = new ArrayList<>();
@@ -320,10 +375,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //sap xep danh sach game theo gia tien
     public List<Game> sortGameByPrice() {
         String sql = "SELECT * FROM [dbo].[Game] order by Price ASC";
         List<Game> list = new ArrayList<>();
@@ -340,10 +397,12 @@ public class GameDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //lay lich su mua game cua user dua theo id
     public List<UserGameBuy> getUserGameBuybyId(int userid) {
         UserDAO usAO = new UserDAO();
         GameDAO gAO = new GameDAO();
@@ -363,10 +422,12 @@ public class GameDAO extends DBContext {
 
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
     }
 
+    //lay tat ca giao dich cua user
     public List<UserGameBuy> getUserGameBuy() {
         UserDAO usAO = new UserDAO();
         List<UserGameBuy> list = new ArrayList<>();
@@ -384,8 +445,32 @@ public class GameDAO extends DBContext {
 
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            return list;
         }
-        return list;
+    }
+
+    //lay game co giam gia
+    public List<Game> getDeals() {
+        List<Game> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[Game] where "
+                + "[Discount] != 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            return list;
+        }
     }
 
     public static void main(String[] args) {

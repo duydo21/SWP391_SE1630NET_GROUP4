@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dal.CategoryDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,15 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Category;
 import model.Game;
 
 /**
  *
  * @author Strongest
  */
-@WebServlet(name = "BestSellingServlet", urlPatterns = {"/best"})
-public class BestSellingServlet extends HttpServlet {
+@WebServlet(name = "DealServlet", urlPatterns = {"/deal"})
+public class DealServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +39,10 @@ public class BestSellingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BestSellingServlet</title>");
+            out.println("<title>Servlet DealServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BestSellingServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DealServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,9 +61,7 @@ public class BestSellingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         GameDAO gd = new GameDAO();
-        CategoryDAO cd = new CategoryDAO();
-        List<Game> list = gd.getBestSeller();
-        List<Category> clist = cd.getCategory();
+        List<Game> list = gd.getDeals();
 
         //phan trang
         int size = list.size();
@@ -86,12 +82,8 @@ public class BestSellingServlet extends HttpServlet {
         request.setAttribute("num", num);
         request.setAttribute("getgames", plist);
         //
-
-        List<Game> glist = gd.getGame();
-        request.setAttribute("gamelist", glist);
-        request.setAttribute("cate", clist);
-        request.setAttribute("link", "best");
-        request.setAttribute("text", "Best seller");
+        request.setAttribute("link", "deal");
+        request.setAttribute("text", "All Deals");
         request.getRequestDispatcher("games.jsp").forward(request, response);
     }
 

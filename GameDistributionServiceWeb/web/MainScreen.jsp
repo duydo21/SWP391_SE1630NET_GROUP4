@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<!--        splide framework-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css"> 
         <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js"></script>
 
@@ -26,7 +27,14 @@
                 margin: 0 auto;
 
             }
-
+            .card:hover{
+                -webkit-filter: brightness(90%);
+                cursor: pointer;
+                background-color: #cccccc;
+            }
+            .text .btn:hover{
+                -webkit-filter: brightness(90%);
+            }
         </style>
     </head>
     <body>
@@ -107,6 +115,7 @@
                     <div class="splide__list" style="display: flex;">
                         <c:forEach items="${requestScope.bestseller}" var="game">
                             <div class="splide__slide" style="width:25%">
+<!--                                ben trong tu cho gi cung dc-->
                                 <div class="card" style="width: 18rem;" onclick="window.location.href = 'gameDetails?GameID=${game.gameID}'">
                                     <img class="card-img-top" src="${game.poster}" alt="Card image cap" style="width: 288px;height: 165px">
                                     <div class="card-body">
@@ -123,7 +132,6 @@
         </section>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css"> 
         <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js"></script>
-
         <script>
                                     var splide = new Splide('#best', {
                                         type: 'loop',

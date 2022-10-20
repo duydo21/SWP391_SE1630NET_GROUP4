@@ -53,20 +53,6 @@ public class GamesServlet extends HttpServlet {
     List<Game> list = gd.getGame();
     CategoryDAO cd = new CategoryDAO();
     List<Category> clist = cd.getCategory();
-
-    private boolean ischeck(int d, int[] id) {
-        if (id == null) {
-            return false;
-        } else {
-            for (int i = 0; i < id.length; i++) {
-                if (id[i] == d) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

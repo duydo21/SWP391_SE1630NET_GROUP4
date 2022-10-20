@@ -28,7 +28,7 @@
                 margin-bottom: 20px;
                 border-radius: 10px;
             }
-            
+
             .item:hover{
                 background-color: #cccccc;
             }
@@ -118,9 +118,9 @@
                     <!-- Cột phải -->
                     <div class="col-sm-3 " style="box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);">
                         <h2>Game Owned</h2>
-                        <div style="display: inline-block">
+                        <div style="width: 100%; display: contents">
                             <c:forEach var="i" items="${requestScope.usergamebylist}">                        
-                                <div class="row item" style="width: 50%;">
+                                <div class="item" style="width: 50%; margin: 0;">
                                     <div class="item-image" style="padding: 0">
                                         <a href="gameDetails?GameID=${i.gameID.gameID}">
                                             <img src="${i.gameID.poster}" width="100%" height="100%" >  

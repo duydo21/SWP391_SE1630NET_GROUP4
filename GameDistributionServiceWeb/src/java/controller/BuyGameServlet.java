@@ -107,7 +107,7 @@ public class BuyGameServlet extends HttpServlet {
         List<Game> gameList = new ArrayList<>();
         List<Category> cateList = cat_DAO.getCategoryOfA_Game(game.getGameID());
         for (int i = 0; i < 5; i++) {
-            gameList.add(gameDao.getGameByCategory(cateList.get(0)).get(i));
+            gameList.add(gameDao.getRecomendByCategory(cateList.get(0)).get(i));
         }
 
         for (int i = 0; i < gameList.size(); i++) {

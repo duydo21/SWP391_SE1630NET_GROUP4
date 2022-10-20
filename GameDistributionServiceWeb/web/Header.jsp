@@ -47,7 +47,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="news">New Release</a>
-                            <a class="dropdown-item" href="#">Deals</a>
+                            <a class="dropdown-item" href="deal">Deals</a>
                             <a class="dropdown-item" href="best">Best Selling</a>
                             <a class="dropdown-item" href="free">Free to play</a>
                             <a class="dropdown-item" href="#">Coming Soon</a>
@@ -90,7 +90,7 @@
                 <form class="search d-flex " action="search" method = "get" style="position: relative">
                     <input class="form-control me-2" id="input" type="search" placeholder="Search" aria-label="Search" name="search" onkeyup="filterFunction()">
                     <button class="btn btn-outline-success" type="submit">Search</button>
-                    <div id="dropdown">
+                    <div id="dropdown" style="display: none">
                         <c:forEach items="${requestScope.gamelist}" var="g">
                             <div id="game" onclick="window.location.href = 'gameDetails?GameID=${g.gameID}'" style="display: flex">
                                 <div style="width: 20%">
@@ -106,27 +106,27 @@
 
             </div>
         </nav>
-        <script>
+        <script type="text/javascript">
             /* When the user clicks on the button,
              toggle between hiding and showing the dropdown content */
 
             function filterFunction() {
-
                 var input, filter, a, i;
                 input = document.getElementById("input");
-                filter = input.value.toUpperCase();
+                filter = input.value.toUpperCase().trim();
                 div = document.getElementById("dropdown");
                 a = div.getElementsByTagName("div");
                 for (i = 0; i < a.length; i++) {
                     document.getElementById("dropdown").style.display = "block";
+                    pic = div.getElementsByTagName("img");
                     txtValue = a[i].textContent || a[i].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    if (txtValue.toUpperCase().indexOf(filter) > 0) {
+                        p.style.display = "";
                         a[i].style.display = "";
                     } else {
                         a[i].style.display = "none";
                     }
                 }
-
             }
         </script> 
     </body>

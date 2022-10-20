@@ -27,7 +27,7 @@ public class CategoryDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return new Category(rs.getInt(1), rs.getString(2));
+                return new Category(rs.getInt(1), rs.getString(2),rs.getString(3));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -42,7 +42,7 @@ public class CategoryDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Category c = new Category(rs.getInt("CategoryID"), rs.getString("CategoryName"));
+                Category c = new Category(rs.getInt("CategoryID"), rs.getString("CategoryName"),rs.getString("Cover"));
                 list.add(c);
             }
         } catch (SQLException e) {

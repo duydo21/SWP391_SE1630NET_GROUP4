@@ -80,11 +80,14 @@
                                 <a class="dropdown-item" href="changepass?acc=${sessionScope.acc.username}">Change Password</a>
                                 <a class="dropdown-item" href="logout">Sign out</a>
                                 <a class="dropdown-item" href="#">Payment</a>
+                                <a class="dropdown-item" href="transactionhistory?UserID=${sessionScope.userlogin.userID}">Transaction History</a>
                             </div>
                         </li>
                     </c:if>
-                    <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
-                        <a class="nav-link bg-danger" href="/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}">Dev Register</a>
+                    <c:if test="${(sessionScope.acc != null)}">
+                        <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
+                            <a class="nav-link bg-danger" href="/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}">Dev Register</a>
+                        </c:if>    
                     </c:if>
                 </ul>
                 <form class="search d-flex " action="search" method = "get" style="position: relative">

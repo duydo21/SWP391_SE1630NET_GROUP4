@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,8 +42,9 @@
             </div>
             <div id="post">
                 <div style="float: left">   
-                    <form class="search d-flex " action="search" method = "get" style="margin-left: 20px">
-                        <input type="search" placeholder="Search" aria-label="Search" name="search">
+                    <form class="search d-flex " action="findtransactionhistory" method = "get" style="margin-left: 20px">
+                        <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/>
+                        <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
@@ -57,16 +59,21 @@
             </div>
         </div>
         <div id="post" style="background-color: #e8e8e8; margin-right: 10%">
-            <table style="width: 90%; margin-left: 10%">
-                <tr>
-                    <th>Payment method: Paypal</th>
-                    <th style="text-align: center;">Date: 26/09/2002</th>
-                </tr>
-                <tr>
-                    <th>Amount of money: +500$</th>
-                    <th style="text-align: center;">20:39</th>
-                </tr>
-            </table>
+            <c:forEach items="${requestScope.listtransactionhistory}" var="c">
+                <table style="width: 100%; border-bottom: solid 2px">
+                    <tr>
+                        <th>Payment method: ${c.paymentMethod}</th>
+                        <th style="text-align: center;">${c.date}</th>
+                    </tr>
+                    <tr>
+                        <th>Amount of money: ${c.money}</th>
+                        <th style="text-align: center;"></th>
+                    </tr>
+                </table>
+            </c:forEach>
+            <c:if test="${requestScope.size == 0}">
+                <h1 style="margin-top: 20px">Nothing here, <a href="games">Let's buy something</a></h1>
+            </c:if>
         </div>
     </body>
 </html>

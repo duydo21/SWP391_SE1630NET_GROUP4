@@ -224,10 +224,11 @@ public class GameDAO extends DBContext {
                 return g;
             }
         } catch (SQLException e) {
-
-        } finally {
             return null;
+        } finally {
+            
         }
+        return null;
     }
 
     //lay anh demo, video dua tren game id

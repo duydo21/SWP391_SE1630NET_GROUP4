@@ -68,6 +68,9 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
             
         }
+        finally {
+            
+        }
         return null;
     }
     
@@ -86,6 +89,8 @@ public class UserDAO extends DBContext {
                 return a;
             }
         } catch (SQLException e) {
+            
+        }finally {
             
         }
         return null;
@@ -114,6 +119,8 @@ public class UserDAO extends DBContext {
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
+        }finally {
+            
         }
     }
     
@@ -138,6 +145,8 @@ public class UserDAO extends DBContext {
             }
             
         } catch (SQLException e) {
+            
+        }finally {
             
         }
         return null;
@@ -167,6 +176,8 @@ public class UserDAO extends DBContext {
             return u;
         } catch (SQLException e) {
             
+        }finally {
+            
         }
         return null;
     }
@@ -188,6 +199,8 @@ public class UserDAO extends DBContext {
             ps.setInt(7, u.getUserID());
             count = ps.executeUpdate();
         } catch (SQLException ex) {
+        }finally {
+            
         }
         return count;
     }
@@ -203,6 +216,8 @@ public class UserDAO extends DBContext {
             ps.setString(3, a.getUsername());
             count = ps.executeUpdate();
         } catch (SQLException ex) {
+        }finally {
+            
         }
         return count;
     }
@@ -219,6 +234,8 @@ public class UserDAO extends DBContext {
             ps.setInt(2, u.getUserID());
             count = ps.executeUpdate();
         } catch (SQLException e) {
+            
+        }finally {
             
         }
 //        return count;
@@ -244,6 +261,8 @@ public class UserDAO extends DBContext {
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
+        }finally {
+            
         }
     }
     

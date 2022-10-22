@@ -34,6 +34,8 @@ public class UserGameBuyDAO extends DBContext{
             }
         } catch (SQLException e) {
             System.out.println(e);
+        }finally {
+            
         }
         return null;
     }
@@ -51,6 +53,8 @@ public class UserGameBuyDAO extends DBContext{
             st.executeQuery();
         } catch (SQLException e) {
 
+        }finally {
+            
         }
     }
     

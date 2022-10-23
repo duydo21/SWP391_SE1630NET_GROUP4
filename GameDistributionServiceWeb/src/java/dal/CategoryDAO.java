@@ -23,7 +23,7 @@ public class CategoryDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[Category]"
                 + "  where [CategoryID]=?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -39,7 +39,7 @@ public class CategoryDAO extends DBContext {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Category]";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Category c = new Category(rs.getInt("CategoryID"), rs.getString("CategoryName"),rs.getString("Cover"));
@@ -56,7 +56,7 @@ public class CategoryDAO extends DBContext {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game-Category] where GameID = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, gameID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {

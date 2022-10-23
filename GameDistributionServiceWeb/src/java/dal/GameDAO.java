@@ -51,7 +51,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game]";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -106,7 +106,7 @@ public class GameDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[Game] where "
                 + "[price] = 0";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -128,7 +128,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         String sql = "select * from Game where [Status] != 2 order by Download desc";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -150,7 +150,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         String sql = "select top 10 * from Game where [Status] != 2 order by Download desc";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -172,7 +172,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -194,7 +194,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT top 10 * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -215,7 +215,7 @@ public class GameDAO extends DBContext {
     public Game getGameById(int id) {
         String sql = "SELECT * FROM [dbo].[Game] where GameID = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -236,7 +236,7 @@ public class GameDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[Media] where GameID = ?";
         List<Media> mediaList = new ArrayList<>();
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -256,7 +256,7 @@ public class GameDAO extends DBContext {
         List<UserGameComment> list = new ArrayList<>();
         UserDAO userDao = new UserDAO();
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -276,7 +276,7 @@ public class GameDAO extends DBContext {
         List<UserGameRate> list = new ArrayList<>();
         UserDAO userDao = new UserDAO();
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -303,7 +303,7 @@ public class GameDAO extends DBContext {
         CategoryDAO cat_DAO = new CategoryDAO();
         String sql = "SELECT * FROM [dbo].[Game-Category] where CategoryID = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, category.getCategoryID());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -327,7 +327,7 @@ public class GameDAO extends DBContext {
         CategoryDAO cat_DAO = new CategoryDAO();
         String sql = "SELECT * FROM [dbo].[Game-Category] where CategoryID = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, cate);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -346,7 +346,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"), rs.getFloat("Price"), rs.getInt("Download"), rs.getInt("Discount"), rs.getFloat("Rate"), rs.getInt("Status"), rs.getString("Description"), rs.getDate("Date"), rs.getString("Poster"));
@@ -364,7 +364,7 @@ public class GameDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[Game] order by Name ASC";
         List<Game> list = new ArrayList<>();
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -386,7 +386,7 @@ public class GameDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[Game] order by Price ASC";
         List<Game> list = new ArrayList<>();
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
@@ -410,7 +410,7 @@ public class GameDAO extends DBContext {
         List<UserGameBuy> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[User-Game-Buy] where UserID =?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, userid);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -434,7 +434,7 @@ public class GameDAO extends DBContext {
         List<UserGameBuy> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[User-Game-Buy]";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 User u = usAO.findUserByID(rs.getInt("UserID"));
@@ -457,7 +457,7 @@ public class GameDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[Game] where "
                 + "[Discount] != 0";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),

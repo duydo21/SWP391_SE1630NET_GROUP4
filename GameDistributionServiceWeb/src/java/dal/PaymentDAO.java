@@ -4,6 +4,8 @@
  */
 package dal;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,19 +25,21 @@ public class PaymentDAO extends DBContext{
     public void insertPayment(Payment payment) {
         String sql = "INSERT [dbo].[Payment] "
                 + "([Paidby], [PaymentMethod], [Money], [Date]) "
-                + "VALUES (?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?)";        
         try {
             java.util.Date utilDate = new Date();
             java.sql.Date date = new java.sql.Date(utilDate.getTime());
             
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, payment.getUserID().getUserID());
             st.setInt(2, payment.getPaymentMethod());
             st.setFloat(3, payment.getMoney());
             st.setDate(4, date);
             st.executeQuery();
         } catch (SQLException e) {
-
+            
+        }finally{
+            
         }
     
     }
@@ -44,7 +48,7 @@ public class PaymentDAO extends DBContext{
         List<Payment> list = new ArrayList<>();
         String sql = "select * from Payment where Paidby = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, u.getUserID());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -65,7 +69,7 @@ public class PaymentDAO extends DBContext{
         List<Payment> list = new ArrayList<>();
         String sql = "Select * from Payment where PaymentMethod = ? or Money = ? or YEAR([Date]) = ? or MONTH([Date]) = ? or DAY([Date]) = ? and PaidId = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, Integer.parseInt(key));
             st.setInt(2, Integer.parseInt(key));
             st.setInt(3, Integer.parseInt(key));

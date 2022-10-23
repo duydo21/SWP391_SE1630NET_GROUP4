@@ -24,7 +24,7 @@ public class UserGameBuyDAO extends DBContext{
         String sql = "SELECT * FROM [dbo].[User-Game-Buy]"
                 + "  where [GameID]=? and [UserID] =?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, gameID);
             st.setInt(2, userID);
             ResultSet rs = st.executeQuery();
@@ -46,7 +46,7 @@ public class UserGameBuyDAO extends DBContext{
         Date todayDate = new Date();
         java.sql.Date d = new java.sql.Date(todayDate.getTime());
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, u.getUserID());
             st.setInt(2, g.getGameID());
             st.setDate(3,  d);

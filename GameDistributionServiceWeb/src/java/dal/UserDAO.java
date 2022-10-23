@@ -23,7 +23,7 @@ public class UserDAO extends DBContext {
                 + "           ,[Type])\n"
                 + "     VALUES(?,?,?)";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setString(1, a.getUsername());
             st.setString(2, a.getPassword());
             st.setBoolean(3, true);
@@ -58,7 +58,7 @@ public class UserDAO extends DBContext {
                 + "      ,[Type]\n"
                 + "  FROM [dbo].[Account] where [Username] = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -80,7 +80,7 @@ public class UserDAO extends DBContext {
                 + "      ,[Type]\n"
                 + "  FROM [dbo].[Account] where [Username] = ? AND [Password] = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
@@ -108,7 +108,7 @@ public class UserDAO extends DBContext {
                 + "     VALUES\n"
                 + "           (?,?,?,?,?,?,?)";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setString(1, name);
             st.setString(2, "No information");
             st.setString(3, "No information");
@@ -128,7 +128,7 @@ public class UserDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[User] where [Name] = ?";
         User u = new User();
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setString(1, Username);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -156,7 +156,7 @@ public class UserDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[User] where [UserID] = ?";
         User u = new User();
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -189,7 +189,7 @@ public class UserDAO extends DBContext {
                 + "Avatar =?, [Description] = ?, IsPrivate = ?  "
                 + "where UserID=?";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setString(1, u.getNickname());
             ps.setString(2, u.getCountry());
             ps.setString(3, u.getEmail());
@@ -210,7 +210,7 @@ public class UserDAO extends DBContext {
         String sql = "update [Account] set Username = ? , "
                 + "[Password] = ? where Username=?";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setString(1, a.getUsername());
             ps.setString(2, a.getPassword());
             ps.setString(3, a.getUsername());
@@ -228,7 +228,7 @@ public class UserDAO extends DBContext {
                 + "IsDev = ?  "
                 + "where UserID=?";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = getConnection().prepareStatement(sql);
             
             ps.setBoolean(1, true);
             ps.setInt(2, u.getUserID());
@@ -255,7 +255,7 @@ public class UserDAO extends DBContext {
                 + "   SET [AccountBalance] = ?\n"
                 + " WHERE name= ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = getConnection().prepareStatement(sql);
             st.setFloat(1, u.getAccountBalance());
             st.setString(2, u.getUsername().getUsername());
             st.executeUpdate();

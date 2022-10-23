@@ -54,6 +54,7 @@ public class PaymentDAO extends DBContext {
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
+        
         try {
             preparedStatement.setInt(1, u.getUserID());
             resultSet = getResultSet(preparedStatement);
@@ -81,17 +82,13 @@ public class PaymentDAO extends DBContext {
 
     public List<Payment> searchPaymentbyKey(User u, String key) {
         List<Payment> list = new ArrayList<>();
-        String sql = "Select * from Payment where PaymentMethod = ? or Money = ? or YEAR([Date]) = ? or MONTH([Date]) = ? or DAY([Date]) = ? and PaidId = ?";
+        String sql = "Select * from Payment where (PaymentMethod like '%"+key+"%' or Money like '%"+key+
+                "%' or YEAR([Date]) like '%"+key+"%' or MONTH([Date]) like '%"+key+"%' or DAY([Date]) like '%"+key+"%') and Paidby = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
         try {
-            preparedStatement.setInt(1, Integer.parseInt(key));
-            preparedStatement.setInt(2, Integer.parseInt(key));
-            preparedStatement.setInt(3, Integer.parseInt(key));
-            preparedStatement.setInt(4, Integer.parseInt(key));
-            preparedStatement.setInt(5, Integer.parseInt(key));
-            preparedStatement.setInt(6, u.getUserID());
+            preparedStatement.setInt(1, u.getUserID());
             resultSet = getResultSet(preparedStatement);
             while (resultSet.next()) {
                 Payment c = new Payment(resultSet.getInt("PaymentID"),

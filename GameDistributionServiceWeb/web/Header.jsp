@@ -95,11 +95,9 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                     <div id="dropdown" style="display: none">
                         <c:forEach items="${requestScope.gamelist}" var="g">
-                            <div id="game" onclick="window.location.href = 'gameDetails?GameID=${g.gameID}'" style="display: flex">
-                                <div style="width: 20%">
-                                    <img src="${g.poster}" alt="alt" style="width: 100%"/>
-                                </div>
+                            <div id="game" onclick="window.location.href = 'gameDetails?GameID=${g.gameID}'">
                                 <div>
+                                    <img src="${g.poster}" alt="alt" style="width: 20%; float: left"/>
                                     <p>${g.name}</p>                                 
                                 </div>
                             </div>
@@ -121,10 +119,8 @@
                 a = div.getElementsByTagName("div");
                 for (i = 0; i < a.length; i++) {
                     document.getElementById("dropdown").style.display = "block";
-                    pic = div.getElementsByTagName("img");
                     txtValue = a[i].textContent || a[i].innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > 0) {
-                        p.style.display = "";
                         a[i].style.display = "";
                     } else {
                         a[i].style.display = "none";

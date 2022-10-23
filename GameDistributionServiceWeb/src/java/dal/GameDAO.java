@@ -45,7 +45,6 @@ public class GameDAO extends DBContext {
 //    private int Status;
 //    private String Description;
 //    private Date Date;
-    
     //lay danh sach game
     public List<Game> getGame() {
         List<Game> list = new ArrayList<>();
@@ -69,6 +68,7 @@ public class GameDAO extends DBContext {
         }
 
     }
+
     //lay danh sach game theo trang
     public List<Game> getGameByPage(List<Game> list, int start, int end) {
         List<Game> pGame = new ArrayList<>();
@@ -77,6 +77,7 @@ public class GameDAO extends DBContext {
         }
         return pGame;
     }
+
     //lay danh sach game dua tren category theo trang
     public List<GameCategory> getGameByCategoryByPage(List<GameCategory> list, int start, int end) {
         List<GameCategory> cGame = new ArrayList<>();
@@ -122,7 +123,7 @@ public class GameDAO extends DBContext {
             return list;
         }
     }
-    
+
     //lay top ban chay
     public List<Game> getBestSeller() {
         List<Game> list = new ArrayList<>();
@@ -226,8 +227,9 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
 
         } finally {
-            return null;
+
         }
+        return null;
     }
 
     //lay anh demo, video dua tren game id
@@ -454,7 +456,7 @@ public class GameDAO extends DBContext {
     public List<Game> getDeals() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where "
-                + "[Discount] != 0";
+                + "[Discount] > 0";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();

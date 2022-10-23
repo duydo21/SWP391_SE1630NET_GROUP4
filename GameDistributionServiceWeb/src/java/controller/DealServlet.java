@@ -82,6 +82,8 @@ public class DealServlet extends HttpServlet {
         request.setAttribute("num", num);
         request.setAttribute("getgames", plist);
         //
+        
+        
         request.setAttribute("link", "deal");
         request.setAttribute("text", "All Deals");
         request.getRequestDispatcher("games.jsp").forward(request, response);

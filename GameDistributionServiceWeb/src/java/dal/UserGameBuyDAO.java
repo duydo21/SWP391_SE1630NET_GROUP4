@@ -25,19 +25,21 @@ public class UserGameBuyDAO extends DBContext {
         String sql = "SELECT * FROM [dbo].[User-Game-Buy]"
                 + "  where [GameID]=? and [UserID] =?";
         Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = getResultSet(preparedStatement);
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, gameID);
-            st.setInt(2, userID);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                return new UserGameBuy(u_Dao.findUserByID(rs.getInt(1)),
-                         g_Dao.getGameById(rs.getInt(2)), rs.getDate(3));
+            preparedStatement.setInt(1, gameID);
+            preparedStatement.setInt(2, userID);
+            if (resultSet.next()) {
+                return new UserGameBuy(u_Dao.findUserByID(resultSet.getInt(1)),
+                         g_Dao.getGameById(resultSet.getInt(2)), resultSet.getDate(3));
             }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
+                resultSet.close();
+                preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
 
@@ -52,16 +54,17 @@ public class UserGameBuyDAO extends DBContext {
         Connection connection = getConnection();
         Date todayDate = new Date();
         java.sql.Date d = new java.sql.Date(todayDate.getTime());
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, u.getUserID());
-            st.setInt(2, g.getGameID());
-            st.setDate(3, d);
-            st.executeQuery();
+            preparedStatement.setInt(1, u.getUserID());
+            preparedStatement.setInt(2, g.getGameID());
+            preparedStatement.setDate(3, d);
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
 
         } finally {
             try {
+                preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
 

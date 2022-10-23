@@ -6,6 +6,8 @@ package dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -28,5 +30,23 @@ public class DBContext {
         } finally {
             return connection;
         }
+    }
+    
+    public PreparedStatement getPreparedStatement(String sql, Connection connection){
+        try{
+            return connection.prepareStatement(sql);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public ResultSet getResultSet(PreparedStatement preparedStatement){
+        try{
+            return preparedStatement.executeQuery();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

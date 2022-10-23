@@ -26,19 +26,20 @@ public class PaymentDAO extends DBContext {
                 + "([Paidby], [PaymentMethod], [Money], [Date]) "
                 + "VALUES (?, ?, ?, ?)";
         Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try {
             java.util.Date utilDate = new Date();
             java.sql.Date date = new java.sql.Date(utilDate.getTime());
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, payment.getUserID().getUserID());
-            st.setInt(2, payment.getPaymentMethod());
-            st.setFloat(3, payment.getMoney());
-            st.setDate(4, date);
-            st.executeQuery();
+            preparedStatement.setInt(1, payment.getUserID().getUserID());
+            preparedStatement.setInt(2, payment.getPaymentMethod());
+            preparedStatement.setFloat(3, payment.getMoney());
+            preparedStatement.setDate(4, date);
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
 
         } finally {
             try {
+                preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
 
@@ -51,22 +52,24 @@ public class PaymentDAO extends DBContext {
         List<Payment> list = new ArrayList<>();
         String sql = "select * from Payment where Paidby = ?";
         Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = getResultSet(preparedStatement);
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, u.getUserID());
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Payment c = new Payment(rs.getInt("PaymentID"),
+            preparedStatement.setInt(1, u.getUserID());
+            while (resultSet.next()) {
+                Payment c = new Payment(resultSet.getInt("PaymentID"),
                         u,
-                        rs.getInt("PaymentMethod"),
-                        rs.getFloat("Money"),
-                        rs.getDate("Date"));
+                        resultSet.getInt("PaymentMethod"),
+                        resultSet.getFloat("Money"),
+                        resultSet.getDate("Date"));
                 list.add(c);
             }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
+                resultSet.close();
+                preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
 
@@ -79,27 +82,29 @@ public class PaymentDAO extends DBContext {
         List<Payment> list = new ArrayList<>();
         String sql = "Select * from Payment where PaymentMethod = ? or Money = ? or YEAR([Date]) = ? or MONTH([Date]) = ? or DAY([Date]) = ? and PaidId = ?";
         Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = getResultSet(preparedStatement);
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, Integer.parseInt(key));
-            st.setInt(2, Integer.parseInt(key));
-            st.setInt(3, Integer.parseInt(key));
-            st.setInt(4, Integer.parseInt(key));
-            st.setInt(5, Integer.parseInt(key));
-            st.setInt(6, u.getUserID());
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Payment c = new Payment(rs.getInt("PaymentID"),
+            preparedStatement.setInt(1, Integer.parseInt(key));
+            preparedStatement.setInt(2, Integer.parseInt(key));
+            preparedStatement.setInt(3, Integer.parseInt(key));
+            preparedStatement.setInt(4, Integer.parseInt(key));
+            preparedStatement.setInt(5, Integer.parseInt(key));
+            preparedStatement.setInt(6, u.getUserID());
+            while (resultSet.next()) {
+                Payment c = new Payment(resultSet.getInt("PaymentID"),
                         u,
-                        rs.getInt("PaymentMethod"),
-                        rs.getFloat("Money"),
-                        rs.getDate("Date"));
+                        resultSet.getInt("PaymentMethod"),
+                        resultSet.getFloat("Money"),
+                        resultSet.getDate("Date"));
                 list.add(c);
             }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
+                resultSet.close();
+                preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
 

@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,21 +16,28 @@ import model.User;
  * @author Strongest
  */
 public class UserDAO extends DBContext {
-    
+
     public void createAccount(Account a) {
         String sql = "INSERT INTO [dbo].[Account]\n"
                 + "           ([Username]\n"
                 + "           ,[Password]\n"
                 + "           ,[Type])\n"
                 + "     VALUES(?,?,?)";
+        Connection connection = getConnection();
         try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, a.getUsername());
             st.setString(2, a.getPassword());
             st.setBoolean(3, true);
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
     }
 
@@ -57,8 +65,9 @@ public class UserDAO extends DBContext {
                 + "      ,[Password]\n"
                 + "      ,[Type]\n"
                 + "  FROM [dbo].[Account] where [Username] = ?";
+        Connection connection = getConnection();
         try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -66,21 +75,25 @@ public class UserDAO extends DBContext {
                 return a;
             }
         } catch (SQLException e) {
-            
-        }
-        finally {
-            
+
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return null;
     }
-    
+
     public Account checkLogin(String username, String password) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
                 + "      ,[Type]\n"
                 + "  FROM [dbo].[Account] where [Username] = ? AND [Password] = ?";
+        Connection connection = getConnection();
         try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
@@ -89,13 +102,17 @@ public class UserDAO extends DBContext {
                 return a;
             }
         } catch (SQLException e) {
-            
-        }finally {
-            
+
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return null;
     }
-    
+
     public void createUser(String name) {
         String sql = "INSERT INTO [dbo].[User]\n"
                 + "           ([Name]\n"
@@ -107,8 +124,9 @@ public class UserDAO extends DBContext {
                 + "           ,[IsDev])\n"
                 + "     VALUES\n"
                 + "           (?,?,?,?,?,?,?)";
+        Connection connection = getConnection();
         try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
             st.setString(2, "No information");
             st.setString(3, "No information");
@@ -119,16 +137,21 @@ public class UserDAO extends DBContext {
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
-        }finally {
-            
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
     }
-    
+
     public User findUserByName(String Username) {
         String sql = "SELECT * FROM [dbo].[User] where [Name] = ?";
         User u = new User();
+        Connection connection = getConnection();
         try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, Username);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -143,20 +166,25 @@ public class UserDAO extends DBContext {
                 u.setIsDev(rs.getBoolean("IsDev"));
                 return u;
             }
-            
+
         } catch (SQLException e) {
-            
-        }finally {
-            
+
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return null;
     }
-    
+
     public User findUserByID(int id) {
         String sql = "SELECT * FROM [dbo].[User] where [UserID] = ?";
         User u = new User();
+        Connection connection = getConnection();
         try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -171,25 +199,30 @@ public class UserDAO extends DBContext {
                 u.setIsDev(rs.getBoolean("IsDev"));
                 u.setIsPrivate(rs.getBoolean("IsPrivate"));
                 u.setDecription(rs.getString("Description"));
-                
+
             }
             return u;
         } catch (SQLException e) {
-            
-        }finally {
-            
+
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return null;
     }
-    
+
     public int updateProfileUser(User u) {
         int count = 0;
         String sql = "update [User] set  "
                 + "Nickname=?,  Country =?,  [Email] =?,"
                 + "Avatar =?, [Description] = ?, IsPrivate = ?  "
                 + "where UserID=?";
+        Connection connection = getConnection();
         try {
-            PreparedStatement ps = getConnection().prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, u.getNickname());
             ps.setString(2, u.getCountry());
             ps.setString(3, u.getEmail());
@@ -199,71 +232,89 @@ public class UserDAO extends DBContext {
             ps.setInt(7, u.getUserID());
             count = ps.executeUpdate();
         } catch (SQLException ex) {
-        }finally {
-            
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return count;
     }
-    
+
     public int changePassUser(Account a) {
         int count = 0;
         String sql = "update [Account] set Username = ? , "
                 + "[Password] = ? where Username=?";
+        Connection connection = getConnection();
         try {
-            PreparedStatement ps = getConnection().prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, a.getUsername());
             ps.setString(2, a.getPassword());
             ps.setString(3, a.getUsername());
             count = ps.executeUpdate();
         } catch (SQLException ex) {
-        }finally {
-            
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return count;
     }
-    
+
     public void updateisDevUser(User u) {
         int count = 0;
         String sql = "update [User] set  "
                 + "IsDev = ?  "
                 + "where UserID=?";
+        Connection connection = getConnection();
         try {
-            PreparedStatement ps = getConnection().prepareStatement(sql);
-            
+            PreparedStatement ps = connection.prepareStatement(sql);
+
             ps.setBoolean(1, true);
             ps.setInt(2, u.getUserID());
             count = ps.executeUpdate();
         } catch (SQLException e) {
-            
-        }finally {
-            
+
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
 //        return count;
     }
-    
+
     public static void main(String[] args) {
-       
-            User u = new UserDAO().findUserByID(4);
-        
+
+        User u = new UserDAO().findUserByID(4);
+
         System.out.println(u);
-       
-        
+
     }
 
     public void manageAccBalance(User u) {
         String sql = "UPDATE [dbo].[User]\n"
                 + "   SET [AccountBalance] = ?\n"
                 + " WHERE name= ?";
+        Connection connection = getConnection();
         try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setFloat(1, u.getAccountBalance());
             st.setString(2, u.getUsername().getUsername());
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
-        }finally {
-            
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
     }
-    
+
 }

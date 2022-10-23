@@ -264,7 +264,7 @@ public class UserDAO extends DBContext {
         return count;
     }
 
-    public void updateisDevUser(User u) {
+    public void updateIsDevUser(User u) {
         int count = 0;
         String sql = "update [User] set  "
                 + "IsDev = ?  "

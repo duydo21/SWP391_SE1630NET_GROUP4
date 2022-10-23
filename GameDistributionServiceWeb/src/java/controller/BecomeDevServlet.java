@@ -83,7 +83,7 @@ public class BecomeDevServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             User u = d.findUserByName(name);
-            d.updateisDevUser(u);
+            d.updateIsDevUser(u);
             HttpSession session = request.getSession();
             session.removeAttribute("acc");
             response.sendRedirect("mainscreen");

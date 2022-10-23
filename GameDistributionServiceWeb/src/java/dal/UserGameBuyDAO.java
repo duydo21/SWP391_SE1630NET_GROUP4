@@ -46,7 +46,7 @@ public class UserGameBuyDAO extends DBContext {
         return null;
     }
 
-    public void addbuyGame(User u, Game g) {
+    public void addBuyGame(User u, Game g) {
         String sql = "INSERT [dbo].[User-Game-Buy] "
                 + "VALUES (?, ?,?)";
         Connection connection = getConnection();

@@ -84,7 +84,7 @@ public class BuyGameServlet extends HttpServlet {
         //get user who buy the game
         User user = (User) session.getAttribute("userlogin");
         //add record to UserGameBuy
-        ugbDao.addbuyGame(user, game);
+        ugbDao.addBuyGame(user, game);
         //add record to Payment
         pDao.addPaymentBuyGame(user, game);
         //subtract user account balance

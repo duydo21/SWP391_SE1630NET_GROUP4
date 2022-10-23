@@ -26,10 +26,11 @@ public class UserGameBuyDAO extends DBContext {
                 + "  where [GameID]=? and [UserID] =?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        ResultSet resultSet = getResultSet(preparedStatement);
+        ResultSet resultSet = null;
         try {
             preparedStatement.setInt(1, gameID);
             preparedStatement.setInt(2, userID);
+            resultSet = getResultSet(preparedStatement);;
             if (resultSet.next()) {
                 return new UserGameBuy(u_Dao.findUserByID(resultSet.getInt(1)),
                          g_Dao.getGameById(resultSet.getInt(2)), resultSet.getDate(3));

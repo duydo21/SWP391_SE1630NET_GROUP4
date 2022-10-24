@@ -34,8 +34,8 @@
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-            <a class="navbar-brand" href="mainscreen"><img src="image/logo.png" alt="alt" class="navbar-brand" style="height: 100px"/></a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="amainscreen"><img src="image/logo.png" alt="alt" class="navbar-brand" style="height: 100px"/></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -46,7 +46,7 @@
                             Store
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="news">New Release</a>
+                            <a class="dropdown-item " href="news">New Release</a>
                             <a class="dropdown-item" href="deal">Deals</a>
                             <a class="dropdown-item" href="best">Best Selling</a>
                             <a class="dropdown-item" href="free">Free to play</a>
@@ -62,14 +62,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Support</a>
                     </li>
-                    <c:if test="${(sessionScope.acc == null)}">
-                        <li class="nav-item">
-                            <a class="nav-link" href="login">Sign in</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="register">Sign up</a>
-                        </li>                            
-                    </c:if>
                     <c:if test="${(sessionScope.acc != null)}">                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,8 +71,6 @@
                                 <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
                                 <a class="dropdown-item" href="changepass?acc=${sessionScope.acc.username}">Change Password</a>
                                 <a class="dropdown-item" href="logout">Sign out</a>
-                                <a class="dropdown-item" href="#">Payment</a>
-                                <a class="dropdown-item" href="transactionhistory?UserID=${sessionScope.userlogin.userID}">Transaction History</a>
                             </div>
                         </li>
                     </c:if>

@@ -4,8 +4,7 @@
  */
 package controller;
 
-import dal.PaymentDAO;
-import dal.UserDAO;
+import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +12,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import java.util.List;
-import model.Payment;
-import model.User;
+import model.Game;
 
 /**
  *
- * @author Vu Hoang Minh Quan
+ * @author Strongest
  */
-@WebServlet(name = "transactionhistoryServlet", urlPatterns = {"/transactionhistory"})
-public class TransactionhistoryServlet extends HttpServlet {
+@WebServlet(name = "AdminMainScreenServlet", urlPatterns = {"/amainscreen"})
+public class AdminMainScreenServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +40,10 @@ public class TransactionhistoryServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet transactionhistoryServlet</title>");
+            out.println("<title>Servlet AdminMainScreenServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet transactionhistoryServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminMainScreenServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,28 +61,44 @@ public class TransactionhistoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("UserID"));                          //lay id nguoi duong nhap
-        String indexPage = request.getParameter("index");                                   //lay so trang
-        if(indexPage == null){
-            indexPage = "1";
-        }    
-        int index = Integer.parseInt(indexPage);
-        
-        User user = new UserDAO().findUserByID(id);                                         //tim tai khoan nguoi dang nhap
-        List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do
-        List<Payment> listPaging = new PaymentDAO().pagingTransactionHistory(index, user);  //chia thanh cac trang                   
-        int countList = list.size();                                                        //them trang thieu
-        int endPage = countList / 5;
-        if(countList % 5 != 0){
-            endPage++;
-        }
-        
-        request.setAttribute("listtransactionhistory", list);                               //truyen du lieu danh sach
-        request.setAttribute("pagingth", listPaging);                                       //truyen du lieu danh sach da phan trang
-        request.setAttribute("endPageth", endPage);                                         //truyen so trang hien thi
-        request.setAttribute("sizeth", list.size());                                        //truyen kich thuoc danh sach
+        GameDAO gd = new GameDAO();
+        List<Game> list = gd.getGame();
 
-        request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);  //ve trang
+        //dem so luong download
+        BigInteger total = BigInteger.valueOf(0);
+        for(Game g: list){
+            total = total.add(BigInteger.valueOf(g.getDownload()));
+        }
+        request.setAttribute("total", total);
+        
+        //phan trang
+        int size = list.size();
+        int page, numpage = 10;
+        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numpage;
+        end = Math.min(page * numpage, size);
+        List<Game> plist = gd.getGameByPage(list, start, end);
+        request.setAttribute("size", size);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        
+        
+        List<Game> best = gd.get10BestSeller();
+        List<Game> newgame = gd.get10NewRelease();
+        request.setAttribute("tenbest", best);
+        request.setAttribute("tennewgame", newgame);
+        
+        
+        
+        request.setAttribute("games", plist);
+        request.getRequestDispatcher("AdminMainScreen.jsp").forward(request, response);
     }
 
     /**

@@ -87,10 +87,10 @@ public class GamesServlet extends HttpServlet {
         start = (page - 1) * numpage;
         end = Math.min(page * numpage, size);
         List<Game> plist = gd.getGameByPage(list, start, end);
-
         request.setAttribute("size", size);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
+        
         request.setAttribute("getgames", plist);
         request.setAttribute("cate", clist);
         request.setAttribute("link", "games");

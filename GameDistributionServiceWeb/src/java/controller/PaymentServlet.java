@@ -96,7 +96,7 @@ public class PaymentServlet extends HttpServlet {
             method_raw = request.getParameter("meth");
             method = Integer.parseInt(method_raw);
             //lấy parameter amount of money
-            amount_raw = request.getParameter("amount");
+            amount_raw = request.getParameter("amount").trim();
             float amount = Float.parseFloat(amount_raw);
             
             Payment payment = new Payment();

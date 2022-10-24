@@ -32,7 +32,7 @@
                                     <form action="changepass" class="register" method="post">
 
                                         <div class="form-outline mb-2">
-                                            <input type="text" name ="username" id="form3Example1cg" class="form-control form-control-lg" required=""  />
+                                            <input type="text" name ="username" value="${acc.username}" id="form3Example1cg" class="form-control form-control-lg" required=""  />
                                             <label class="form-label" for="form3Example1cg">User name</label>
                                         </div>
 

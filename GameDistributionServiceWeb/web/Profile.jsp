@@ -59,8 +59,8 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col col-lg-12 col-xl-12">
                         <div class="card">
-                            //trường hợp khi vào đúng profile theo account  
-                            <c:if test="${sessionScope.userlogin.isPrivate==false ||sessionScope.userlogin.isPrivate==true && cookie['userC'].getValue()==sessionScope.userlogin.username.username}"> 
+<!--                            trường hợp khi vào đúng profile theo account  -->
+                            <c:if test="${sessionScope.userlogin.isPrivate==false && cookie['userC'].getValue()==sessionScope.userlogin.username.username}"> 
                                 <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
                                     <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
                                         <img src="${i.avatar}"
@@ -81,7 +81,28 @@
                                 </div>
                             </c:if>
                             
-                            //trường hợp khi vào sai profile theo account khi profile đó chưa private  
+                            <c:if test="${sessionScope.userlogin.isPrivate==true  && cookie['userC'].getValue()==sessionScope.userlogin.username.username}"> 
+                                <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
+                                    <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
+                                        <img src="${i.avatar}"
+                                             alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
+                                             style="width: 150px;height:150px ; z-index: 1">
+                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = 'editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
+                                                style="z-index: 1;">
+                                            Edit profile
+                                        </button>
+                                    </div>
+
+                                    <div class="user-detail ms-3" style="margin-top: 60px;">
+                                        <h5>${i.nickname}</h5>
+                                        <p>${i.country}</p>
+                                        <p>${i.decription}</p>
+                                    </div>
+
+                                </div>
+                            </c:if>
+                            
+                            <!--//trường hợp khi vào sai profile theo account khi profile đó chưa private--> 
                             <c:if test="${sessionScope.userlogin.isPrivate==false && cookie['userC'].getValue()!=sessionScope.userlogin.username.username}"> 
                                 <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
                                     <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
@@ -98,7 +119,7 @@
                                 </div>
                             </c:if>
                             
-                             //trường hợp khi vào sai profile theo account khi profile đó private  
+                             <!--//trường hợp khi vào sai profile theo account khi profile đó private-->  
                             <c:if test="${sessionScope.userlogin.isPrivate==true && cookie['userC'].getValue()!=sessionScope.userlogin.username.username}}"> 
                                 <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
                                     <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
@@ -121,7 +142,7 @@
                     <!-- Cột trái -->
                     <div class="col-sm-8" style="box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);">
                         <h1>Game published</h1>
-                        //Game rao bán của Profile đó
+                         <!--//Game rao bán của Profile đó-->
                         <c:forEach items="${requestScope.usergamebylist}" var="ug">
                             <div class="row item" onclick="window.location.href = 'gameDetails?GameID=${ug.gameID.gameID}'">
                                 <div class="col item-image">
@@ -142,7 +163,7 @@
                     <!-- Cột phải -->
                     <div class="col-sm-3 " style="box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);">
                         <h2>Game Owned</h2>
-                        //Game mà Profile đó đã dc mua vể
+                        <!--//Game mà Profile đó đã dc mua vể-->
                         <div style="width: 100%; display: contents">
                             <c:forEach var="i" items="${requestScope.usergamebylist}">                        
                                 <div class="item" style="width: 50%; margin: 0;">

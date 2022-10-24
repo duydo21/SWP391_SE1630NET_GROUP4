@@ -48,23 +48,55 @@ public class PaymentDAO extends DBContext {
 
     }
 
-    public List<Payment> getAllTransactionHistory(User u) {
+    public List<Payment> getAllTransactionHistory(User user) {
         List<Payment> list = new ArrayList<>();
-        String sql = "select * from Payment where Paidby = ?";
+        String sql = "select * from Payment where Paidby = ?";                          //chon toan bo cac giao dich voi id la cua tai khoan duoc truyen vao
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
-        
+
         try {
-            preparedStatement.setInt(1, u.getUserID());
+            preparedStatement.setInt(1, user.getUserID());
             resultSet = getResultSet(preparedStatement);
-            while (resultSet.next()) {
-                Payment c = new Payment(resultSet.getInt("PaymentID"),
-                        u,
+            while (resultSet.next()) {                                                  //doc du lieu va truyen vao list
+                Payment payment = new Payment(resultSet.getInt("PaymentID"),
+                        user,
                         resultSet.getInt("PaymentMethod"),
                         resultSet.getFloat("Money"),
                         resultSet.getDate("Date"));
-                list.add(c);
+                list.add(payment);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+
+            }
+        }
+        return list;                                                                    //tra ve list
+    }
+
+    public List<Payment> pagingTransactionHistory(int index, User user) {
+        List<Payment> list = new ArrayList<>();
+        String sql = "select * from Payment where Paidby = ? order by PaymentID offset ? row fetch next 5 rows only";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setInt(1, user.getUserID());
+            preparedStatement.setInt(2, (index - 1) * 5);
+            resultSet = getResultSet(preparedStatement);
+            while (resultSet.next()) {                                                  //doc du lieu va truyen vao list
+                Payment payment = new Payment(resultSet.getInt("PaymentID"),
+                        user,
+                        resultSet.getInt("PaymentMethod"),
+                        resultSet.getFloat("Money"),
+                        resultSet.getDate("Date"));
+                list.add(payment);
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -82,8 +114,8 @@ public class PaymentDAO extends DBContext {
 
     public List<Payment> searchPaymentbyKey(User u, String key) {
         List<Payment> list = new ArrayList<>();
-        String sql = "Select * from Payment where (PaymentMethod like '%"+key+"%' or Money like '%"+key+
-                "%' or YEAR([Date]) like '%"+key+"%' or MONTH([Date]) like '%"+key+"%' or DAY([Date]) like '%"+key+"%') and Paidby = ?";
+        String sql = "Select * from Payment where (Money like '%" + key + "%' or YEAR([Date]) like '%" + key + 
+                "%' or MONTH([Date]) like '%" + key + "%' or DAY([Date]) like '%" + key + "%') and Paidby = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;

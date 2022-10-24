@@ -65,10 +65,12 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
         UserDAO ud = new UserDAO();
+        //lấy paramter UserID bên trang Profile 
         String id_raw = request.getParameter("UserID");
         int id = Integer.parseInt(id_raw);
-        //tìm kiếm user bằng biến id trên url 
+        //tìm kiếm user bằng biến id  
         User u = ud.findUserByID(id);
 
         GameDAO gd = new GameDAO();
@@ -88,7 +90,7 @@ public class ProfileServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("userlogin");
         session.setAttribute("userlogin", u);
-        //chuyển trang Profile
+        //chuyển trang Profile.jsp
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
 

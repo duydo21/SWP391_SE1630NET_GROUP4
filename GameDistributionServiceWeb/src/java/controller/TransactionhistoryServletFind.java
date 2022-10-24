@@ -60,14 +60,28 @@ public class TransactionhistoryServletFind extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.removeAttribute("list");
-        int Id = Integer.parseInt(request.getParameter("UserID"));
-        String key = request.getParameter("keytransactionhistory");
-        User user = new UserDAO().findUserByID(Id);
-        List<Payment> list = new PaymentDAO().searchPaymentbyKey(user, key);
-        request.setAttribute("listtransactionhistory", list);
-        request.setAttribute("keytranhis", key);
-        request.setAttribute("size", list.size());
+        int id = Integer.parseInt(request.getParameter("UserID"));                  //lay id nguoi duong nhap
+        String key = request.getParameter("keytransactionhistory");                 //lay tu tim kiem
+        if(key == null){
+            key = "";
+        }
+        String indexPage = request.getParameter("index");                           //lay so trang
+        if(indexPage == null){
+            indexPage = "1";
+        }    
+        int index = Integer.parseInt(indexPage);
+        
+        User user = new UserDAO().findUserByID(id);                                 //tim tai khoan nguoi dang nhap
+        List<Payment> list = new PaymentDAO().searchPaymentbyKey(user, key);        //lay du lieu theo tai khoan do voi tu tim kiem
+        int countList = list.size();
+        int endPage = countList / 5;
+        if(countList % 5 != 0){
+            endPage++;
+        }
+        
+        request.setAttribute("pagingth", list);                                     //truyen du lieu danh sach voi tu tim kiem
+        request.setAttribute("keytranhis", key);                                    //truyen tu tim kiem
+        request.setAttribute("size", list.size());                                  //truyen kich thuoc danh sach
         request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);
     } 
 

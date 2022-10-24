@@ -80,29 +80,29 @@ public class PaymentServlet extends HttpServlet {
         try {
             UserDAO userDao = new UserDAO();
             HttpSession session = request.getSession();
-            //get session user
+            //lấy session của user
             Account account = (Account) session.getAttribute("acc");
             User user = userDao.findUserByName(account.getUsername());
             
-            //get payment method
+            //lấy parameter payment method
             String method = request.getParameter("meth");
-            //get amount of money
+            //lấy parameter amount of money
             String amount_raw = request.getParameter("amount");
             float amount = Float.parseFloat(amount_raw);
-            //get type of payment
+            //lấy parameter type of payment
             String type = request.getParameter("t");
             
             Payment payment = new Payment();
             payment.setUserID(user);
             payment.setPaymentMethod(Integer.parseInt(method));
             PaymentDAO paymentDAO = new PaymentDAO();
-            //case amount of money < 0
+            //trường hợp amount of money < 0
             if(amount<0){
                 throw new NumberFormatException();
             }
-            //case user choose to withdraw money
+            //trường hợp user chọn rút tiền
             if(type.equals("0")){
-                //case user input money amount > user account balance
+                //trường hợp user rút tiền > tiền trong tài khoản user 
                 if(amount > user.getAccountBalance()){
                     request.setAttribute("msf", "Please input money from 0 to "+ user.getAccountBalance() + "!!");
                 }else{
@@ -111,7 +111,7 @@ public class PaymentServlet extends HttpServlet {
                     paymentDAO.insertPayment(payment);
                     request.setAttribute("mss", "Successful!!");
                 }
-                //case user choose to purchase money for account
+                //trường hợp user choose to purchase money for account
             }else{
                 user.setAccountBalance(user.getAccountBalance()+amount);
                 payment.setMoney(amount);

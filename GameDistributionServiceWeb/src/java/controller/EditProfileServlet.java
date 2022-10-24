@@ -88,10 +88,10 @@ public class EditProfileServlet extends HttpServlet {
             throws ServletException, IOException {
         //lấy pameter ở EditProfile
         int id = Integer.parseInt(request.getParameter("id"));
-        String nickname = request.getParameter("nickname");
+        String nickname = request.getParameter("nickname").trim();
         String country = request.getParameter("country");
-        String email = request.getParameter("email");
-        String decription = request.getParameter("decription");
+        String email = request.getParameter("email").trim();
+        String decription = request.getParameter("decription").trim();
         boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
         
         //tạo đường truyền dẫn cho upload ảnh

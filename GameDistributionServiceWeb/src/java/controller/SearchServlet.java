@@ -58,13 +58,19 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //Gọi GameDao
         GameDAO gd = new GameDAO();
+        //lấy parameter của search
         String searchString = request.getParameter("search");
+        //Gọi list Game bằng method tìm game bằng tên
         List<Game> list = gd.searchGamesByName(searchString);
+        //lấy size của list
         int size = list.size();
+        //tạo các atribute
         request.setAttribute("size", size);
         request.setAttribute("keyword", searchString);
         request.setAttribute("gamesearch", list);
+        //truyền dữ liệu sang trang Search.jsp
         request.getRequestDispatcher("Search.jsp").forward(request, response);
     } 
 

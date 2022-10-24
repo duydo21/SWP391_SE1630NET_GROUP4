@@ -60,7 +60,28 @@
                     <div class="col col-lg-12 col-xl-12">
                         <div class="card">
 <!--                            trường hợp khi vào đúng profile theo account  -->
-                            <c:if test="${sessionScope.userlogin.isPrivate==false ||sessionScope.userlogin.isPrivate==true && cookie['userC'].getValue()==sessionScope.userlogin.username.username}"> 
+                            <c:if test="${sessionScope.userlogin.isPrivate==false && cookie['userC'].getValue()==sessionScope.userlogin.username.username}"> 
+                                <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
+                                    <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
+                                        <img src="${i.avatar}"
+                                             alt="Generic placeholder image" class="img-fluid img-thumbnail  mt-0 mb-2"
+                                             style="width: 150px;height:150px ; z-index: 1">
+                                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href = 'editprofile?UserID=${sessionScope.userlogin.userID}';" data-mdb-ripple-color="dark"
+                                                style="z-index: 1;">
+                                            Edit profile
+                                        </button>
+                                    </div>
+
+                                    <div class="user-detail ms-3" style="margin-top: 60px;">
+                                        <h5>${i.nickname}</h5>
+                                        <p>${i.country}</p>
+                                        <p>${i.decription}</p>
+                                    </div>
+
+                                </div>
+                            </c:if>
+                            
+                            <c:if test="${sessionScope.userlogin.isPrivate==true  && cookie['userC'].getValue()==sessionScope.userlogin.username.username}"> 
                                 <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px; border-radius: 10px ; margin: 0">
                                     <div class="ms-4 mt-7 d-flex flex-column " style="width: 150px;">
                                         <img src="${i.avatar}"

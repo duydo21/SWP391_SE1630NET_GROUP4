@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -582,15 +583,13 @@ public class GameDAO extends DBContext {
             return list;
         }
     }
-
+    
     public static void main(String[] args) {
         GameDAO gdd = new GameDAO();
 
-        List<UserGameBuy> list = gdd.getUserGameBuy();
-        for (UserGameBuy g : list) {
-            System.out.println(g.getUserID().getUserID());
-            System.out.println(g.getGameID().getGameID());
-            System.out.println(g.getContent());
+        List<Game> list = gdd.get10NewRelease();
+        for (Game g : list) {
+            System.out.println(g.getDate());
         }
         System.out.println(list.size());
     }

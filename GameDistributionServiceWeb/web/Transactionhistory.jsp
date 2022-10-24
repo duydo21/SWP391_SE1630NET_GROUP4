@@ -43,7 +43,7 @@
             <div id="post">
                 <div style="float: left">   
                     <form class="search d-flex " action="findtransactionhistory" method = "get" style="margin-left: 20px">
-                        <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/>
+                        <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/>                                       <!--id tai khoan-->
                         <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
@@ -59,19 +59,32 @@
             </div>
         </div>
         <div id="post" style="background-color: #e8e8e8; margin-right: 10%">
-            <c:forEach items="${requestScope.listtransactionhistory}" var="c">
+            <c:forEach items="${requestScope.pagingth}" var="listth">              <!--lay du lieu ve table-->
                 <table style="width: 100%; border-bottom: solid 2px">
                     <tr>
-                        <th>Payment method: ${c.paymentMethod}</th>
-                        <th style="text-align: center;">${c.date}</th>
+                        <th>Payment method:                                         <!--phan loai giao dich-->
+                            <c:choose>
+                                <c:when test="${listth.paymentMethod == 1}">Paypal</c:when>
+                                <c:when test="${listth.paymentMethod == 2}">Credit Card</c:when>
+                                <c:when test="${listth.paymentMethod == 3}">Banking</c:when>
+                                <c:when test="${listth.paymentMethod == 4}">Buy Game</c:when>
+                                <c:when test="${listth.paymentMethod == 5}">Sell Game</c:when>
+                            </c:choose>
+                        </th>
+                        <th style="text-align: center;">${listth.date}</th>
                     </tr>
                     <tr>
-                        <th>Amount of money: ${c.money}</th>
+                        <th>Amount of money: ${listth.money}</th>
                         <th style="text-align: center;"></th>
                     </tr>
                 </table>
             </c:forEach>
-            <c:if test="${requestScope.size == 0}">
+            
+            <c:forEach begin="1" end="${endPageth}" var="i">                                        <!--phan trang-->
+                <a href="transactionhistory?UserID=${sessionScope.userlogin.userID}&index=${i}">${i}</a>
+            </c:forEach>
+            
+            <c:if test="${requestScope.size == 0}">                                                 <!--thong bao neu kich thuoc list lay ve = 0-->
                 <h1 style="margin-top: 20px">Nothing here, <a href="games">Let's buy something</a></h1>
             </c:if>
         </div>

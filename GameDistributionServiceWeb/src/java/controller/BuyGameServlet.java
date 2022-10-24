@@ -82,14 +82,14 @@ public class BuyGameServlet extends HttpServlet {
         Game game = gameDao.getGameById(gameID);
         
         //get user who buy the game
-        User u = (User) session.getAttribute("userlogin");
+        User user = (User) session.getAttribute("userlogin");
         //add record to UserGameBuy
-        ugbDao.addbuyGame(u, game);
+        ugbDao.addBuyGame(user, game);
         //add record to Payment
-        pDao.addPaymentBuyGame(u, game);
+        pDao.addPaymentBuyGame(user, game);
         //subtract user account balance
-        u.setAccountBalance(u.getAccountBalance() - game.getPriceAfterDiscount());
-        uDao.manageAccBalance(u);
+        user.setAccountBalance(user.getAccountBalance() - game.getPriceAfterDiscount());
+        uDao.manageAccBalance(user);
         
         //get game comment
         List<UserGameComment> cmtList = new ArrayList<>();
@@ -121,7 +121,7 @@ public class BuyGameServlet extends HttpServlet {
 //        List<User> devList = new ArrayList<>();
         //get bool isBought
         boolean isBought = false;
-        if (ugbDao.isGameIDBoughtByUserID(u.getUserID(), gameID) != null) {
+        if (ugbDao.isGameIDBoughtByUserID(user.getUserID(), gameID) != null) {
             isBought = true;
         }
 

@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import static java.lang.System.out;
 import model.User;
 
 /**
@@ -83,7 +82,7 @@ public class BecomeDevServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             User u = d.findUserByName(name);
-            d.updateisDevUser(u);
+            d.updateIsDevUser(u);
             HttpSession session = request.getSession();
             session.removeAttribute("acc");
             response.sendRedirect("mainscreen");

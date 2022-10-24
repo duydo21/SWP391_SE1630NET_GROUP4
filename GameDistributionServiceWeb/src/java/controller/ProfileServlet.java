@@ -17,8 +17,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Game;
-import model.Media;
-
 import model.User;
 import model.UserGameBuy;
 
@@ -70,20 +68,27 @@ public class ProfileServlet extends HttpServlet {
         UserDAO ud = new UserDAO();
         String id_raw = request.getParameter("UserID");
         int id = Integer.parseInt(id_raw);
-        User u =  ud.findUserByID(id);
+        //tìm kiếm user bằng biến id trên url 
+        User u = ud.findUserByID(id);
 
         GameDAO gd = new GameDAO();
-        List<Game> glist =  new ArrayList<>();
+        //lấy list game 
+        List<Game> glist = new ArrayList<>();
         glist = gd.getGame();
+        //lấy list game của user mua
         List<UserGameBuy> uglist = new ArrayList<>();
         uglist = gd.getUserGameBuybyId(id);
+        
+        //set Attribute của glist và uglist
         request.setAttribute("gamelist", glist);
         request.setAttribute("usergamebylist", uglist);
-          
         request.setAttribute("here", u);
+        
+        //taọ session cho User
         HttpSession session = request.getSession();
         session.removeAttribute("userlogin");
         session.setAttribute("userlogin", u);
+        //chuyển trang Profile
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
 

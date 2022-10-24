@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,15 +23,22 @@ public class CategoryDAO extends DBContext {
     public Category getCategoryByID(int id) {
         String sql = "SELECT * FROM [dbo].[Category]"
                 + "  where [CategoryID]=?";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return new Category(rs.getInt(1), rs.getString(2),rs.getString(3));
+                return new Category(rs.getInt(1), rs.getString(2), rs.getString(3));
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return null;
     }
@@ -38,29 +46,37 @@ public class CategoryDAO extends DBContext {
     public List<Category> getCategory() {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Category]";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Category c = new Category(rs.getInt("CategoryID"), rs.getString("CategoryName"),rs.getString("Cover"));
+                Category c = new Category(rs.getInt("CategoryID"), rs.getString("CategoryName"), rs.getString("Cover"));
                 list.add(c);
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return list;
     }
 
-    public List<Category> getCategoryOfA_Game(int gameID){
+    public List<Category> getCategoryOfA_Game(int gameID) {
         GameDAO gameDao = new GameDAO();
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game-Category] where GameID = ?";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, gameID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Category c = new GameCategory(gameDao.getGameById(gameID), 
+                Category c = new GameCategory(gameDao.getGameById(gameID),
                         getCategoryByID(rs.getInt("CategoryID")))
                         .getCategoryID();
                 list.add(c);
@@ -68,9 +84,16 @@ public class CategoryDAO extends DBContext {
             return list;
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
         }
         return list;
     }
+
     public static void main(String[] args) {
         CategoryDAO cd = new CategoryDAO();
 

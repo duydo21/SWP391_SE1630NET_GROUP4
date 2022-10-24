@@ -6,6 +6,8 @@ package dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -13,18 +15,38 @@ import java.sql.SQLException;
  * @author ACER
  */
 public class DBContext {
-    protected Connection connection;
-    public DBContext()
-    {
+
+    private final static String URL = "jdbc:sqlserver://localhost:1433;databaseName= SWP";
+    private final static String USERNAME = "sa";
+    private final static String PASSWORD = "123";
+
+    public Connection getConnection() {
+        Connection connection = null;
         try {
-            // Edit URL , username, password to authenticate with your MS SQL Server
-            String url = "jdbc:sqlserver://localhost:1433;databaseName= SWP";
-            String username = "sa";
-            String password = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
+        } finally {
+            return connection;
         }
+    }
+    
+    public PreparedStatement getPreparedStatement(String sql, Connection connection){
+        try{
+            return connection.prepareStatement(sql);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public ResultSet getResultSet(PreparedStatement preparedStatement){
+        try{
+            return preparedStatement.executeQuery();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

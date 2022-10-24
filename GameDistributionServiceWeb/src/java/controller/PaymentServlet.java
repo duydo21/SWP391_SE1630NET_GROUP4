@@ -80,39 +80,47 @@ public class PaymentServlet extends HttpServlet {
         try {
             UserDAO userDao = new UserDAO();
             HttpSession session = request.getSession();
-            Account acc = (Account) session.getAttribute("acc");
-            User u = userDao.findUserByName(acc.getUsername());
-
+            //get session user
+            Account account = (Account) session.getAttribute("acc");
+            User user = userDao.findUserByName(account.getUsername());
+            
+            //get payment method
             String method = request.getParameter("meth");
+            //get amount of money
             String amount_raw = request.getParameter("amount");
             float amount = Float.parseFloat(amount_raw);
+            //get type of payment
             String type = request.getParameter("t");
             
             Payment payment = new Payment();
-            payment.setUserID(u);
+            payment.setUserID(user);
             payment.setPaymentMethod(Integer.parseInt(method));
             PaymentDAO paymentDAO = new PaymentDAO();
+            //case amount of money < 0
             if(amount<0){
                 throw new NumberFormatException();
             }
+            //case user choose to withdraw money
             if(type.equals("0")){
-                if(amount > u.getAccountBalance()){
-                    request.setAttribute("msf", "Please input money from 0 to "+ u.getAccountBalance() + "!!");
+                //case user input money amount > user account balance
+                if(amount > user.getAccountBalance()){
+                    request.setAttribute("msf", "Please input money from 0 to "+ user.getAccountBalance() + "!!");
                 }else{
-                    u.setAccountBalance(u.getAccountBalance()-amount);
+                    user.setAccountBalance(user.getAccountBalance()-amount);
                     payment.setMoney(-amount);
                     paymentDAO.insertPayment(payment);
                     request.setAttribute("mss", "Successful!!");
                 }
+                //case user choose to purchase money for account
             }else{
-                u.setAccountBalance(u.getAccountBalance()+amount);
+                user.setAccountBalance(user.getAccountBalance()+amount);
                 payment.setMoney(amount);
                 paymentDAO.insertPayment(payment);
                 request.setAttribute("mss", "Successful!!");
             }
             
-            userDao.manageAccBalance(u);
-            session.setAttribute("userlogin", u);
+            userDao.manageAccBalance(user);
+            session.setAttribute("userlogin", user);
         } catch (NumberFormatException e) {
             request.setAttribute("msf", "Invalid money!!");
         }

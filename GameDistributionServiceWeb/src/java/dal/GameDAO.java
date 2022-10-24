@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,6 +50,7 @@ public class GameDAO extends DBContext {
     public List<Game> getGame() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game]";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -64,6 +66,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
 
@@ -106,6 +113,7 @@ public class GameDAO extends DBContext {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where "
                 + "[price] = 0";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -120,6 +128,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -128,6 +141,7 @@ public class GameDAO extends DBContext {
     public List<Game> getBestSeller() {
         List<Game> list = new ArrayList<>();
         String sql = "select * from Game where [Status] != 2 order by Download desc";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -142,6 +156,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -150,6 +169,7 @@ public class GameDAO extends DBContext {
     public List<Game> get10BestSeller() {
         List<Game> list = new ArrayList<>();
         String sql = "select top 10 * from Game where [Status] != 2 order by Download desc";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -164,6 +184,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -172,6 +197,7 @@ public class GameDAO extends DBContext {
     public List<Game> getNewRelease() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -186,6 +212,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -194,6 +225,7 @@ public class GameDAO extends DBContext {
     public List<Game> get10NewRelease() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT top 10 * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -208,6 +240,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -215,6 +252,7 @@ public class GameDAO extends DBContext {
     //lay game dua theo id
     public Game getGameById(int id) {
         String sql = "SELECT * FROM [dbo].[Game] where GameID = ?";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -225,9 +263,13 @@ public class GameDAO extends DBContext {
                 return g;
             }
         } catch (SQLException e) {
-
+            return null;
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
 
+            }
         }
         return null;
     }
@@ -236,6 +278,7 @@ public class GameDAO extends DBContext {
     public List<Media> getGameMediaByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[Media] where GameID = ?";
         List<Media> mediaList = new ArrayList<>();
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -247,6 +290,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
 
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return mediaList;
         }
     }
@@ -254,6 +302,7 @@ public class GameDAO extends DBContext {
     //lay comment nguoi dung dua tren game id
     public List<UserGameComment> getGameCommentByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Comment] where GameID = ?";
+        Connection connection = getConnection();
         List<UserGameComment> list = new ArrayList<>();
         UserDAO userDao = new UserDAO();
         try {
@@ -267,6 +316,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
 
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -274,6 +328,7 @@ public class GameDAO extends DBContext {
     //lay danh gia nguoi dung dua tren game id
     public float getGameRateByID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Rate] where GameID = ?";
+        Connection connection = getConnection();
         List<UserGameRate> list = new ArrayList<>();
         UserDAO userDao = new UserDAO();
         try {
@@ -291,6 +346,11 @@ public class GameDAO extends DBContext {
             for (UserGameRate i : list) {
                 r += i.getRate();
             }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return r / list.size();
         }
     }
@@ -303,6 +363,7 @@ public class GameDAO extends DBContext {
         List<GameCategory> list_gameID = new ArrayList<>();
         CategoryDAO cat_DAO = new CategoryDAO();
         String sql = "SELECT * FROM [dbo].[Game-Category] where CategoryID = ?";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, category.getCategoryID());
@@ -317,6 +378,11 @@ public class GameDAO extends DBContext {
             for (GameCategory gameCategory : list_gameID) {
                 list.add(gameCategory.getGameID());
             }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -327,6 +393,7 @@ public class GameDAO extends DBContext {
         List<GameCategory> list = new ArrayList<>();
         CategoryDAO cat_DAO = new CategoryDAO();
         String sql = "SELECT * FROM [dbo].[Game-Category] where CategoryID = ?";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, cate);
@@ -338,6 +405,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -346,6 +418,7 @@ public class GameDAO extends DBContext {
     public List<Game> searchGamesByName(String name) {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -356,6 +429,11 @@ public class GameDAO extends DBContext {
         } catch (Exception ex) {
 
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -363,6 +441,7 @@ public class GameDAO extends DBContext {
     //sap xep danh sach game theo ten
     public List<Game> sortGameByName() {
         String sql = "SELECT * FROM [dbo].[Game] order by Name ASC";
+        Connection connection = getConnection();
         List<Game> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -378,6 +457,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -385,6 +469,7 @@ public class GameDAO extends DBContext {
     //sap xep danh sach game theo gia tien
     public List<Game> sortGameByPrice() {
         String sql = "SELECT * FROM [dbo].[Game] order by Price ASC";
+        Connection connection = getConnection();
         List<Game> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -400,6 +485,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -410,6 +500,7 @@ public class GameDAO extends DBContext {
         GameDAO gAO = new GameDAO();
         List<UserGameBuy> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[User-Game-Buy] where UserID =?";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, userid);
@@ -425,6 +516,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -434,6 +530,7 @@ public class GameDAO extends DBContext {
         UserDAO usAO = new UserDAO();
         List<UserGameBuy> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[User-Game-Buy]";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -448,6 +545,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }
@@ -456,7 +558,8 @@ public class GameDAO extends DBContext {
     public List<Game> getDeals() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where "
-                + "[Discount] > 0";
+                + "[Discount] != 0";
+        Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -471,6 +574,11 @@ public class GameDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
             return list;
         }
     }

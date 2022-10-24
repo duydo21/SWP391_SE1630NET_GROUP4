@@ -14,9 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Account;
 import model.User;
 
@@ -65,6 +62,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //vào trang login
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 
@@ -83,14 +81,28 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         UserDAO ud = new UserDAO();
         Account a = null;
+        //kiểm tra Đã đăng nhập 
         a = ud.checkLogin(user, pass);
         if (a == null) {
+            //Khi tên đăng nhập không đúng với trong Account 
             request.setAttribute("ms", "username or password invalid!!! ");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
+            //tạo session 
             HttpSession session = request.getSession();
             User u = null;
+            //tìm tên người dùng trong User trùng với Account
             u = ud.findUserByName(a.getUsername());
+
+            //tao cookie cho người dùng đăng nhập
+            Cookie cu = new Cookie("userC", user);
+            Cookie cp = new Cookie("passC", pass);
+            cu.setMaxAge(60 * 60);
+            cp.setMaxAge(60 * 60);
+            response.addCookie(cu);
+            response.addCookie(cp);
+
+            //set atribute
             session.setAttribute("userlogin", u);
             session.setAttribute("acc", a);
             response.sendRedirect("mainscreen");

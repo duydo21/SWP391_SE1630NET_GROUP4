@@ -90,6 +90,9 @@ public class BuyGameServlet extends HttpServlet {
         //subtract user account balance
         user.setAccountBalance(user.getAccountBalance() - game.getPriceAfterDiscount());
         uDao.manageAccBalance(user);
+        //insert download to the game
+        game.setDownload(game.getDownload()+1);
+        gameDao.insertDownloadToGame(game);
         
         //get game comment
         List<UserGameComment> cmtList = new ArrayList<>();

@@ -583,7 +583,25 @@ public class GameDAO extends DBContext {
             return list;
         }
     }
-    
+
+    //Insert +1 download when a game is bought
+    public void insertDownloadToGame(Game game) {
+        String sql = "Update [Game] set Download = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try {
+            preparedStatement.setInt(1, game.getDownload());
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
     public static void main(String[] args) {
         GameDAO gdd = new GameDAO();
 

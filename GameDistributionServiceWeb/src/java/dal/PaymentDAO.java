@@ -21,6 +21,8 @@ import model.User;
  */
 public class PaymentDAO extends DBContext {
 
+    
+    //insert payment to database
     public void insertPayment(Payment payment) {
         String sql = "INSERT [dbo].[Payment] "
                 + "([Paidby], [PaymentMethod], [Money], [Date]) "
@@ -48,6 +50,7 @@ public class PaymentDAO extends DBContext {
 
     }
 
+    //get all transaction of an user
     public List<Payment> getAllTransactionHistory(User user) {
         List<Payment> list = new ArrayList<>();
         String sql = "select * from Payment where Paidby = ?";                          //chon toan bo cac giao dich voi id la cua tai khoan duoc truyen vao
@@ -80,6 +83,7 @@ public class PaymentDAO extends DBContext {
         return list;                                                                    //tra ve list
     }
 
+    //
     public List<Payment> pagingTransactionHistory(int index, User user) {
         List<Payment> list = new ArrayList<>();
         String sql = "select * from Payment where Paidby = ? order by PaymentID offset ? row fetch next 5 rows only";
@@ -112,6 +116,7 @@ public class PaymentDAO extends DBContext {
         return list;
     }
 
+    //
     public List<Payment> searchPaymentbyKey(User u, String key) {
         List<Payment> list = new ArrayList<>();
         String sql = "Select * from Payment where (Money like '%" + key + "%' or YEAR([Date]) like '%" + key + 
@@ -142,12 +147,14 @@ public class PaymentDAO extends DBContext {
         return list;
     }
 
-    public void addPaymentBuyGame(User u, Game g) {
-        Payment p = new Payment();
-        p.setUserID(u);
-        p.setPaymentMethod(4);
-        p.setMoney(-g.getPriceAfterDiscount());
-        insertPayment(p);
+    //insert payment which is buying game by user to the database
+    public void addPaymentBuyGame(User user, Game game) {
+        Payment payment = new Payment();
+        payment.setUserID(user);
+        //payment method 4 = buy game
+        payment.setPaymentMethod(4);
+        payment.setMoney(-game.getPriceAfterDiscount());
+        insertPayment(payment);
     }
 
 }

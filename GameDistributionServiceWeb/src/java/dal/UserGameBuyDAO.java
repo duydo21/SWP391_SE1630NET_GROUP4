@@ -19,6 +19,7 @@ import model.UserGameBuy;
  */
 public class UserGameBuyDAO extends DBContext {
 
+    //method to check if a game is bought by the user or not
     public UserGameBuy isGameIDBoughtByUserID(int userID, int gameID) {
         GameDAO g_Dao = new GameDAO();
         UserDAO u_Dao = new UserDAO();
@@ -49,17 +50,18 @@ public class UserGameBuyDAO extends DBContext {
         return null;
     }
 
+    //insert buy game history to database
     public void addBuyGame(User u, Game g) {
         String sql = "INSERT [dbo].[User-Game-Buy] "
                 + "VALUES (?, ?,?)";
         Connection connection = getConnection();
         Date todayDate = new Date();
-        java.sql.Date d = new java.sql.Date(todayDate.getTime());
+        java.sql.Date date = new java.sql.Date(todayDate.getTime());
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try {
             preparedStatement.setInt(1, u.getUserID());
             preparedStatement.setInt(2, g.getGameID());
-            preparedStatement.setDate(3, d);
+            preparedStatement.setDate(3, date);
             preparedStatement.executeQuery();
         } catch (SQLException e) {
 

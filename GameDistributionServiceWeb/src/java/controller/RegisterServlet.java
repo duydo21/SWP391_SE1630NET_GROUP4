@@ -12,9 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.Account;
-import model.User;
 
 /**
  *
@@ -75,29 +73,41 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //lấy các paramter bên trang register
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         String pass2 = request.getParameter("pass2");
 
+        
         UserDAO ud = new UserDAO();
+        //Kiểm tra trong Account có tài khoản dc nhập chưa bằng method checkAccountExit 
         Account a = ud.checkAccountExist(user);
+        //trường hợp trùng Account
         if (a != null){
             request.setAttribute("msr", "this username is existed!!! ");
             request.getRequestDispatcher("Register.jsp").forward(request, response);            
         }
+        //trường hợp không nhập username
         else if (user == null || user.equals("")) {
             request.setAttribute("msr", "Please enter username!!! ");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
-        } else if (pass == null || pass.equals("") || pass2 == null || pass2.equals("")) {
+        }
+        //trường hợp không nhập pass
+        else if (pass == null || pass.equals("") || pass2 == null || pass2.equals("")) {
             request.setAttribute("msr", "Please enter password!!! ");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
-        } else if (!pass.equals(pass2)) {
+        }
+        //trường hợp pass ko giống pass2
+        else if (!pass.equals(pass2)) {
             request.setAttribute("msr", "Re-enter password does not match with your password!!! ");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else{
             Account reg = new Account(user, pass, true);
+            //gọi method createAccount cho dữ liệu vào Account
             ud.createAccount(reg);
+            //gọi method createUser cho dữ liệu vào User
             ud.createUser(user);
+            //chuyển trang login.jsp
             response.sendRedirect("login");
         }
     }

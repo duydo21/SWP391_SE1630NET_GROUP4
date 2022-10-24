@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Account;
+import model.Admin;
 import model.User;
 
 /**
@@ -98,7 +99,7 @@ public class UserDAO extends DBContext {
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                Account a = new Account(rs.getString("Username"), rs.getString("Password"), true);
+                Account a = new Account(rs.getString("Username"), rs.getString("Password"), rs.getBoolean("Type"));
                 return a;
             }
         } catch (SQLException e) {
@@ -316,5 +317,7 @@ public class UserDAO extends DBContext {
             }
         }
     }
+    
+   
 
 }

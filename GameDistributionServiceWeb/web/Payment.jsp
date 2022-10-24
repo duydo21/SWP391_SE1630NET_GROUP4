@@ -102,7 +102,7 @@
                     <div id="amount">
                         <label>Amount:</label>
                         <c:if test="${amount==null}">
-                            <input class="amount" type="text" name="amount">
+                            <input class="amount" type="text" name="amount" required>
                         </c:if>
                         <c:if test="${amount!=null}">
                             <input class="amount" type="text" name="amount" value="${amount}">

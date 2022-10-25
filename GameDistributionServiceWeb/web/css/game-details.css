@@ -148,6 +148,20 @@ html{
     float: left;
 }
 
+.fa-thumbs-up, .fa-thumbs-down{
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.fa-thumbs-up:hover, .fa-thumbs-down:hover{
+    color: #64acff;
+}
+
+#like, #dislike{
+    padding: 0 25px;
+    text-align: center;
+}
+
 #btn .buy,
 #btn .price,
 #btn #discount{
@@ -197,7 +211,10 @@ html{
 .buy-successful-modal,
 .buy-fail-modal{
     position: fixed;
-    top: 0; left: 0;right:0;bottom: 0;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom: 0;
     display: none;
     align-items: center;
     justify-content: center;
@@ -229,7 +246,8 @@ html{
 
 .modal-container .modal-content{
     position: absolute;
-    top: 50%; transform: translateY(-50%);
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 20px;
     text-align:center;
 }

@@ -337,7 +337,7 @@ public class GameDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                UserGameRate rate = new UserGameRate(userDao.findUserByID(rs.getInt("UserIDs")), getGameById(rs.getInt("GameID")), rs.getInt("Rate"));
+                UserGameRate rate = new UserGameRate(userDao.findUserByID(rs.getInt("UserID")), getGameById(rs.getInt("GameID")), rs.getInt("Rate"));
                 list.add(rate);
             }
         } catch (SQLException e) {
@@ -345,14 +345,17 @@ public class GameDAO extends DBContext {
         } finally {
             float r = 0;
             for (UserGameRate i : list) {
-                r += i.getRate();
+                if (i.getRate() == 1) {
+                    r += i.getRate();
+                }
             }
             try {
                 connection.close();
             } catch (SQLException e) {
 
+            } finally {
+                return r / list.size() * 10;
             }
-            return r / list.size();
         }
     }
 
@@ -586,11 +589,12 @@ public class GameDAO extends DBContext {
 
     //Insert +1 download when a game is bought
     public void insertDownloadToGame(Game game) {
-        String sql = "Update [Game] set Download = ?";
+        String sql = "Update [Game] set Download = ? where GameID = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try {
             preparedStatement.setInt(1, game.getDownload());
+            preparedStatement.setInt(2, game.getGameID());
             preparedStatement.executeQuery();
         } catch (SQLException e) {
         } finally {
@@ -610,6 +614,56 @@ public class GameDAO extends DBContext {
             System.out.println(g.getDate());
         }
         System.out.println(list.size());
+    }
+
+    public int getLikesOrDislikes(Game game, int voteType) {
+        String sql = "Select count(GameID) From [User-Game-rate] "
+                + "where GameID = ? and Rate = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setInt(1, game.getGameID());
+            preparedStatement.setInt(2, voteType);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return -1;
+    }
+
+    public int getUserVoteOfAGame(User user, Game game) {
+        String sql = "Select Rate from [SWP].[dbo].[User-Game-Rate] "
+                + " where UserID =? and GameID =?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setInt(1, user.getUserID());
+            preparedStatement.setInt(2, game.getGameID());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return -1;
     }
 
 }

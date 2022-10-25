@@ -93,6 +93,17 @@ public class GameDetailsServlet extends HttpServlet {
         //get game rate
         float gameRate = gameDao.getGameRateByID(gameID);
         game.setRate(gameRate);
+        //get amount of like votes
+        int likes = gameDao.getLikesOrDislikes(game, 1);
+        //get amount of dislike votes
+        int dislikes = gameDao.getLikesOrDislikes(game, 0);
+        //get amount of votes
+        int votes = likes + dislikes;
+        //get user vote
+        int userVote = -1;
+        if (user != null) {
+            userVote = gameDao.getUserVoteOfAGame(user, game);
+        }
         //get game comment
         List<UserGameComment> cmtList = new ArrayList<>();
         cmtList = gameDao.getGameCommentByGameID(gameID);
@@ -101,7 +112,7 @@ public class GameDetailsServlet extends HttpServlet {
         List<Game> gameList = new ArrayList<>();
         List<Category> cateList = cat_DAO.getCategoryOfA_Game(gameID);
         //get all categories of current game
-        for(Category cat : cateList){
+        for (Category cat : cateList) {
             gameList_full.addAll(gameDao.getRecomendByCategory(cat));
         }
         //remove current game from list recommended games
@@ -112,18 +123,20 @@ public class GameDetailsServlet extends HttpServlet {
             }
         }
         //remove duplicated games
-        for(int i=0;i<gameList_full.size();i++){
-            for(int j=i+1;j<gameList_full.size();j++){
-                if(gameList_full.get(i).getGameID()== gameList_full.get(j).getGameID()){
+        for (int i = 0; i < gameList_full.size(); i++) {
+            for (int j = i + 1; j < gameList_full.size(); j++) {
+                if (gameList_full.get(i).getGameID() == gameList_full.get(j).getGameID()) {
                     gameList_full.remove(j);
                     j--;
                 }
             }
         }
         //slect <= 4 games of the recommended game list
-        for(int i=0;i<gameList_full.size();i++){
+        for (int i = 0; i < gameList_full.size(); i++) {
             gameList.add(gameList_full.get(i));
-            if(i==3) break;
+            if (i == 3) {
+                break;
+            }
         }
         //get developer
 //        List<User> devList = new ArrayList<>();
@@ -134,9 +147,12 @@ public class GameDetailsServlet extends HttpServlet {
                 isBought = true;
             }
         }
-        
-        
+
         //send info to jsp page
+        request.setAttribute("userVote", userVote);
+        request.setAttribute("likes", likes);
+        request.setAttribute("dislikes", dislikes);
+        request.setAttribute("votes", votes);
         request.setAttribute("game", game);
         request.setAttribute("gameComment", cmtList);
         request.setAttribute("gameMedias", gameMedias);

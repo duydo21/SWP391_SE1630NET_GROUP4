@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${game.getName()}</title>
         <link rel="stylesheet" href="css/game-details.css">
+        <script src="https://kit.fontawesome.com/f92d1eca7b.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/fonts/themify-icons/themify-icons.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -34,8 +35,8 @@
         <c:set var="gameList" value = "${requestScope.gameList}"/>
         <c:set var="catList" value = "${requestScope.catList}"/>
         <c:set var="user" value = "${sessionScope.userlogin}"/>
-        
-        
+        <c:set var="userVote" value = "${requestScope.userVote}"/>
+
         <header>
             <jsp:include page="Header.jsp" />
         </header>
@@ -107,13 +108,71 @@
 
                     <div id="action">
                         <div id="rating">
-                            <p>Rating: </p>
+                            <p>Rating: ${game.getRate()}/10 (${requestScope.votes} votes) </p><br>
                             <span>
-                                <icon class="ti-star" style="color: rgb(245, 5, 5);"></icon>
-                                <icon class="ti-star" style="color: rgb(245, 5, 5);"></icon>
-                                <icon class="ti-star" style="color: rgb(245, 5, 5);"></icon>
-                                <icon class="ti-star"></icon>
-                                <icon class="ti-star"></icon>
+                                <div id="like" style="float: left">
+                                    <!--TH chua login-->
+                                    <c:if test="${user==null}">
+                                        <icon class="fa-regular fa-thumbs-up"></icon>
+                                    </c:if>
+                                    <!--Th login roi-->
+                                    <c:if test="${user!=null}">
+                                        <!--TH user chua mua game -> ko dc vote-->
+                                        <c:if test ="${!isBought}">
+                                            <icon class="fa-regular fa-thumbs-up"></icon>
+                                        </c:if>
+                                        <!--TH user mua game -> dc vote-->
+                                        <c:if test ="${isBought}">
+                                            <!--TH user chua vote-->
+                                            <c:if test="${userVote==-1}">
+                                                <icon class="fa-regular fa-thumbs-up" 
+                                                      onclick="window.location.href = 'votegame?type=1&GameID=${game.getGameID()}'"></icon>
+                                            </c:if>
+                                            <!--TH user likes-->
+                                            <c:if test="${userVote==1}">
+                                                <icon class="fa-solid fa-thumbs-up"></icon>
+                                            </c:if>
+                                            <!--TH user dislike-->
+                                            <c:if test="${userVote==0}">
+                                                <icon class="fa-regular fa-thumbs-up"
+                                                      onclick="window.location.href = 'votegame?type=1&GameID=${game.getGameID()}'"></icon>
+                                            </c:if>
+                                        </c:if>
+                                        
+                                    </c:if>
+                                    <div>${requestScope.likes} likes</div>
+                                </div>
+                                <div id="dislike" style="float: left">
+                                    <!--TH chua login-->
+                                    <c:if test="${user==null}">
+                                        <icon class="fa-regular fa-thumbs-down"></icon>
+                                    </c:if>
+                                    <!--Th login roi-->
+                                    <c:if test="${user!=null}">
+                                        <!--TH user chua mua game -> ko dc vote-->
+                                        <c:if test ="${!isBought}">
+                                            <icon class="fa-regular fa-thumbs-down"></icon>
+                                        </c:if>
+                                        <!--TH user mua game -> dc vote-->
+                                        <c:if test ="${isBought}">
+                                            <!--TH user chua vote-->
+                                            <c:if test="${userVote==-1}">
+                                                <icon class="fa-regular fa-thumbs-down"
+                                                      onclick="window.location.href = 'votegame?type=0&GameID=${game.getGameID()}'"></icon>
+                                            </c:if>
+                                            <!--TH user dislikes-->
+                                            <c:if test="${userVote==0}">
+                                                <icon class="fa-solid fa-thumbs-down"></icon>
+                                            </c:if>
+                                            <!--TH user likes-->
+                                            <c:if test="${userVote==1}">
+                                                <icon class="fa-regular fa-thumbs-down"
+                                                      onclick="window.location.href = 'votegame?type=0&GameID=${game.getGameID()}'"></icon>
+                                            </c:if>
+                                        </c:if>
+                                    </c:if>
+                                    <div>${requestScope.dislikes} dislikes</div>
+                                </div>
                             </span>
                         </div>
                         <div id="btn">

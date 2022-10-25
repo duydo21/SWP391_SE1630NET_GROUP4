@@ -68,8 +68,6 @@
                                 Welcome ${sessionScope.adminlogin.name.username} 
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="profile?adminID=${sessionScope.adminlogin.adminID}">Profile</a>
-                                <a class="dropdown-item" href="changepass?acc=${sessionScope.acc.username}">Change Password</a>
                                 <a class="dropdown-item" href="logout">Sign out</a>
                             </div>
                         </li>

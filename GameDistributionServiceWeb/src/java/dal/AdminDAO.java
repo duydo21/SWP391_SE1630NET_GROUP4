@@ -18,6 +18,7 @@ import model.User;
  */
 public class AdminDAO extends DBContext {
 
+    //Kiểm tra Account có tồn tại
     public Account checkAccountExist(String username) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
@@ -45,7 +46,7 @@ public class AdminDAO extends DBContext {
     }
     
     
-
+    //tìm Admin bằng Name
     public Admin findAdminByName(String Username) {
         String sql = "SELECT * FROM [dbo].[Admin] where [Name] = ?";
         Admin ad = new Admin();

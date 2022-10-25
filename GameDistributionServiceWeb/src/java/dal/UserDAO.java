@@ -8,8 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
+import javax.management.RuntimeErrorException;
 import model.Account;
-import model.Admin;
 import model.User;
 
 /**
@@ -18,6 +19,7 @@ import model.User;
  */
 public class UserDAO extends DBContext {
 
+    //tạo thêm Account
     public void createAccount(Account a) {
         String sql = "INSERT INTO [dbo].[Account]\n"
                 + "           ([Username]\n"
@@ -61,6 +63,7 @@ public class UserDAO extends DBContext {
 //        }
 //        return null;
 //    }
+    //kiểm tra account có tồn tại
     public Account checkAccountExist(String username) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
@@ -86,7 +89,8 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-
+    
+    //kiểm tra account qua username và password
     public Account checkLogin(String username, String password) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
@@ -113,7 +117,8 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-
+    
+    //tạo User
     public void createUser(String name) {
         String sql = "INSERT INTO [dbo].[User]\n"
                 + "           ([Name]\n"
@@ -147,6 +152,7 @@ public class UserDAO extends DBContext {
         }
     }
 
+    //Tìm User qua Name
     public User findUserByName(String Username) {
         String sql = "SELECT * FROM [dbo].[User] where [Name] = ?";
         User u = new User();
@@ -180,6 +186,7 @@ public class UserDAO extends DBContext {
         return null;
     }
 
+    //Tìm User qua UserID
     public User findUserByID(int id) {
         String sql = "SELECT * FROM [dbo].[User] where [UserID] = ?";
         User u = new User();
@@ -215,7 +222,10 @@ public class UserDAO extends DBContext {
         return null;
     }
 
+
+    //Cập nhật thông tin của User
     public int updateProfileUser(User u) {
+        
         int count = 0;
         String sql = "update [User] set  "
                 + "Nickname=?,  Country =?,  [Email] =?,"
@@ -233,6 +243,7 @@ public class UserDAO extends DBContext {
             ps.setInt(7, u.getUserID());
             count = ps.executeUpdate();
         } catch (SQLException ex) {
+           throw  new RuntimeException(ex);
         } finally {
             try {
                 connection.close();
@@ -243,6 +254,7 @@ public class UserDAO extends DBContext {
         return count;
     }
 
+    //Thay đổi password của Account
     public int changePassUser(Account a) {
         int count = 0;
         String sql = "update [Account] set Username = ? , "
@@ -265,6 +277,7 @@ public class UserDAO extends DBContext {
         return count;
     }
 
+    //cập nhật User là Dev
     public void updateIsDevUser(User u) {
         int count = 0;
         String sql = "update [User] set  "
@@ -297,6 +310,7 @@ public class UserDAO extends DBContext {
 
     }
 
+    //Số tiền hiện có của User
     public void manageAccBalance(User u) {
         String sql = "UPDATE [dbo].[User]\n"
                 + "   SET [AccountBalance] = ?\n"
@@ -317,7 +331,5 @@ public class UserDAO extends DBContext {
             }
         }
     }
-    
-   
 
 }

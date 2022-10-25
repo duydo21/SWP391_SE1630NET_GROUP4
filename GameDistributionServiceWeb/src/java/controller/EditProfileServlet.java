@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.nio.file.Paths;
+import java.sql.SQLWarning;
 import model.User;
 
 /**
@@ -65,11 +66,11 @@ public class EditProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //lấy parameter của id  qua UserID
+
         String id_raw = request.getParameter("UserID");
         int id = Integer.parseInt(id_raw);
         //Tìm kiếm user bằng id
-        UserDAO u = new UserDAO();
-        u.findUserByID(id);
+
         //vào trang EditProfile
         request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
 
@@ -89,24 +90,29 @@ public class EditProfileServlet extends HttpServlet {
         //lấy pameter ở EditProfile
         int id = Integer.parseInt(request.getParameter("id"));
         String nickname = request.getParameter("nickname").trim();
+        if (nickname.equals("")) {
+            request.setAttribute("msr", "please enter nick name");
+            request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
+        }
         String country = request.getParameter("country");
         String email = request.getParameter("email").trim();
         String decription = request.getParameter("decription").trim();
         boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
-        
+
         //tạo đường truyền dẫn cho upload ảnh
         Part part = request.getPart("avatar");
         String realPath = request.getServletContext().getRealPath("/image");
         String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-        
+
         //trường hợp không có ảnh truyền vào
-        if ( filename.isEmpty()) {
-            filename ="Default Avatar.jpg";
+        if (filename.isEmpty()) {
+            filename = "Default Avatar.jpg";
         }
         part.write(realPath + "/" + filename);
-        
+
         //truyền dữ liệu vào User
         User u = new User(id, nickname, country, email, "image" + "/" + filename, decription, isPrivate);
+        //method UpdateProfileUser
         if (new UserDAO().updateProfileUser(u) > 0) {
             HttpSession session = request.getSession();
             session.removeAttribute("userlogin");

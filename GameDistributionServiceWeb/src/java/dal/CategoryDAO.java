@@ -42,7 +42,7 @@ public class CategoryDAO extends DBContext {
         }
         return null;
     }
-
+    //Lấy list Category
     public List<Category> getCategory() {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Category]";
@@ -65,7 +65,8 @@ public class CategoryDAO extends DBContext {
         }
         return list;
     }
-
+    
+    //lấy list Game-Category bằng GameID
     public List<Category> getCategoryOfA_Game(int gameID) {
         GameDAO gameDao = new GameDAO();
         List<Category> list = new ArrayList<>();

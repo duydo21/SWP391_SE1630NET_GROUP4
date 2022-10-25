@@ -65,20 +65,16 @@
                     <c:if test="${(sessionScope.acc != null)}">                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Welcome ${sessionScope.userlogin.nickname} 
+                                Welcome ${sessionScope.adminlogin.name.username} 
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
+                                <a class="dropdown-item" href="profile?adminID=${sessionScope.adminlogin.adminID}">Profile</a>
                                 <a class="dropdown-item" href="changepass?acc=${sessionScope.acc.username}">Change Password</a>
                                 <a class="dropdown-item" href="logout">Sign out</a>
                             </div>
                         </li>
                     </c:if>
-                    <c:if test="${(sessionScope.acc != null)}">
-                        <c:if test="${(sessionScope.userlogin.isDev == false)}"> 
-                            <a class="nav-link bg-danger" href="/GameDistributionServiceWeb/isDev?UserID=${sessionScope.userlogin.userID}">Dev Register</a>
-                        </c:if>    
-                    </c:if>
+                    
                 </ul>
                 <form class="search d-flex " action="search" method = "get" style="position: relative">
                     <input class="form-control me-2" id="input" type="search" placeholder="Search" aria-label="Search" name="search" onkeyup="filterFunction()">

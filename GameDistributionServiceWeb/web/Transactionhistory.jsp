@@ -32,6 +32,11 @@
                 float: left;
             }
         </style>
+        <script type="text/javascript">
+            function changeFunc() {
+                document.getElementById("sortlist").submit();
+            }
+        </script>
     </head>
     <body>
         <h1 class="text-uppercase text-center mb-5" style="text-align: center; margin-top: 20px"><u>TRANSACTION HISTORY</u></h1>
@@ -42,20 +47,25 @@
             </div>
             <div id="post">
                 <div style="float: left">   
-                    <form class="search d-flex " action="findtransactionhistory" method = "get" style="margin-left: 20px">
+                    <form class="search d-flex "  action="findtransactionhistory" method = "get" style="margin-left: 20px">
                         <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/>                                       <!--id tai khoan-->
                         <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
-                <div style="float: right">
-                    <label>Sort by: </label>
-                    <select name="sort">
-                        <option value="date">Date</option>
-                        <option value="money">Money</option>
-                        <option value="paymentmethod">Payment Method</option>
-                    </select>
-                </div>
+
+                <form id="sortlist" action="transactionhistory" method="get">
+                    <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/> 
+                    <div style="float: right">
+                        <label>Sort by: </label>
+                        <select id="selectBox" name="sortList" onchange="changeFunc()">
+                            <option value="date" ${dateSelected}>Date</option>
+                            <option value="money" ${moneySelected}>Money</option>
+                            <option value="paymentmethod" ${paymentMethodSelected}>Payment Method</option>
+                        </select>
+                    </div>
+                </form>  
+
             </div>
         </div>
         <div id="post" style="background-color: #e8e8e8; margin-right: 10%">
@@ -79,11 +89,11 @@
                     </tr>
                 </table>
             </c:forEach>
-            
+
             <c:forEach begin="1" end="${endPageth}" var="i">                                        <!--phan trang-->
-                <a href="transactionhistory?UserID=${sessionScope.userlogin.userID}&index=${i}">${i}</a>
+                <a href="transactionhistory?UserID=${sessionScope.userlogin.userID}&index=${i}&sortList=${sorttype}">${i}</a>
             </c:forEach>
-            
+
             <c:if test="${requestScope.size == 0}">                                                 <!--thong bao neu kich thuoc list lay ve = 0-->
                 <h1 style="margin-top: 20px">Nothing here, <a href="games">Let's buy something</a></h1>
             </c:if>

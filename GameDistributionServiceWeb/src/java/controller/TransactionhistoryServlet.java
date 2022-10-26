@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import model.Payment;
 import model.User;
@@ -62,26 +63,69 @@ public class TransactionhistoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.removeAttribute("dateSelected");
+        request.removeAttribute("moneySelected");
+        request.removeAttribute("paymentMethodSelected");
+
         int id = Integer.parseInt(request.getParameter("UserID"));                          //lay id nguoi duong nhap
         String indexPage = request.getParameter("index");                                   //lay so trang
-        if(indexPage == null){
+        if (indexPage == null) {
             indexPage = "1";
-        }    
+        }
         int index = Integer.parseInt(indexPage);
-        
+
+        String sortType = request.getParameter("sortList");
+        if (sortType == null) {
+            sortType = "date";
+        }
+        String dateSelect = "";
+        String moneySelect = "";
+        String paymentMethodSelect = "";
+        switch (sortType) {
+            case "date":
+                dateSelect = "selected";
+                break;
+            case "money":
+                moneySelect = "selected";
+                break;
+            case "paymentmethod":
+                paymentMethodSelect = "selected";
+                break;
+        }
+
         User user = new UserDAO().findUserByID(id);                                         //tim tai khoan nguoi dang nhap
         List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do
-        List<Payment> listPaging = new PaymentDAO().pagingTransactionHistory(index, user);  //chia thanh cac trang                   
+//        List<Payment> listPaging = new PaymentDAO().pagingTransactionHistory(index, user);  //chia thanh cac trang                   
         int countList = list.size();                                                        //them trang thieu
         int endPage = countList / 5;
-        if(countList % 5 != 0){
+        if (countList % 5 != 0) {
             endPage++;
         }
-        
+        switch (sortType) {
+            case "date":
+                list = new PaymentDAO().getAllTransactionHistory(user);
+                break;
+            case "money":
+                list = sortMoneyList(list);
+                break;
+            case "paymentmethod":
+                list = sortPaymentMethodList(list);
+                break;
+        }
+
+        List<Payment> listPaging = getPaging(list, index);
+
         request.setAttribute("listtransactionhistory", list);                               //truyen du lieu danh sach
         request.setAttribute("pagingth", listPaging);                                       //truyen du lieu danh sach da phan trang
         request.setAttribute("endPageth", endPage);                                         //truyen so trang hien thi
         request.setAttribute("sizeth", list.size());                                        //truyen kich thuoc danh sach
+
+        
+        request.setAttribute("sorttype", sortType);
+        request.setAttribute("dateSelected", dateSelect);
+        request.setAttribute("moneySelected", moneySelect);
+        request.setAttribute("paymentMethodSelected", paymentMethodSelect);
 
         request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);  //ve trang
     }
@@ -109,5 +153,39 @@ public class TransactionhistoryServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private List<Payment> getPaging(List<Payment> list, int index) {
+        List<Payment> newList = new ArrayList<>();
+        for (int i = (index - 1) * 5; i < 5 * index && i < list.size(); i++) {
+            newList.add(list.get(i));
+        }
+        return newList;
+    }
+
+    private List<Payment> sortMoneyList(List<Payment> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = 0; j < list.size() - i - 1; j++) {
+                if (list.get(j).getMoney() > list.get(j + 1).getMoney()) {
+                    Payment temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+        return list;
+    }
+
+    private List<Payment> sortPaymentMethodList(List<Payment> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = 0; j < list.size() - i - 1; j++) {
+                if (list.get(j).getPaymentMethod() > list.get(j + 1).getPaymentMethod()) {
+                    Payment temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+        return list;
+    }
 
 }

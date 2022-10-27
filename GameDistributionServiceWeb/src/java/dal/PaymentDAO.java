@@ -83,43 +83,10 @@ public class PaymentDAO extends DBContext {
         return list;                                                                    //tra ve list
     }
 
-    //
-//    public List<Payment> pagingTransactionHistory(int index, User user) {
-//        List<Payment> list = new ArrayList<>();
-//        String sql = "select * from Payment where Paidby = ? order by PaymentID offset ? row fetch next 5 rows only";
-//        Connection connection = getConnection();
-//        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-//        ResultSet resultSet = null;
-//        try {
-//            preparedStatement.setInt(1, user.getUserID());
-//            preparedStatement.setInt(2, (index - 1) * 5);
-//            resultSet = getResultSet(preparedStatement);
-//            while (resultSet.next()) {                                                  //doc du lieu va truyen vao list
-//                Payment payment = new Payment(resultSet.getInt("PaymentID"),
-//                        user,
-//                        resultSet.getInt("PaymentMethod"),
-//                        resultSet.getFloat("Money"),
-//                        resultSet.getDate("Date"));
-//                list.add(payment);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        } finally {
-//            try {
-//                resultSet.close();
-//                preparedStatement.close();
-//                connection.close();
-//            } catch (SQLException e) {
-//
-//            }
-//        }
-//        return list;
-//    }
-
-    //
+    //get all transaction of an user by key search
     public List<Payment> searchPaymentbyKey(User user, String key) {
         List<Payment> list = new ArrayList<>();
-        String sql = "Select * from Payment where (Money like '%" + key + "%' or YEAR([Date]) like '%" + key + 
+        String sql = "Select * from Payment where (Money like '%" + key + "%' or YEAR([Date]) like '%" + key +            //tim data theo key search
                 "%' or MONTH([Date]) like '%" + key + "%' or DAY([Date]) like '%" + key + "%') and Paidby = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
@@ -127,7 +94,7 @@ public class PaymentDAO extends DBContext {
         try {
             preparedStatement.setInt(1, user.getUserID());
             resultSet = getResultSet(preparedStatement);
-            while (resultSet.next()) {
+            while (resultSet.next()) {                                                                                      //truyen vao list
                 Payment c = new Payment(resultSet.getInt("PaymentID"),
                         user,
                         resultSet.getInt("PaymentMethod"),
@@ -146,7 +113,7 @@ public class PaymentDAO extends DBContext {
 
             }
         }
-        return list;
+        return list;                                                                                                        //tra ve list
     }
 
     //insert payment which is buying game by user to the database

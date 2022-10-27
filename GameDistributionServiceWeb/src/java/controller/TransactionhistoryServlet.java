@@ -65,7 +65,7 @@ public class TransactionhistoryServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("UserID"));                          //lay id nguoi duong nhap
 
-        String key = request.getParameter("keytransactionhistory");                 //lay tu tim kiem
+        String key = request.getParameter("keytransactionhistory");                         //lay tu tim kiem
         if (key == null) {
             key = "";
         }
@@ -76,7 +76,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         }
         int index = Integer.parseInt(indexPage);
 
-        String addcheckbox = request.getParameter("addonly");
+        String addcheckbox = request.getParameter("addonly");                               //lay tich checkbox
         if (addcheckbox == null) {
             addcheckbox = "";
         }
@@ -93,7 +93,7 @@ public class TransactionhistoryServlet extends HttpServlet {
             subchecked = "checked";
         }
 
-        String sortType = request.getParameter("sortList");
+        String sortType = request.getParameter("sortList");                                 //lay kieu sap xep
         if (sortType == null) {
             sortType = "date";
         }
@@ -113,15 +113,15 @@ public class TransactionhistoryServlet extends HttpServlet {
         }
 
         User user = new UserDAO().findUserByID(id);                                         //tim tai khoan nguoi dang nhap
-        List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do
-//        List<Payment> listPaging = new PaymentDAO().pagingTransactionHistory(index, user);  //chia thanh cac trang                   
+        
+        List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do                 
 
-        List<Payment> listAfterSearch = new PaymentDAO().searchPaymentbyKey(user, key);        //lay du lieu theo tai khoan do voi tu tim kiem
+        List<Payment> listAfterSearch = new PaymentDAO().searchPaymentbyKey(user, key);     //lay du lieu theo tai khoan do voi tu tim kiem
 
         List<Payment> listAfterChecked;
         listAfterChecked = listAfterSearch;
 
-        if (addcheckbox.equals("on")) {
+        if (addcheckbox.equals("on")) {                                                     //tao list moi voi ap dung checkbox
             listAfterChecked = new ArrayList<>();
             for (int i = 0; i < listAfterSearch.size(); i++) {
                 if (listAfterSearch.get(i).getMoney() > 0) {
@@ -141,7 +141,7 @@ public class TransactionhistoryServlet extends HttpServlet {
             listAfterChecked = listAfterSearch;
         }
 
-        switch (sortType) {
+        switch (sortType) {                                                                             //sap xep list cuoi cung
             case "date":
                 listAfterChecked = sortDateList(listAfterChecked);
                 break;
@@ -159,25 +159,24 @@ public class TransactionhistoryServlet extends HttpServlet {
             endPage++;
         }
 
-        List<Payment> listPaging = getPaging(listAfterChecked, index);
+        List<Payment> listPaging = getPaging(listAfterChecked, index);                                  //phan trang
 
-//        request.setAttribute("listtransactionhistory", list);                               //truyen du lieu danh sach
-        request.setAttribute("pagingth", listPaging);                                       //truyen du lieu danh sach da phan trang
-        request.setAttribute("endPageth", endPage);                                         //truyen so trang hien thi
-        request.setAttribute("sizeth", countList);                                        //truyen kich thuoc danh sach
+        request.setAttribute("pagingth", listPaging);                                                   //truyen du lieu danh sach da phan trang
+        request.setAttribute("endPageth", endPage);                                                     //truyen so trang hien thi
+        request.setAttribute("sizeth", countList);                                                      //truyen kich thuoc danh sach
 
-        request.setAttribute("sorttype", sortType);
+        request.setAttribute("sorttype", sortType);                                                     //truyen kieu sap xep
         request.setAttribute("dateSelected", dateSelect);
         request.setAttribute("moneySelected", moneySelect);
         request.setAttribute("paymentMethodSelected", paymentMethodSelect);
 
-        request.setAttribute("addchecked", addchecked);
+        request.setAttribute("addchecked", addchecked);                                                 //truyen checkbox
         request.setAttribute("addcheckbox", addcheckbox);
         request.setAttribute("subchecked", subchecked);
 
-        request.setAttribute("keytranhis", key);                                    //truyen tu tim kiem
+        request.setAttribute("keytranhis", key);                                                        //truyen tu tim kiem
 
-        request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);  //ve trang
+        request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);              //ve trang
     }
 
     /**
@@ -204,7 +203,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private List<Payment> getPaging(List<Payment> list, int index) {
+    private List<Payment> getPaging(List<Payment> list, int index) {                                        //phan trang 5
         List<Payment> newList = new ArrayList<>();
         for (int i = (index - 1) * 5; i < 5 * index && i < list.size(); i++) {
             newList.add(list.get(i));
@@ -212,7 +211,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         return newList;
     }
 
-    private List<Payment> sortDateList(List<Payment> list) {
+    private List<Payment> sortDateList(List<Payment> list) {                                                //sap xep theo Date
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - i - 1; j++) {
                 if (list.get(j).getDate().compareTo(list.get(j + 1).getDate()) > 0) {
@@ -225,7 +224,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         return list;
     }
 
-    private List<Payment> sortMoneyList(List<Payment> list) {
+    private List<Payment> sortMoneyList(List<Payment> list) {                                               //sap xep theo Money
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - i - 1; j++) {
                 if (list.get(j).getMoney() > list.get(j + 1).getMoney()) {
@@ -238,7 +237,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         return list;
     }
 
-    private List<Payment> sortPaymentMethodList(List<Payment> list) {
+    private List<Payment> sortPaymentMethodList(List<Payment> list) {                                       //sap xep theo PaymentMethod
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - i - 1; j++) {
                 if (list.get(j).getPaymentMethod() > list.get(j + 1).getPaymentMethod()) {

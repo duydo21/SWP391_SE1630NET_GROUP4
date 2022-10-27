@@ -43,22 +43,18 @@
             <h1 class="text-uppercase text-center mb-5" style="text-align: center; margin-top: 20px"><u>TRANSACTION HISTORY</u></h1>
             <div class="tranhis">
                 <div id="sidebar">
-
-
                     <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/>
-                    <input type="checkbox" name="addonly" onclick="this.form.submit()" ${addchecked}/>Show only additon<br>
-                    <input type="checkbox" name="subonly" onclick="this.form.submit()" ${subchecked}/>Show only subtraction
-
-
+                    <input type="checkbox" name="addonly" onclick="this.form.submit()" ${addchecked}/>Show only additon<br><!-- chi hien giao dich + -->
+                    <input type="checkbox" name="subonly" onclick="this.form.submit()" ${subchecked}/>Show only subtraction<!-- chi hien giao dich - -->
                 </div>
                 <div id="post">
                     <div style="float: left">   
-                            <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}">
+                        <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}"><!-- tim kiem -->
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         
                     </div>
                         <div style="float: right">
-                            <label>Sort by: </label>
+                            <label>Sort by: </label>                                                                        <!<!-- sap xep -->
                             <select id="selectBox" name="sortList" onchange="changeFunc()">
                                 <option value="date" ${dateSelected}>Date</option>
                                 <option value="money" ${moneySelected}>Money</option>

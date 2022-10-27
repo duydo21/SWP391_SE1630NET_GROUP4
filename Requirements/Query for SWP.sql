@@ -353,3 +353,8 @@ INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (18,15)
 
 INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (19,4)
 INSERT INTO [dbo].[Game-Category]([GameID],[CategoryID]) VALUES (19,20)
+
+
+--table user-game-report
+--select * from [User-Game-Report]
+INSERT INTO [dbo].[User-Game-Report] ([UserID],[GameID],[Content],[Date]) VALUES(1,1,'This game suck!!!',CAST( GETDATE() as Date))

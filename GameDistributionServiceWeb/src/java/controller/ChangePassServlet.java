@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -60,7 +61,7 @@ public class ChangePassServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
     }
 
@@ -75,32 +76,50 @@ public class ChangePassServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = request.getParameter("username").trim();
+        //Gọi mang cookie getValue truyền vào 2 String cpass và cuser 
+        Cookie[] cookies = request.getCookies();
+        String cpass = "";
+        String cuser = "";        
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().contains("userC")) {
+                cuser = cookie.getValue();
+            }
+            if (cookie.getName().contains("passC")) {
+                cpass = cookie.getValue();
+            }
+        };
+
+        String oldpass = request.getParameter("oldpass");
         String pass = request.getParameter("pass");
         String repass = request.getParameter("repass");
         UserDAO ud = new UserDAO();
-        Account a = ud.checkAccountExist(user);
-         if (a == null) {
-            request.setAttribute("msr", "username must match ");
+        //khi nhập old pass không đúng
+        if (!oldpass.equals(cpass)) {
+            request.setAttribute("msr", "Wrong Old password  ");
             request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
-        }else if (user == null || user.equals("")) {
-            request.setAttribute("msr", "Please enter username!!! ");
-            request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
-        } else if (pass == null || pass.equals("") || repass == null || repass.equals("")) {
+        } 
+        //khi không nhập pass
+        else if (pass == null || pass.equals("") || repass == null || repass.equals("")) {
             request.setAttribute("msr", "Please enter password!!! ");
             request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
-        } else if (!pass.equals(repass)) {
+        }
+        //khi nhập new pass không trùng với repass
+        else if (!pass.equals(repass)) {
             request.setAttribute("msr", "Confirm password does not match with New password!!! ");
             request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
         } else {
-            Account cha = new Account(user, pass);
+            //cập nhật lại cookie
+            Cookie cp = new Cookie("passC", pass);
+            cp.setMaxAge(60 * 60);
+            response.addCookie(cp);
+            
+            //truyền dũ liêu vào Account rồi gọi Mehtod changePassUser 
+            Account cha = new Account(cuser, pass);
             User u = new User();
-            ud.changePassUser(cha);          
+            ud.changePassUser(cha);
             response.sendRedirect("mainscreen");
         }
-        
 
-       
     }
 
     /**

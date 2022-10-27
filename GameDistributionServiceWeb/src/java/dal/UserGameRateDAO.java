@@ -18,6 +18,7 @@ import model.UserGameRate;
  */
 public class UserGameRateDAO extends DBContext {
 
+    //get list UserRateOfGame by userId and GAmeid
     public UserGameRate getUserRateOfGame(User user, Game game) {
         String sql = "Select * from [User-Game-Rate] where UserID=? and GameID=?";
         Connection connection = getConnection();
@@ -44,6 +45,7 @@ public class UserGameRateDAO extends DBContext {
         return userGameRate;
     }
 
+    //Insert in UserGameRate
     public void insert(UserGameRate userGameRate) {
         String sql = "Insert [User-Game-Rate] (UserID, GameID, Rate) "
                 + "VALUES (?,?,?)";
@@ -64,6 +66,7 @@ public class UserGameRateDAO extends DBContext {
         }
     }
 
+    //Update UserGameRate
     public void update(UserGameRate userGameRate) {
         String sql = "Update [User-Game-Rate] set "
                 + "Rate =? where UserID =? and GameID=?";

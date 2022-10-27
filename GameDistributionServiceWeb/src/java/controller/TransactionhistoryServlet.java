@@ -173,6 +173,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         request.setAttribute("addchecked", addchecked);                                                 //truyen checkbox
         request.setAttribute("addcheckbox", addcheckbox);
         request.setAttribute("subchecked", subchecked);
+        request.setAttribute("subcheckbox", subcheckbox);
 
         request.setAttribute("keytranhis", key);                                                        //truyen tu tim kiem
 

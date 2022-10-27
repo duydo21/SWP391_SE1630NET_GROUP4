@@ -126,14 +126,17 @@
             }
             function message(){
                var name = document.getElementsByName("nickname")[0].value;
-               swal(name);
-                if (name.length===0) {
-                     swal("Update Succesfull");
-                        
+               var email = document.getElementsByName("email")[0].value;
+               var result = name.replace(/^\s+|\s+$/gm,'');
+
+                if (name != null && name.replace(/^\s+|\s+$/gm,'') && validateEmail(email) ) {
+                      swal("Update Succesfull");
                 }
-                else if (name.length>0) {
-                    swal("Update Succesfull");
-                        }
+                    }
+                    
+             function validateEmail(email) {
+                    var re = /\S+@\S+\.\S+/;
+                    return re.test(email);
                     }
         </script>
     </body>

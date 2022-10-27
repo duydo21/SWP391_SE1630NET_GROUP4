@@ -42,8 +42,13 @@
         <h1 class="text-uppercase text-center mb-5" style="text-align: center; margin-top: 20px"><u>TRANSACTION HISTORY</u></h1>
         <div class="tranhis">
             <div id="sidebar">
-                <input type="checkbox" />Show only additon<br>
-                <input type="checkbox" />Show only subtraction
+
+                <form action="transactionhistory" method="get">
+                    <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/> 
+                    <input type="checkbox" name="addonly" onclick="this.form.submit()" ${addchecked}/>Show only additon<br>
+                    <input type="checkbox" name="subonly" onclick="this.form.submit()" ${subchecked}/>Show only subtraction
+                </form>
+
             </div>
             <div id="post">
                 <div style="float: left">   
@@ -91,7 +96,7 @@
             </c:forEach>
 
             <c:forEach begin="1" end="${endPageth}" var="i">                                        <!--phan trang-->
-                <a href="transactionhistory?UserID=${sessionScope.userlogin.userID}&index=${i}&sortList=${sorttype}">${i}</a>
+                <a href="transactionhistory?UserID=${sessionScope.userlogin.userID}&index=${i}&sortList=${sorttype}&addonly=${addcheckbox}&subonly=${subcheckbox}">${i}</a>
             </c:forEach>
 
             <c:if test="${requestScope.size == 0}">                                                 <!--thong bao neu kich thuoc list lay ve = 0-->

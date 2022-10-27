@@ -63,17 +63,29 @@ public class TransactionhistoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.removeAttribute("dateSelected");
-        request.removeAttribute("moneySelected");
-        request.removeAttribute("paymentMethodSelected");
-
         int id = Integer.parseInt(request.getParameter("UserID"));                          //lay id nguoi duong nhap
         String indexPage = request.getParameter("index");                                   //lay so trang
         if (indexPage == null) {
             indexPage = "1";
         }
         int index = Integer.parseInt(indexPage);
+
+        String addcheckbox = request.getParameter("addonly");
+        if (addcheckbox == null) {
+            addcheckbox = "";
+        }
+        String addchecked = "";
+        if (addcheckbox.equals("on")) {
+            addchecked = "checked";
+        }
+        String subcheckbox = request.getParameter("subonly");
+        if (subcheckbox == null) {
+            subcheckbox = "";
+        }
+        String subchecked = "";
+        if (subcheckbox.equals("on")) {
+            subchecked = "checked";
+        }
 
         String sortType = request.getParameter("sortList");
         if (sortType == null) {
@@ -97,14 +109,33 @@ public class TransactionhistoryServlet extends HttpServlet {
         User user = new UserDAO().findUserByID(id);                                         //tim tai khoan nguoi dang nhap
         List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do
 //        List<Payment> listPaging = new PaymentDAO().pagingTransactionHistory(index, user);  //chia thanh cac trang                   
-        int countList = list.size();                                                        //them trang thieu
-        int endPage = countList / 5;
-        if (countList % 5 != 0) {
-            endPage++;
+
+        List<Payment> listAfterChecked;
+        listAfterChecked = list;
+        
+        if (addcheckbox.equals("on")) {
+            listAfterChecked = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getMoney() > 0) {
+                    listAfterChecked.add(list.get(i));
+                }
+            }
         }
+        if (subcheckbox.equals("on")) {
+            listAfterChecked = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getMoney() < 0) {
+                    listAfterChecked.add(list.get(i));
+                }
+            }
+        }
+        if(addcheckbox.equals("on") && subcheckbox.equals("on")){
+            listAfterChecked = list;
+        }
+        
         switch (sortType) {
             case "date":
-                list = new PaymentDAO().getAllTransactionHistory(user);
+                listAfterChecked = sortDateList(listAfterChecked);
                 break;
             case "money":
                 list = sortMoneyList(list);
@@ -113,19 +144,28 @@ public class TransactionhistoryServlet extends HttpServlet {
                 list = sortPaymentMethodList(list);
                 break;
         }
+        
+        int countList = listAfterChecked.size();                                                        //them trang thieu
+        int endPage = countList / 5;
+        if (countList % 5 != 0) {
+            endPage++;
+        }
+        
+        List<Payment> listPaging = getPaging(listAfterChecked, index);
 
-        List<Payment> listPaging = getPaging(list, index);
-
-        request.setAttribute("listtransactionhistory", list);                               //truyen du lieu danh sach
+//        request.setAttribute("listtransactionhistory", list);                               //truyen du lieu danh sach
         request.setAttribute("pagingth", listPaging);                                       //truyen du lieu danh sach da phan trang
         request.setAttribute("endPageth", endPage);                                         //truyen so trang hien thi
         request.setAttribute("sizeth", list.size());                                        //truyen kich thuoc danh sach
 
-        
         request.setAttribute("sorttype", sortType);
         request.setAttribute("dateSelected", dateSelect);
         request.setAttribute("moneySelected", moneySelect);
         request.setAttribute("paymentMethodSelected", paymentMethodSelect);
+
+        request.setAttribute("addchecked", addchecked);
+        request.setAttribute("addcheckbox", addcheckbox);
+        request.setAttribute("subchecked", subchecked);       
 
         request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);  //ve trang
     }
@@ -160,6 +200,19 @@ public class TransactionhistoryServlet extends HttpServlet {
             newList.add(list.get(i));
         }
         return newList;
+    }
+
+    private List<Payment> sortDateList(List<Payment> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = 0; j < list.size() - i - 1; j++) {
+                if (list.get(j).getDate().compareTo(list.get(j + 1).getDate()) > 0) {
+                    Payment temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+        return list;
     }
 
     private List<Payment> sortMoneyList(List<Payment> list) {

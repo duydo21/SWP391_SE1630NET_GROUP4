@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.CategoryDAO;
+import dal.AdminDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,15 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Category;
 import model.Game;
+import model.UserGameReport;
 
 /**
  *
  * @author Strongest
  */
-@WebServlet(name = "GamesServlet", urlPatterns = {"/games"})
-public class GamesServlet extends HttpServlet {
+@WebServlet(name = "AdminReportServlet", urlPatterns = {"/report"})
+public class AdminReportServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,18 +41,14 @@ public class GamesServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GamesServlet</title>");
+            out.println("<title>Servlet AdminReportServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GamesServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminReportServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
-    GameDAO gd = new GameDAO();
-    List<Game> list = gd.getGame();
-    CategoryDAO cd = new CategoryDAO();
-    List<Category> clist = cd.getCategory();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -66,40 +62,15 @@ public class GamesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String price = request.getParameter("Price");
-        String name = request.getParameter("Name");
-        list = gd.getGame();
-        if (price != null || name != null) {
-
-        }
-
-        //phan trang
-        int size = list.size();
-        int page, numpage = 10;
-        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
-        String xpage = request.getParameter("page");
-        if (xpage == null) {
-            page = 1;
-        } else {
-            page = Integer.parseInt(xpage);
-        }
-        int start, end;
-        start = (page - 1) * numpage;
-        end = Math.min(page * numpage, size);
-        List<Game> plist = gd.getGameByPage(list, start, end);
-        request.setAttribute("size", size);
-        request.setAttribute("page", page);
-        request.setAttribute("num", num);
-
+        GameDAO gd = new GameDAO();
+        AdminDAO ad = new AdminDAO();
         List<Game> glist = gd.getGame();
         request.setAttribute("gamelist", glist);
-
-        request.setAttribute("getgames", plist);
-        request.setAttribute("cate", clist);
-        request.setAttribute("link", "games");
-        request.setAttribute("text", "All Games");
-        request.getRequestDispatcher("games.jsp").forward(request, response);
+        
+        List<UserGameReport> report = ad.getReport();
+        request.setAttribute("report", report);
+        
+        request.getRequestDispatcher("Report.jsp").forward(request, response);
     }
 
     /**
@@ -113,14 +84,7 @@ public class GamesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String price = request.getParameter("Price");
-        String name = request.getParameter("Name");
-        if (price == null && name == null) {
-            list = gd.getGame();
-        } else if (price == "1") {
-            list = gd.sortGameByPrice();
-        }
-        request.getRequestDispatcher("games.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

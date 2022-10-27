@@ -41,38 +41,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                            Store
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item " href="news">New Release</a>
-                            <a class="dropdown-item" href="deal">Deals</a>
-                            <a class="dropdown-item" href="best">Best Selling</a>
-                            <a class="dropdown-item" href="free">Free to play</a>
-                            <a class="dropdown-item" href="#">Coming Soon</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="genre">Genre</a>
-                            <a class="dropdown-item" href="games">All games</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="report">View report</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about">About</a>
+                        <a class="nav-link" href="#">Pending uploads</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Support</a>
+                        <a class="nav-link" href="#">Manage Users</a>
                     </li>
-                    <c:if test="${(sessionScope.acc != null)}">                        
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Welcome ${sessionScope.adminlogin.name.username} 
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="logout">Sign out</a>
-                            </div>
-                        </li>
-                    </c:if>
-                    
                 </ul>
                 <form class="search d-flex " action="search" method = "get" style="position: relative">
                     <input class="form-control me-2" id="input" type="search" placeholder="Search" aria-label="Search" name="search" onkeyup="filterFunction()">

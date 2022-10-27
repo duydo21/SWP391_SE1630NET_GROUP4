@@ -311,7 +311,7 @@ public class GameDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                UserGameComment cmt = new UserGameComment(userDao.findUserByID(rs.getInt("UserIDs")), getGameById(rs.getInt("GameID")), rs.getString("Content"));
+                UserGameComment cmt = new UserGameComment(userDao.findUserByID(rs.getInt("UserIDs")), getGameById(rs.getInt("GameID")), rs.getString("Content"), rs.getDate("Date"));
                 list.add(cmt);
             }
         } catch (SQLException e) {

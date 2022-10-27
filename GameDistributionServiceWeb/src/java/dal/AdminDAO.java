@@ -8,16 +8,47 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 import model.Admin;
+import model.Game;
 import model.User;
+import model.UserGameReport;
 
 /**
  *
- * @author ADMIN
+ * @author Strongest
  */
 public class AdminDAO extends DBContext {
+    UserDAO ud = new UserDAO();
+    GameDAO gd = new GameDAO();
+    
+    //lay report game cua user
+    public List<UserGameReport> getReport(){
+        List<UserGameReport> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[User-Game-Report]";
+        Connection connection = getConnection();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                User u = ud.findUserByID(rs.getInt("UserID"));
+                Game g = gd.getGameById(rs.getInt("GameID"));
+                UserGameReport ugr = new UserGameReport(u,g,rs.getString("Content"),rs.getDate("Date"));
+                list.add(ugr);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
 
+            }
+        }
+        return list;
+    }
     //Kiểm tra Account có tồn tại
     public Account checkAccountExist(String username) {
         String sql = "SELECT [Username]\n"

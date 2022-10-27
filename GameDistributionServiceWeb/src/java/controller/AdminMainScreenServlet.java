@@ -66,11 +66,11 @@ public class AdminMainScreenServlet extends HttpServlet {
 
         //dem so luong download
         BigInteger total = BigInteger.valueOf(0);
-        for(Game g: list){
+        for (Game g : list) {
             total = total.add(BigInteger.valueOf(g.getDownload()));
         }
         request.setAttribute("total", total);
-        
+
         //phan trang
         int size = list.size();
         int page, numpage = 10;
@@ -88,15 +88,15 @@ public class AdminMainScreenServlet extends HttpServlet {
         request.setAttribute("size", size);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
-        
-        
+
         List<Game> best = gd.get10BestSeller();
         List<Game> newgame = gd.get10NewRelease();
         request.setAttribute("tenbest", best);
         request.setAttribute("tennewgame", newgame);
-        
-        
-        
+
+        List<Game> glist = gd.getGame();
+        request.setAttribute("gamelist", glist);
+
         request.setAttribute("games", plist);
         request.getRequestDispatcher("AdminMainScreen.jsp").forward(request, response);
     }

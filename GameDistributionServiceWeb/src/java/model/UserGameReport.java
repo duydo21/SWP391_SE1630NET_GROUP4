@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Strongest
@@ -12,14 +14,16 @@ public class UserGameReport {
     private User UserID;
     private Game GameID;
     private String content;
-
+    private Date date;
+    
     public UserGameReport() {
     }
 
-    public UserGameReport(User UserID, Game GameID, String content) {
+    public UserGameReport(User UserID, Game GameID, String content, Date date) {
         this.UserID = UserID;
         this.GameID = GameID;
         this.content = content;
+        this.date = date;
     }
 
     public User getUserID() {
@@ -44,6 +48,14 @@ public class UserGameReport {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
     
     

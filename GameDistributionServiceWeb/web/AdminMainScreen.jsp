@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,8 +18,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
         <!--        splide framework-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css"> 
-        <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js"></script>        
         <link rel="stylesheet" href="css/Header.css"/>
         <style>
             body{
@@ -80,11 +80,11 @@
                         <thead>
                             <tr>
                                 <th class="table-title" colspan="2">
-                                    <a href="/best">Best selling
+                                    <a href="abest">Best selling
                                         <span class="hide-small"> Games</span>
                                     </a>
                                 </th>
-                                <th style="color: white">Download</th>
+                                <th style="color: white; width: 22%;">Download</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,11 +103,11 @@
                     </table>
                 </div>
                 <div style="width:50%">
-                    <table class="table table-hover">
+                    <table class="table table-hover" >
                         <thead>
                             <tr>
-                                <th class="table-title">
-                                    <a href="/best">New
+                                <th class="table-title" colspan="2">
+                                    <a href="anews">New
                                         <span class="hide-small"> Games</span>
                                     </a>
                                 </th>
@@ -117,7 +117,7 @@
                         <tbody>
                             <c:forEach items="${requestScope.tennewgame}" var="n">
                                 <tr style="height: 5%;">
-                                    <td>
+                                    <td colspan="2">
                                         <a href="gameDetails?GameID=${n.gameID}" aria-hidden="true">
                                             <img src="${n.poster}" alt="" style="width: 10%; height: 100%">
                                         </a>
@@ -131,6 +131,62 @@
                 </div>
             </div>
 
+            <div class="row" style="display:flex">
+                <div style="width:50%">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="table-title" colspan="2">
+                                    <a href="abest">Sale
+                                        <span class="hide-small"> Games</span>
+                                    </a>
+                                </th>
+                                <th style="color: white; width: 22%;">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${requestScope.tenbest}" var="b">
+                                <tr style="height: 5%;">
+                                    <td colspan="2">
+                                        <a href="gameDetails?GameID=${b.gameID}" aria-hidden="true">
+                                            <img src="${b.poster}" alt="" style="width: 10%; height: 100%">
+                                        </a>
+                                        <span style="color: white">${b.name}</span>
+                                    </td>
+                                    <td class="text-success"><b>${b.download}</b></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width:50%">
+                    <table class="table table-hover" >
+                        <thead>
+                            <tr>
+                                <th class="table-title" colspan="2">
+                                    <a href="anews">Free
+                                        <span class="hide-small"> Games</span>
+                                    </a>
+                                </th>
+                                <th style="color: white; width: 22%;">Release date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${requestScope.tennewgame}" var="n">
+                                <tr style="height: 5%;">
+                                    <td colspan="2">
+                                        <a href="gameDetails?GameID=${n.gameID}" aria-hidden="true">
+                                            <img src="${n.poster}" alt="" style="width: 10%; height: 100%">
+                                        </a>
+                                        <span style="color: white">${n.name}</span>
+                                    </td>
+                                    <td class="text-success"><b>${n.date}</b></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="container">
                 <h3 style="color: white">Current database</h3>
                 <div class="row db">
@@ -139,7 +195,7 @@
                         <em style="display: block">number of games on WHG</em>
                     </div>
                     <div style="width: 20%; color: white;">
-                        <a class="number">${requestScope.total}</a>
+                        <a class="number" > <fmt:formatNumber type = "number" maxIntegerDigits = "2" value = "${requestScope.total}"/>M</a>
                         <em style="display: block">number of Purchase on WHG</em>
                     </div>  
                     <div style="width: 20%; color: white;">
@@ -155,6 +211,7 @@
 
             <div class="container">
                 <h2 style="color:white;font-size: 24px; line-height: 2; text-align: left">Recent activities</h2>
+
             </div>
             <br>
         </section>

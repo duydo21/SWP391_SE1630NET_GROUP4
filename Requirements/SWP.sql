@@ -46,14 +46,15 @@ create table Request
 	RequestBy int foreign key references [User](UserID),
 	[Status] int,
 	Content nvarchar(100),
-	[Time] smallDatetime
+	[Time] smallDatetime,
 )
 go
 create table [Notification]
 (
 	NotiID int IDENTITY(1,1) primary key,
 	[Type] int,
-	Content nvarchar(max)
+	Content nvarchar(max),
+	[Date] date
 )
 go
 create table [User-Notification]
@@ -104,7 +105,8 @@ create table [User-Game-Report]
 (
 	UserID int foreign key references [User](UserID),
 	GameID int foreign key references [Game](GameID),
-	Content nvarchar(300)
+	Content nvarchar(300),
+	[Date] date
 )
 go
 create table [User-Game-Buy]

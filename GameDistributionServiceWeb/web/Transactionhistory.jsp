@@ -34,74 +34,71 @@
         </style>
         <script type="text/javascript">
             function changeFunc() {
-                document.getElementById("sortlist").submit();
+                document.getElementById("filter").submit();
             }
         </script>
     </head>
     <body>
-        <h1 class="text-uppercase text-center mb-5" style="text-align: center; margin-top: 20px"><u>TRANSACTION HISTORY</u></h1>
-        <div class="tranhis">
-            <div id="sidebar">
+        <form id="filter" action="transactionhistory" method="get">
+            <h1 class="text-uppercase text-center mb-5" style="text-align: center; margin-top: 20px"><u>TRANSACTION HISTORY</u></h1>
+            <div class="tranhis">
+                <div id="sidebar">
 
-                <form action="transactionhistory" method="get">
-                    <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/> 
+
+                    <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/>
                     <input type="checkbox" name="addonly" onclick="this.form.submit()" ${addchecked}/>Show only additon<br>
                     <input type="checkbox" name="subonly" onclick="this.form.submit()" ${subchecked}/>Show only subtraction
-                </form>
 
-            </div>
-            <div id="post">
-                <div style="float: left">   
-                    <form class="search d-flex "  action="findtransactionhistory" method = "get" style="margin-left: 20px">
-                        <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/>                                       <!--id tai khoan-->
-                        <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+
                 </div>
-
-                <form id="sortlist" action="transactionhistory" method="get">
-                    <input type="hidden" name="UserID" value="${sessionScope.userlogin.userID}"/> 
-                    <div style="float: right">
-                        <label>Sort by: </label>
-                        <select id="selectBox" name="sortList" onchange="changeFunc()">
-                            <option value="date" ${dateSelected}>Date</option>
-                            <option value="money" ${moneySelected}>Money</option>
-                            <option value="paymentmethod" ${paymentMethodSelected}>Payment Method</option>
-                        </select>
+                <div id="post">
+                    <div style="float: left">   
+                            <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        
                     </div>
-                </form>  
+                        <div style="float: right">
+                            <label>Sort by: </label>
+                            <select id="selectBox" name="sortList" onchange="changeFunc()">
+                                <option value="date" ${dateSelected}>Date</option>
+                                <option value="money" ${moneySelected}>Money</option>
+                                <option value="paymentmethod" ${paymentMethodSelected}>Payment Method</option>
+                            </select>
+                        </div>
+                      
 
+                </div>
             </div>
-        </div>
-        <div id="post" style="background-color: #e8e8e8; margin-right: 10%">
-            <c:forEach items="${requestScope.pagingth}" var="listth">              <!--lay du lieu ve table-->
-                <table style="width: 100%; border-bottom: solid 2px">
-                    <tr>
-                        <th>Payment method:                                         <!--phan loai giao dich-->
-                            <c:choose>
-                                <c:when test="${listth.paymentMethod == 1}">Paypal</c:when>
-                                <c:when test="${listth.paymentMethod == 2}">Credit Card</c:when>
-                                <c:when test="${listth.paymentMethod == 3}">Banking</c:when>
-                                <c:when test="${listth.paymentMethod == 4}">Buy Game</c:when>
-                                <c:when test="${listth.paymentMethod == 5}">Sell Game</c:when>
-                            </c:choose>
-                        </th>
-                        <th style="text-align: center;">${listth.date}</th>
-                    </tr>
-                    <tr>
-                        <th>Amount of money: ${listth.money}</th>
-                        <th style="text-align: center;"></th>
-                    </tr>
-                </table>
-            </c:forEach>
+            <div id="post" style="background-color: #e8e8e8; margin-right: 10%">
+                <c:forEach items="${requestScope.pagingth}" var="listth">              <!--lay du lieu ve table-->
+                    <table style="width: 100%; border-bottom: solid 2px">
+                        <tr>
+                            <th>Payment method:                                         <!--phan loai giao dich-->
+                                <c:choose>
+                                    <c:when test="${listth.paymentMethod == 1}">Paypal</c:when>
+                                    <c:when test="${listth.paymentMethod == 2}">Credit Card</c:when>
+                                    <c:when test="${listth.paymentMethod == 3}">Banking</c:when>
+                                    <c:when test="${listth.paymentMethod == 4}">Buy Game</c:when>
+                                    <c:when test="${listth.paymentMethod == 5}">Sell Game</c:when>
+                                </c:choose>
+                            </th>
+                            <th style="text-align: center;">${listth.date}</th>
+                        </tr>
+                        <tr>
+                            <th>Amount of money: ${listth.money}</th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                    </table>
+                </c:forEach>
 
-            <c:forEach begin="1" end="${endPageth}" var="i">                                        <!--phan trang-->
-                <a href="transactionhistory?UserID=${sessionScope.userlogin.userID}&index=${i}&sortList=${sorttype}&addonly=${addcheckbox}&subonly=${subcheckbox}">${i}</a>
-            </c:forEach>
+                <c:forEach begin="1" end="${endPageth}" var="i">                                        <!--phan trang-->
+                    <a href="transactionhistory?UserID=${sessionScope.userlogin.userID}&index=${i}&sortList=${sorttype}&addonly=${addcheckbox}&subonly=${subcheckbox}&keytransactionhistory=${keytranhis}">${i}</a>
+                </c:forEach>
 
-            <c:if test="${requestScope.size == 0}">                                                 <!--thong bao neu kich thuoc list lay ve = 0-->
-                <h1 style="margin-top: 20px">Nothing here, <a href="games">Let's buy something</a></h1>
-            </c:if>
-        </div>
+                <c:if test="${requestScope.sizeth == 0}">                                                 <!--thong bao neu kich thuoc list lay ve = 0-->
+                    <h1 style="margin-top: 20px">Nothing here, <a href="games">Let's buy something</a></h1>
+                </c:if>
+            </div>
+        </form>
     </body>
 </html>

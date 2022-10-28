@@ -4,11 +4,13 @@
  */
 package dal;
 
+import dal.DAOInterface.IUserGameBuyDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import model.Game;
 import model.User;
 import model.UserGameBuy;
@@ -17,7 +19,7 @@ import model.UserGameBuy;
  *
  * @author ACER
  */
-public class UserGameBuyDAO extends DBContext {
+public class UserGameBuyDAO extends DBContext implements IUserGameBuyDAO{
 
     //method to check if a game is bought by the user or not
     public UserGameBuy isGameIDBoughtByUserID(int userID, int gameID) {
@@ -73,6 +75,26 @@ public class UserGameBuyDAO extends DBContext {
 
             }
         }
+    }
+
+    @Override
+    public List<UserGameBuy> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void insert(UserGameBuy t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(UserGameBuy t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(UserGameBuy t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

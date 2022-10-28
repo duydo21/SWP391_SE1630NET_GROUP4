@@ -4,10 +4,12 @@
  */
 package dal;
 
+import dal.DAOInterface.IUserGameRateDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import model.Game;
 import model.User;
 import model.UserGameRate;
@@ -16,7 +18,7 @@ import model.UserGameRate;
  *
  * @author ACER
  */
-public class UserGameRateDAO extends DBContext {
+public class UserGameRateDAO extends DBContext implements IUserGameRateDAO{
 
     //get list UserRateOfGame by userId and GAmeid
     public UserGameRate getUserRateOfGame(User user, Game game) {
@@ -85,6 +87,16 @@ public class UserGameRateDAO extends DBContext {
             } catch (SQLException e) {
             }
         }
+    }
+
+    @Override
+    public List<UserGameRate> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(UserGameRate t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

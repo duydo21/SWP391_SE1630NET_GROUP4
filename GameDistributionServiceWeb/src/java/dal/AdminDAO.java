@@ -4,6 +4,7 @@
  */
 package dal;
 
+import dal.DAOInterface.IAdminDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ import model.UserGameReport;
  *
  * @author Strongest
  */
-public class AdminDAO extends DBContext {
+public class AdminDAO extends DBContext implements IAdminDAO{
 
     UserDAO ud = new UserDAO();
     GameDAO gd = new GameDAO();
@@ -107,5 +108,25 @@ public class AdminDAO extends DBContext {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<Admin> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void insert(Admin t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(Admin t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(Admin t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

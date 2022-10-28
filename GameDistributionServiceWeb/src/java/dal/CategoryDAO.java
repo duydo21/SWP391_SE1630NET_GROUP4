@@ -4,6 +4,7 @@
  */
 package dal;
 
+import dal.DAOInterface.ICategoryDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ import model.GameCategory;
  *
  * @author ACER
  */
-public class CategoryDAO extends DBContext {
+public class CategoryDAO extends DBContext implements ICategoryDAO{
 
     //get Category by ID
     public Category getCategoryByID(int id) {
@@ -106,5 +107,25 @@ public class CategoryDAO extends DBContext {
         List<Category> list = cd.getCategory();
 
         System.out.println(list.size());
+    }
+
+    @Override
+    public List<Category> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void insert(Category t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(Category t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(Category t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

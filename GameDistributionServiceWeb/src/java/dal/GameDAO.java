@@ -4,6 +4,7 @@
  */
 package dal;
 
+import dal.DAOInterface.IGameCategoryDAO;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ import model.UserGameRate;
  *
  * @author Strongest
  */
-public class GameDAO extends DBContext {
+public class GameDAO extends DBContext implements IGameCategoryDAO{
 
 //    [GameID]
 //      ,[Name]
@@ -680,6 +681,26 @@ public class GameDAO extends DBContext {
             }
         }
         return -1;
+    }
+
+    @Override
+    public List<GameCategory> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void insert(GameCategory t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(GameCategory t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(GameCategory t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

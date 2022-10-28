@@ -4,6 +4,7 @@
  */
 package dal;
 
+import dal.DAOInterface.IPaymentDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ import model.User;
  *
  * @author ACER
  */
-public class PaymentDAO extends DBContext {
+public class PaymentDAO extends DBContext implements IPaymentDAO{
 
     
     //insert payment to database
@@ -124,6 +125,26 @@ public class PaymentDAO extends DBContext {
         payment.setPaymentMethod(4);
         payment.setMoney(-game.getPriceAfterDiscount());
         insertPayment(payment);
+    }
+
+    @Override
+    public List<Payment> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void insert(Payment t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(Payment t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(Payment t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

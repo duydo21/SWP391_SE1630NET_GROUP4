@@ -4,10 +4,12 @@
  */
 package dal;
 
+import dal.DAOInterface.IUserDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import model.Account;
 import model.User;
 
@@ -15,7 +17,7 @@ import model.User;
  *
  * @author Strongest
  */
-public class UserDAO extends DBContext {
+public class UserDAO extends DBContext implements IUserDAO{
 
     //tạo thêm Account
     public void createAccount(Account a) {
@@ -308,6 +310,26 @@ public class UserDAO extends DBContext {
             } catch (SQLException e) {
             }
         }
+    }
+
+    @Override
+    public List<User> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void insert(User t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(User t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(User t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

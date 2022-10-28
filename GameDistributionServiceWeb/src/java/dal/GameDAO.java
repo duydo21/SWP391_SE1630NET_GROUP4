@@ -138,6 +138,35 @@ public class GameDAO extends DBContext {
         }
     }
 
+    //lay 10 game mien phi
+    public List<Game> get10FreeGames() {
+        List<Game> list = new ArrayList<>();
+        String sql = "select top 10 * FROM [dbo].[Game] where "
+                + "[price] = 0";
+        Connection connection = getConnection();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
+            return list;
+        }
+    }
+
     //lay top ban chay
     public List<Game> getBestSeller() {
         List<Game> list = new ArrayList<>();
@@ -562,6 +591,34 @@ public class GameDAO extends DBContext {
     public List<Game> getDeals() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where "
+                + "[Discount] != 0";
+        Connection connection = getConnection();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
+                        rs.getFloat("Price"), rs.getInt("Download"),
+                        rs.getInt("Discount"), rs.getFloat("Rate"),
+                        rs.getInt("Status"), rs.getString("Description"),
+                        rs.getDate("Date"), rs.getString("Poster"));
+                list.add(g);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+
+            }
+            return list;
+        }
+    }
+        //lay game co giam gia
+    public List<Game> get10Deals() {
+        List<Game> list = new ArrayList<>();
+        String sql = "SELECT TOP 10 * FROM [dbo].[Game] where "
                 + "[Discount] != 0";
         Connection connection = getConnection();
         try {

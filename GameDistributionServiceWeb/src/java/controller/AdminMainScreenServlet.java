@@ -91,9 +91,13 @@ public class AdminMainScreenServlet extends HttpServlet {
 
         List<Game> best = gd.get10BestSeller();
         List<Game> newgame = gd.get10NewRelease();
+        List<Game> deals = gd.get10Deals();
+        List<Game> free = gd.get10FreeGames();
         request.setAttribute("tenbest", best);
         request.setAttribute("tennewgame", newgame);
-
+        request.setAttribute("tendeals", deals);
+        request.setAttribute("tenfree", free);
+       
         List<Game> glist = gd.getGame();
         request.setAttribute("gamelist", glist);
 

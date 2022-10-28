@@ -52,10 +52,10 @@
                         </thead>
                         <tbody style="color:white">
                             <c:forEach items="${requestScope.getgames}" var="g">
-                                <tr style="height: 5%;" onclick="window.location.href='gameDetails?GameID=${g.gameID}'">
+                                <tr style="height: 5%;" onclick="window.location.href='agameDetails?GameID=${g.gameID}'">
                                     <td>${g.gameID}</td>
                                     <td>                                       
-                                        <a href="gameDetails?GameID=${g.gameID}" aria-hidden="true">
+                                        <a>
                                             <img src="${g.poster}" alt="" style="width: 10%; height: 100%">
                                         </a>
                                         <span>${g.name}</span></td>

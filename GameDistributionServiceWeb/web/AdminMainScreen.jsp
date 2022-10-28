@@ -89,9 +89,9 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${requestScope.tenbest}" var="b">
-                                <tr style="height: 5%;">
+                                <tr style="height: 5%;" onclick="window.location.href='agameDetails?GameID=${b.gameID}'">
                                     <td colspan="2">
-                                        <a href="gameDetails?GameID=${b.gameID}" aria-hidden="true">
+                                        <a>
                                             <img src="${b.poster}" alt="" style="width: 10%; height: 100%">
                                         </a>
                                         <span style="color: white">${b.name}</span>
@@ -116,9 +116,9 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${requestScope.tennewgame}" var="n">
-                                <tr style="height: 5%;">
+                                <tr style="height: 5%;" onclick="window.location.href='agameDetails?GameID=${n.gameID}'">
                                     <td colspan="2">
-                                        <a href="gameDetails?GameID=${n.gameID}" aria-hidden="true">
+                                        <a>
                                             <img src="${n.poster}" alt="" style="width: 10%; height: 100%">
                                         </a>
                                         <span style="color: white">${n.name}</span>
@@ -145,15 +145,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${requestScope.tenbest}" var="b">
-                                <tr style="height: 5%;">
+                            <c:forEach items="${requestScope.tendeals}" var="d">
+                                <tr style="height: 5%;" onclick="window.location.href='agameDetails?GameID=${d.gameID}'">
                                     <td colspan="2">
-                                        <a href="gameDetails?GameID=${b.gameID}" aria-hidden="true">
-                                            <img src="${b.poster}" alt="" style="width: 10%; height: 100%">
+                                        <a>
+                                            <img src="${d.poster}" alt="" style="width: 10%; height: 100%">
                                         </a>
-                                        <span style="color: white">${b.name}</span>
+                                        <span style="color: white">${d.name}</span>
                                     </td>
-                                    <td class="text-success"><b>${b.download}</b></td>
+                                    <td class="text-success"><b>${d.download}</b></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -172,15 +172,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${requestScope.tennewgame}" var="n">
-                                <tr style="height: 5%;">
+                            <c:forEach items="${requestScope.tenfree}" var="f">
+                                <tr style="height: 5%;" onclick="window.location.href='agameDetails?GameID=${f.gameID}'">
                                     <td colspan="2">
-                                        <a href="gameDetails?GameID=${n.gameID}" aria-hidden="true">
-                                            <img src="${n.poster}" alt="" style="width: 10%; height: 100%">
+                                        <a>
+                                            <img src="${f.poster}" alt="" style="width: 10%; height: 100%">
                                         </a>
-                                        <span style="color: white">${n.name}</span>
+                                        <span style="color: white">${f.name}</span>
                                     </td>
-                                    <td class="text-success"><b>${n.date}</b></td>
+                                    <td class="text-success"><b>${f.date}</b></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

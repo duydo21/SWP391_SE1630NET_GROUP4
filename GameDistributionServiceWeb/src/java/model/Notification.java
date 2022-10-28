@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Strongest
@@ -12,6 +14,7 @@ public class Notification {
     private int NotiID;
     private int Type;
     private String Content;
+    private Date date;
     
     public Notification() {
         
@@ -22,7 +25,6 @@ public class Notification {
         this.Type = Type;
         this.Content = Content;
     }
-
     public Notification(String Context) {
         this.Content = Context;
     }
@@ -49,6 +51,14 @@ public class Notification {
 
     public void setContent(String Content) {
         this.Content = Content;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
     
 }

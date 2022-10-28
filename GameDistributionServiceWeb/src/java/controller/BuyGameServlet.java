@@ -72,7 +72,6 @@ public class BuyGameServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         GameDAO gameDao = new GameDAO();
-        CategoryDAO cat_DAO = new CategoryDAO();
         UserGameBuyDAO ugbDao = new UserGameBuyDAO();
         UserDAO uDao = new UserDAO();
         PaymentDAO pDao = new PaymentDAO();
@@ -94,50 +93,9 @@ public class BuyGameServlet extends HttpServlet {
         game.setDownload(game.getDownload()+1);
         gameDao.insertDownloadToGame(game);
         
-        //get game comment
-        List<UserGameComment> cmtList = new ArrayList<>();
-        cmtList = gameDao.getGameCommentByGameID(game.getGameID());
-        if (game.getDescription().length() > 300) {
-            game.setDescription(game.getDescription().substring(0, 295).concat("..."));
-        }
-        //get game media
-        List<Media> gameMedias = new ArrayList<>();
-        gameMedias = gameDao.getGameMediaByGameID(game.getGameID());
-        //get game rate
-        float gameRate = gameDao.getGameRateByID(game.getGameID());
-        game.setRate(gameRate);
-        //get recommend game list
-        List<Game> gameList = new ArrayList<>();
-        List<Category> cateList = cat_DAO.getCategoryOfA_Game(game.getGameID());
-        for (int i = 0; i < 5; i++) {
-            gameList.add(gameDao.getRecomendByCategory(cateList.get(0)).get(i));
-        }
-
-        for (int i = 0; i < gameList.size(); i++) {
-            if (gameList.get(i).getGameID() == game.getGameID()) {
-                gameList.remove(gameList.get(i));
-                i--;
-            }
-        }
-
-        //get developer
-//        List<User> devList = new ArrayList<>();
-        //get bool isBought
-        boolean isBought = false;
-        if (ugbDao.isGameIDBoughtByUserID(user.getUserID(), gameID) != null) {
-            isBought = true;
-        }
-
-        //send info to jsp page
-        request.setAttribute("game", game);
-        request.setAttribute("gameComment", cmtList);
-        request.setAttribute("gameMedias", gameMedias);
-        request.setAttribute("gameList", gameList);
-        request.setAttribute("catList", cateList);
-        request.setAttribute("isBought", isBought);
-
-        request.getRequestDispatcher("GameDetails.jsp").forward(request, response);
-        gameList.clear();
+        
+        request.setAttribute("GameID", gameID_raw);
+        request.getRequestDispatcher("gameDetails").forward(request, response);
     }
 
     /**

@@ -1,0 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package dal.DAOInterface;
+
+import model.User;
+
+/**
+ *
+ * @author ACER
+ */
+public interface IUserDAO extends IDAO<User>{
+    User get(int UserID);
+}

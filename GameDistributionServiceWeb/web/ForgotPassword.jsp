@@ -16,17 +16,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     </head>
-    <body>   
-        <%
-       Cookie[] cookies = request.getCookies();
-           if (cookies != null) {
-           for (Cookie cookie : cookies) {
-       //work with cookies
-           }
-           }
-        %>
+    <body>         
         <section class="vh-100 bg-image"
                  style="background-image: url('https://wallpaperaccess.com/full/7446.jpg'); width: 100%">
             <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -35,27 +27,22 @@
                         <div class="col-10 col-md-9 col-lg-7 col-xl-6">
                             <div class="card" style="border-radius: 15px;">
                                 <div class="card-body p-5">
-                                    <h2 class="text-uppercase text-center mb-5">Change Password</h2>
+                                    <h2 class="text-uppercase text-center mb-5">Forgot Password</h2>
                                     <h5 class="fw-normal mb-3 pb-3" style="color: black;">${requestScope.msr}</h5>
-                                    <form action="changepass" class="register" method="post">
+                                    <form action="forgotpass"  method="post">
 
                                         <div class="form-outline mb-2">
-                                            <input type="password" name ="oldpass"  id="form3Example1cg" class="form-control form-control-lg" required=""  />
-                                            <label class="form-label" for="form3Example1cg">Old Password</label>
+                                            <input type="text" name ="name" " id="form3Example1cg" class="form-control form-control-lg" required=""  />
+                                            <label class="form-label" for="form3Example1cg">Account name</label>
                                         </div>
 
                                         <div class="form-outline mb-2">
-                                            <input type="password" name="pass" id="form3Example4cg" class="form-control form-control-lg" required=""/>
-                                            <label class="form-label" for="form3Example4cg">New Password</label>
-                                        </div>
-
-                                        <div class="form-outline mb-2">
-                                            <input type="password" name="repass" id="form3Example4cg" class="form-control form-control-lg" required=""/>
-                                            <label class="form-label" for="form3Example4cg">Confirm password</label>
+                                            <input type="email" name="email" id="form3Example4cg" class="form-control form-control-lg" required=""/>
+                                            <label class="form-label" for="form3Example4cg">Email</label>
                                         </div>
 
                                         <div class="d-flex justify-content-center">
-                                            <button type="submit" onclick=" message()" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Submit</button>
+                                            <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Submit</button>
                                         </div>                                       
                                     </form>
                                 </div>
@@ -69,20 +56,8 @@
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"
-            >
-        </script>
-        <script>
-            function message() {
-                var oldpass = document.getElementsByName("oldpass")[0].value;
-                var pass = document.getElementsByName("pass")[0].value;
-                var repass = document.getElementsByName("repass")[0].value;
-                swal("change pass Succesfull");
-                if (pass == repass && oldpass == cookie['passC'].getValue()) {
-                    swal("change pass Succesfull");
-                }
-            }
+        ></script>
 
-        </script>
     </body>
 
 </html>

@@ -1,0 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package dal.DAOInterface;
+
+import model.Category;
+
+/**
+ *
+ * @author ACER
+ */
+public interface ICategoryDAO extends IDAO<Category>{
+    Category get(int CategoryID);
+}

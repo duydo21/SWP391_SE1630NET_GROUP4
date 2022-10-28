@@ -11,5 +11,5 @@ import model.Game;
  * @author ACER
  */
 public interface IGameDAO extends IDAO<Game>{
-    
+    Game get(int GameID);
 }

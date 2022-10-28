@@ -11,5 +11,5 @@ import model.User;
  * @author ACER
  */
 public interface IUserDAO extends IDAO<User>{
-    
+    User get(int UserID);
 }

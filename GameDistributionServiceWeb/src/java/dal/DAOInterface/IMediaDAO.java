@@ -11,5 +11,5 @@ import model.Media;
  * @author ACER
  */
 public interface IMediaDAO extends IDAO<Media>{
-    
+    Media get(String link);
 }

@@ -11,5 +11,5 @@ import model.Notification;
  * @author ACER
  */
 public interface INotificationDAO extends IDAO<Notification>{
-    
+    Notification get(int NotiID);
 }

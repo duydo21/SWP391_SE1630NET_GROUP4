@@ -11,5 +11,5 @@ import model.Category;
  * @author ACER
  */
 public interface ICategoryDAO extends IDAO<Category>{
-    
+    Category get(int CategoryID);
 }

@@ -11,5 +11,5 @@ import model.Payment;
  * @author ACER
  */
 public interface IPaymentDAO extends IDAO<Payment>{
-    
+    Payment get(int PaymentID);
 }

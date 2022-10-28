@@ -4,6 +4,7 @@
  */
 package dal;
 
+import dal.DAOInterface.IAccountDAO;
 import dal.DAOInterface.IAdminDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,21 +113,114 @@ public class AdminDAO extends DBContext implements IAdminDAO{
 
     @Override
     public List<Admin> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        IAccountDAO accountDAO = new AccountDAO();
+        List<Admin> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM [Admin]";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            resultSet = getResultSet(preparedStatement);
+            while (resultSet.next()) {
+                Admin a = new Admin(resultSet.getInt("AdminID"), resultSet.getString("Email"),
+                accountDAO.get(resultSet.getString("Name")));
+                list.add(a);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return list;
+        }
     }
 
     @Override
     public void insert(Admin t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT [Admin] (AdminID, Email, Name)"
+                + "VALUES (?, ?, ?)";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getAdminID());
+            preparedStatement.setString(2, t.getEmail());
+            preparedStatement.setString(3, t.getName().getUsername());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+           try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            } 
+        }
     }
 
     @Override
     public void update(Admin t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Update [Admin] set Email = ? where AdminID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setString(1, t.getEmail());
+            preparedStatement.setInt(2, t.getAdminID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+           try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            } 
+        }
     }
 
     @Override
     public void delete(Admin t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [Admin] where AdminID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getAdminID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+           try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            } 
+        }
+    }
+
+    @Override
+    public Admin get(int AdminID) {
+        AccountDAO accountDAO= new AccountDAO();
+        String sql = "Select * from [Admin] where AdminID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try{
+            preparedStatement.setInt(1, AdminID);
+            resultSet = getResultSet(preparedStatement);
+            if(resultSet.next()){
+                Admin a = new Admin(AdminID, resultSet.getString("Email"), 
+                accountDAO.get(resultSet.getString("Name")));
+                return a;
+            }
+        }catch(SQLException e){
+        }finally{
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return null;
+        }
     }
 }

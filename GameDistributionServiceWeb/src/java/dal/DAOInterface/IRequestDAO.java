@@ -11,5 +11,5 @@ import model.Request;
  * @author ACER
  */
 public interface IRequestDAO extends IDAO<Request>{
-    
+    Request get(int RequestID);
 }

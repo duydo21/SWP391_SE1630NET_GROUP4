@@ -11,5 +11,7 @@ import model.Account;
  * @author ACER
  */
 public interface IAccountDAO extends IDAO<Account>{
+
+    public Account get(String string);
     
 }

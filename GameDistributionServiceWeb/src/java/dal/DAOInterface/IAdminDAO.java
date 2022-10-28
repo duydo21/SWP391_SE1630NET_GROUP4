@@ -11,5 +11,5 @@ import model.Admin;
  * @author ACER
  */
 public interface IAdminDAO extends IDAO<Admin>{
-    
+    Admin get(int AdminID);
 }

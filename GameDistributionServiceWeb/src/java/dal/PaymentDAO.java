@@ -134,12 +134,12 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
 
     @Override
     public void insert(Payment t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 
     @Override
     public void update(Payment t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 
     @Override
@@ -162,7 +162,31 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
 
     @Override
     public Payment get(int PaymentID) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        UserDAO userDAO = new UserDAO();
+        String sql = "Select * from [Payment] where PaymentID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try{
+            preparedStatement.setInt(1, PaymentID);
+            resultSet = getResultSet(preparedStatement);
+            if(resultSet.next()){
+                Payment a = new Payment(resultSet.getInt("PaymentID"), 
+                        userDAO.get(resultSet.getInt("PaidBy")), 
+                        resultSet.getInt("PaymentMethod"), resultSet.getFloat("Money"), 
+                        resultSet.getDate("Date"));
+                return a;
+            }
+        }catch(SQLException e){
+        }finally{
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return null;
+        }
     }
 
 }

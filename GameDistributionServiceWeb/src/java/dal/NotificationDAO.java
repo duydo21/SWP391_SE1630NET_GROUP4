@@ -5,6 +5,9 @@
 package dal;
 
 import dal.DAOInterface.INotificationDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import model.Notification;
 
@@ -31,7 +34,20 @@ public class NotificationDAO extends DBContext implements INotificationDAO{
 
     @Override
     public void delete(Notification t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [Notification] where NotiID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getNotiID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override

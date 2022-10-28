@@ -5,6 +5,9 @@
 package dal;
 
 import dal.DAOInterface.IRequestDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import model.Request;
 
@@ -31,7 +34,20 @@ public class RequestDAO extends DBContext implements IRequestDAO{
 
     @Override
     public void delete(Request t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [Request] where RequestID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getRequestID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override

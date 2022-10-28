@@ -126,7 +126,20 @@ public class CategoryDAO extends DBContext implements ICategoryDAO{
 
     @Override
     public void delete(Category t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [Category] where CategoryID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getCategoryID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override

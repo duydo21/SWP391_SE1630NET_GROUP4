@@ -144,7 +144,20 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
 
     @Override
     public void delete(Payment t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [Payment] where PaymentID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getPaymentID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override

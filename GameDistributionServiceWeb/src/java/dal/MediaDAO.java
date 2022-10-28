@@ -5,6 +5,9 @@
 package dal;
 
 import dal.DAOInterface.IMediaDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import model.Media;
 
@@ -31,7 +34,20 @@ public class MediaDAO extends DBContext implements IMediaDAO{
 
     @Override
     public void delete(Media t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [Media] where Link = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setString(1, t.getLink());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override

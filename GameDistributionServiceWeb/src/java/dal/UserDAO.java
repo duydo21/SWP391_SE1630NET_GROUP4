@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import model.Account;
 import model.User;
@@ -314,27 +315,141 @@ public class UserDAO extends DBContext implements IUserDAO{
 
     @Override
     public List<User> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        AccountDAO accountDAO = new AccountDAO();
+        List<User> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM [User]";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            resultSet = getResultSet(preparedStatement);
+            while (resultSet.next()) {
+                User a = new User(resultSet.getInt("UserID"),
+                accountDAO.get(resultSet.getString("Name")),
+                resultSet.getString("NickName"),resultSet.getString("Country"),
+                resultSet.getFloat("AccountBalance"),resultSet.getString("Email"),
+                resultSet.getString("Avatar"),resultSet.getBoolean("IsDev"),
+                resultSet.getDate("Date"),resultSet.getString("Description"),resultSet.getBoolean("IsPrivate"));
+                list.add(a);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return list;
+        }
     }
 
     @Override
     public void insert(User t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO [dbo].[User]\n"
+                + "           ([Name]\n"
+                + "           ,[Nickname]\n"
+                + "           ,[Country]\n"
+                + "           ,[AccountBalance]\n"
+                + "           ,[Email]\n"
+                + "           ,[Avatar]\n"
+                + "           ,[IsDev])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?)";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try {
+            preparedStatement.setString(1, t.getUsername().getUsername());
+            preparedStatement.setString(2, t.getNickname());
+            preparedStatement.setString(3, t.getCountry());
+            preparedStatement.setFloat(4, 0);
+            preparedStatement.setString(5, t.getEmail());
+            preparedStatement.setString(6, "image/Default Avatar.jpg");
+            preparedStatement.setBoolean(7, false);
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override
     public void update(User t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Update [dbo].[User] set NickName = ? and Country = ? and"
+                + "Email = ? and Avatar =? and Description = ? where UserID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try {
+            preparedStatement.setString(1, t.getNickname());
+            preparedStatement.setString(2, t.getCountry());
+            preparedStatement.setString(3, t.getEmail());
+            preparedStatement.setString(4, t.getAvatar());
+            preparedStatement.setString(5, t.getDecription());
+            preparedStatement.setString(6, t.getUsername().getUsername());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override
     public void delete(User t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [User] where UserID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getUserID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
     }
 
     @Override
     public User get(int UserID) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        AccountDAO accountDAO = new AccountDAO();
+        String sql = "Select * from [User] where UserID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try{
+            preparedStatement.setInt(1, UserID);
+            resultSet = getResultSet(preparedStatement);
+            if(resultSet.next()){
+                User a = new User(resultSet.getInt("UserID"), 
+                        accountDAO.get(resultSet.getString("Name")), 
+                        resultSet.getString("NickName"), resultSet.getString("Country"), 
+                        resultSet.getFloat("AccountBalance"), resultSet.getString("Email"), 
+                        resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"), 
+                        resultSet.getDate("Date"), resultSet.getString("Description"), 
+                        resultSet.getBoolean("IsPrivate"));
+                return a;
+            }
+        }catch(SQLException e){
+        }finally{
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return null;
+        }
     }
 
 }

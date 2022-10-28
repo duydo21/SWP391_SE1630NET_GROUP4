@@ -4,8 +4,7 @@
  */
 package dal;
 
-import dal.DAOInterface.IGameCategoryDAO;
-import java.math.BigInteger;
+import dal.DAOInterface.IGameDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +24,7 @@ import model.UserGameRate;
  *
  * @author Strongest
  */
-public class GameDAO extends DBContext implements IGameCategoryDAO{
+public class GameDAO extends DBContext implements IGameDAO{
 
 //    [GameID]
 //      ,[Name]
@@ -684,23 +683,43 @@ public class GameDAO extends DBContext implements IGameCategoryDAO{
     }
 
     @Override
-    public List<GameCategory> getAll() {
+    public Game get(int GameID) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void insert(GameCategory t) {
+    public List<Game> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void update(GameCategory t) {
+    public void insert(Game t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void delete(GameCategory t) {
+    public void update(Game t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public void delete(Game t) {
+        String sql = "Delete from [Game] where GameID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getGameID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+    
 
 }

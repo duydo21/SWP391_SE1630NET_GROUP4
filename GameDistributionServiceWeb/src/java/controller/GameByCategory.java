@@ -5,6 +5,8 @@
 package controller;
 
 import dal.CategoryDAO;
+import dal.DAOInterface.ICategoryDAO;
+import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,9 +66,9 @@ public class GameByCategory extends HttpServlet {
             throws ServletException, IOException {
         String cate_raw = request.getParameter("genre");
         int id = Integer.parseInt(cate_raw);
-        GameDAO gd = new GameDAO();
+        IGameDAO gd = new GameDAO();
         List<GameCategory> list = gd.getGameByCategory(id);
-        CategoryDAO cd = new CategoryDAO();
+        ICategoryDAO cd = new CategoryDAO();
         Category c = cd.getCategoryByID(id);
 
         //phan trang

@@ -4,12 +4,20 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.Category;
 
 /**
  *
  * @author ACER
  */
-public interface ICategoryDAO extends IDAO<Category>{
+public interface ICategoryDAO extends IDAO<Category> {
+
     Category get(int CategoryID);
+
+    Category getCategoryByID(int id);
+
+    List<Category> getCategory();
+
+    List<Category> getCategoryOfA_Game(int gameID);
 }

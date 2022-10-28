@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.UserGameComment;
 
 /**
@@ -11,5 +12,5 @@ import model.UserGameComment;
  * @author ACER
  */
 public interface IUserGameCommentDAO extends IDAO<UserGameComment>{
-    
+    List<UserGameComment> getAll();
 }

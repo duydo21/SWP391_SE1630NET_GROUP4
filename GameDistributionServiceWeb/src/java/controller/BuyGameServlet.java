@@ -4,9 +4,12 @@
  */
 package controller;
 
+import dal.DAOInterface.IGameDAO;
+import dal.DAOInterface.IPaymentDAO;
+import dal.DAOInterface.IUserDAO;
+import dal.DAOInterface.IUserGameBuyDAO;
 import dal.PaymentDAO;
 import dal.UserGameBuyDAO;
-import dal.CategoryDAO;
 import dal.GameDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -17,13 +20,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import model.Category;
 import model.Game;
-import model.Media;
 import model.User;
-import model.UserGameComment;
 
 /**
  *
@@ -71,10 +69,10 @@ public class BuyGameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        GameDAO gameDao = new GameDAO();
-        UserGameBuyDAO ugbDao = new UserGameBuyDAO();
-        UserDAO uDao = new UserDAO();
-        PaymentDAO pDao = new PaymentDAO();
+        IGameDAO gameDao = new GameDAO();
+        IUserGameBuyDAO ugbDao = new UserGameBuyDAO();
+        IUserDAO uDao = new UserDAO();
+        IPaymentDAO pDao = new PaymentDAO();
         //get game
         String gameID_raw = request.getParameter("GameID");
         int gameID = Integer.parseInt(gameID_raw);

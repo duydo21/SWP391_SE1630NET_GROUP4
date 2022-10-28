@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.Account;
 
 /**
@@ -13,5 +14,5 @@ import model.Account;
 public interface IAccountDAO extends IDAO<Account>{
 
     public Account get(String string);
-    
+    List<Account> getAll();
 }

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,7 +61,7 @@ public class MainScreenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GameDAO gd = new GameDAO();
+        IGameDAO gd = new GameDAO();
         List<Game> gBestSeller = gd.get10BestSeller();
         List<Game> gNewRelease = gd.get10NewRelease();
 
@@ -97,7 +98,10 @@ public class MainScreenServlet extends HttpServlet {
     }// </editor-fold>
 
     public static void main(String[] args) {
-        GameDAO gd = new GameDAO();
+        IGameDAO gd = new GameDAO();
         List<Game> glist = gd.getGame();
+        for(Game g: glist){
+            System.out.println(g.getName());
+        }
     }
 }

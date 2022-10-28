@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dal.DAOInterface.IGameDAO;
+import dal.DAOInterface.IUserDAO;
 import dal.GameDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -66,14 +68,14 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        
-        UserDAO ud = new UserDAO();
+        IUserDAO ud = new UserDAO();
         //lấy paramter UserID bên trang Profile 
         String id_raw = request.getParameter("UserID");
         int id = Integer.parseInt(id_raw);
         //tìm kiếm user bằng biến id  
         User u = ud.findUserByID(id);
 
-        GameDAO gd = new GameDAO();
+        IGameDAO gd = new GameDAO();
         //lấy list game 
         List<Game> glist = new ArrayList<>();
         glist = gd.getGame();

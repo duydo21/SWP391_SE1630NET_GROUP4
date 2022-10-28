@@ -28,6 +28,7 @@ public class AdminDAO extends DBContext implements IAdminDAO{
     GameDAO gd = new GameDAO();
 
     //lay report game cua user
+    @Override
     public List<UserGameReport> getReport() {
         List<UserGameReport> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[User-Game-Report]";
@@ -55,6 +56,7 @@ public class AdminDAO extends DBContext implements IAdminDAO{
     }
 
     //Kiểm tra Account có tồn tại
+    @Override
     public Account checkAccountExist(String username) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
@@ -83,6 +85,7 @@ public class AdminDAO extends DBContext implements IAdminDAO{
     }
 
     //tìm Admin bằng Name
+    @Override
     public Admin findAdminByName(String Username) {
         String sql = "SELECT * FROM [dbo].[Admin] where [Name] = ?";
         Admin ad = new Admin();

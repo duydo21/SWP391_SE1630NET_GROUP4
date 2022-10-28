@@ -4,6 +4,9 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
+import model.Game;
+import model.User;
 import model.UserGameBuy;
 
 /**
@@ -11,5 +14,7 @@ import model.UserGameBuy;
  * @author ACER
  */
 public interface IUserGameBuyDAO extends IDAO<UserGameBuy>{
-    
+    UserGameBuy isGameIDBoughtByUserID(int userID, int gameID);
+    void addBuyGame(User u, Game g);
+    List<UserGameBuy> getAll();
 }

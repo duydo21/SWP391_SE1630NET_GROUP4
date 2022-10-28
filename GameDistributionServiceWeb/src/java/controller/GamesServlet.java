@@ -5,6 +5,8 @@
 package controller;
 
 import dal.CategoryDAO;
+import dal.DAOInterface.ICategoryDAO;
+import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,9 +51,9 @@ public class GamesServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-    GameDAO gd = new GameDAO();
+    IGameDAO gd = new GameDAO();
     List<Game> list = gd.getGame();
-    CategoryDAO cd = new CategoryDAO();
+    ICategoryDAO cd = new CategoryDAO();
     List<Category> clist = cd.getCategory();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

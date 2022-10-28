@@ -4,7 +4,10 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
+import model.Game;
 import model.Payment;
+import model.User;
 
 /**
  *
@@ -12,4 +15,8 @@ import model.Payment;
  */
 public interface IPaymentDAO extends IDAO<Payment>{
     Payment get(int PaymentID);
+    void insertPayment(Payment payment);
+    List<Payment> getAllTransactionHistory(User user);
+    List<Payment> searchPaymentbyKey(User user, String key);
+    void addPaymentBuyGame(User user, Game game);
 }

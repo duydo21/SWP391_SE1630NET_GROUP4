@@ -5,6 +5,8 @@
 
 package controller;
 
+import dal.DAOInterface.IGameDAO;
+import dal.DAOInterface.IUserGameRateDAO;
 import dal.GameDAO;
 import dal.UserGameRateDAO;
 import java.io.IOException;
@@ -62,8 +64,8 @@ public class VoteGameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
-        GameDAO gameDao = new GameDAO();
-        UserGameRateDAO userGameRateDAO = new UserGameRateDAO();
+        IGameDAO gameDao = new GameDAO();
+        IUserGameRateDAO userGameRateDAO = new UserGameRateDAO();
                 
         //get user
         User user = (User) session.getAttribute("userlogin");

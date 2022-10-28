@@ -37,17 +37,9 @@ public class GameDAO extends DBContext implements IGameDAO{
 //      ,[Description]
 //      ,[Developer]
 //      ,[Date]
-//        private int GameID;
-//    private String Name;
-//    private float Price;
-//    private String PublishedBy;
-//    private String Developer;
-//    private int Download;
-//    private float Rate;
-//    private int Status;
-//    private String Description;
-//    private Date Date;
+
     //lay danh sach game
+    @Override
     public List<Game> getGame() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game]";
@@ -77,6 +69,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay danh sach game theo trang
+    @Override
     public List<Game> getGameByPage(List<Game> list, int start, int end) {
         List<Game> pGame = new ArrayList<>();
         for (int i = start; i < end; i++) {
@@ -86,6 +79,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay danh sach game dua tren category theo trang
+    @Override
     public List<GameCategory> getGameByCategoryByPage(List<GameCategory> list, int start, int end) {
         List<GameCategory> cGame = new ArrayList<>();
         for (int i = start; i < end; i++) {
@@ -95,6 +89,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //sort gameList dc truyen vao by Download/price/discount
+    @Override
     public List<Game> sortGameList(List<Game> gameList, int sortType) {
 //        sortType = 1,2,3 -> download, price, discount
         gameList.sort((Game g1, Game g2) -> {
@@ -109,6 +104,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //Get all free game
+    @Override
     public List<Game> getFreeGames() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where "
@@ -139,6 +135,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay 10 game mien phi
+    @Override
     public List<Game> get10FreeGames() {
         List<Game> list = new ArrayList<>();
         String sql = "select top 10 * FROM [dbo].[Game] where "
@@ -168,6 +165,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay top ban chay
+    @Override
     public List<Game> getBestSeller() {
         List<Game> list = new ArrayList<>();
         String sql = "select * from Game where [Status] != 2 order by Download desc";
@@ -197,6 +195,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay 10 game top ban chay
+    @Override
     public List<Game> get10BestSeller() {
         List<Game> list = new ArrayList<>();
         String sql = "select top 10 * from Game where [Status] != 2 order by Download desc";
@@ -226,6 +225,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay game moi nhat
+    @Override
     public List<Game> getNewRelease() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
@@ -255,6 +255,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay 10 game moi nhat
+    @Override
     public List<Game> get10NewRelease() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT top 10 * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
@@ -284,6 +285,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay game dua theo id
+    @Override
     public Game getGameById(int id) {
         String sql = "SELECT * FROM [dbo].[Game] where GameID = ?";
         Connection connection = getConnection();
@@ -311,6 +313,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay anh demo, video dua tren game id
+    @Override
     public List<Media> getGameMediaByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[Media] where GameID = ?";
         List<Media> mediaList = new ArrayList<>();
@@ -337,6 +340,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay comment nguoi dung dua tren game id
+    @Override
     public List<UserGameComment> getGameCommentByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Comment] where GameID = ?";
         Connection connection = getConnection();
@@ -364,6 +368,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay danh gia nguoi dung dua tren game id
+    @Override
     public float getGameRateByID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Rate] where GameID = ?";
         Connection connection = getConnection();
@@ -398,6 +403,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay game dua theo category cua game hien tai
+    @Override
     public List<Game> getRecomendByCategory(Category category) {
         //list chua game
         List<Game> list = new ArrayList<>();
@@ -431,6 +437,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay game dua theo category
+    @Override
     public List<GameCategory> getGameByCategory(int cate) {
         //list chua game-category
         List<GameCategory> list = new ArrayList<>();
@@ -459,6 +466,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //tim game theo teen
+    @Override
     public List<Game> searchGamesByName(String name) {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";
@@ -484,6 +492,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //sap xep danh sach game theo ten
+    @Override
     public List<Game> sortGameByName() {
         String sql = "SELECT * FROM [dbo].[Game] order by Name ASC";
         Connection connection = getConnection();
@@ -513,6 +522,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //sap xep danh sach game theo gia tien
+    @Override
     public List<Game> sortGameByPrice() {
         String sql = "SELECT * FROM [dbo].[Game] order by Price ASC";
         Connection connection = getConnection();
@@ -542,6 +552,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay lich su mua game cua user dua theo id
+    @Override
     public List<UserGameBuy> getUserGameBuybyId(int userid) {
         UserDAO usAO = new UserDAO();
         GameDAO gAO = new GameDAO();
@@ -574,6 +585,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay tat ca giao dich cua user
+    @Override
     public List<UserGameBuy> getUserGameBuy() {
         UserDAO usAO = new UserDAO();
         List<UserGameBuy> list = new ArrayList<>();
@@ -603,6 +615,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //lay game co giam gia
+    @Override
     public List<Game> getDeals() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where "
@@ -632,6 +645,7 @@ public class GameDAO extends DBContext implements IGameDAO{
         }
     }
         //lay game co giam gia
+    @Override
     public List<Game> get10Deals() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT TOP 10 * FROM [dbo].[Game] where "
@@ -661,6 +675,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     }
 
     //Insert +1 download when a game is bought
+    @Override
     public void insertDownloadToGame(Game game) {
         String sql = "Update [Game] set Download = ? where GameID = ?";
         Connection connection = getConnection();
@@ -689,6 +704,7 @@ public class GameDAO extends DBContext implements IGameDAO{
         System.out.println(list.size());
     }
 
+    @Override
     public int getLikesOrDislikes(Game game, int voteType) {
         String sql = "Select count(GameID) From [User-Game-rate] "
                 + "where GameID = ? and Rate = ?";

@@ -5,6 +5,8 @@
 package controller;
 
 import dal.AdminDAO;
+import dal.DAOInterface.IAdminDAO;
+import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,8 +64,8 @@ public class AdminReportServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GameDAO gd = new GameDAO();
-        AdminDAO ad = new AdminDAO();
+        IGameDAO gd = new GameDAO();
+        IAdminDAO ad = new AdminDAO();
         List<Game> glist = gd.getGame();
         request.setAttribute("gamelist", glist);
         

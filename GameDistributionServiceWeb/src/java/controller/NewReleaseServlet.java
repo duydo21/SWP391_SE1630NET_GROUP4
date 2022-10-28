@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.CategoryDAO;
+import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,7 +63,7 @@ public class NewReleaseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GameDAO gd = new GameDAO();
+        IGameDAO gd = new GameDAO();
         List<Game> list = gd.getNewRelease();
         List<Category> clist = new ArrayList<>();
         int size = list.size();

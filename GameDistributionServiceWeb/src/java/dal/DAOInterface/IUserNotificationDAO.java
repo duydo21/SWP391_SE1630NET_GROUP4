@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.UserNotification;
 
 /**
@@ -11,5 +12,5 @@ import model.UserNotification;
  * @author ACER
  */
 public interface IUserNotificationDAO extends IDAO<UserNotification>{
-    
+    List<UserNotification> getAll();
 }

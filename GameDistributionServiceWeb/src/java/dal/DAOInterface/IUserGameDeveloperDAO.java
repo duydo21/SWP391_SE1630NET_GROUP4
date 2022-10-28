@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.UserGameDeveloper;
 
 /**
@@ -11,5 +12,5 @@ import model.UserGameDeveloper;
  * @author ACER
  */
 public interface IUserGameDeveloperDAO extends IDAO<UserGameDeveloper>{
-    
+    List<UserGameDeveloper> getAll();
 }

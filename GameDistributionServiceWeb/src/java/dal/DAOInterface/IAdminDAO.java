@@ -4,7 +4,10 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
+import model.Account;
 import model.Admin;
+import model.UserGameReport;
 
 /**
  *
@@ -12,4 +15,8 @@ import model.Admin;
  */
 public interface IAdminDAO extends IDAO<Admin>{
     Admin get(int AdminID);
+    List<UserGameReport> getReport();
+    Account checkAccountExist(String username);
+    Admin findAdminByName(String Username);
+    List<Admin> getAll();
 }

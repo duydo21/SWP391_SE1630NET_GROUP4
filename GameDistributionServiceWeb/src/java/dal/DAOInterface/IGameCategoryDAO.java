@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.GameCategory;
 
 /**
@@ -11,5 +12,5 @@ import model.GameCategory;
  * @author ACER
  */
 public interface IGameCategoryDAO extends IDAO<GameCategory>{
-    
+    List<GameCategory> getAll();
 }

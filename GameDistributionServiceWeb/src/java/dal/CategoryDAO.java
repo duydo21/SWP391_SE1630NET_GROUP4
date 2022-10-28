@@ -21,6 +21,7 @@ import model.GameCategory;
 public class CategoryDAO extends DBContext implements ICategoryDAO{
 
     //get Category by ID
+    @Override
     public Category getCategoryByID(int id) {
         String sql = "SELECT * FROM [dbo].[Category]"
                 + "  where [CategoryID]=?";
@@ -47,6 +48,7 @@ public class CategoryDAO extends DBContext implements ICategoryDAO{
     }
 
     //Lấy list Category
+    @Override
     public List<Category> getCategory() {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Category]";
@@ -72,6 +74,7 @@ public class CategoryDAO extends DBContext implements ICategoryDAO{
     }
 
     //lấy list Game-Category bằng GameID
+    @Override
     public List<Category> getCategoryOfA_Game(int gameID) {
         GameDAO gameDao = new GameDAO();
         List<Category> list = new ArrayList<>();

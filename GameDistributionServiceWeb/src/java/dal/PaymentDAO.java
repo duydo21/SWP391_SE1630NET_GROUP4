@@ -24,6 +24,7 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
 
     
     //insert payment to database
+    @Override
     public void insertPayment(Payment payment) {
         String sql = "INSERT [dbo].[Payment] "
                 + "([Paidby], [PaymentMethod], [Money], [Date]) "
@@ -52,6 +53,7 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
     }
 
     //get all transaction of an user
+    @Override
     public List<Payment> getAllTransactionHistory(User user) {
         List<Payment> list = new ArrayList<>();
         String sql = "select * from Payment where Paidby = ?";                          //chon toan bo cac giao dich voi id la cua tai khoan duoc truyen vao
@@ -85,6 +87,7 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
     }
 
     //get all transaction of an user by key search
+    @Override
     public List<Payment> searchPaymentbyKey(User user, String key) {
         List<Payment> list = new ArrayList<>();
         String sql = "Select * from Payment where (Money like '%" + key + "%' or YEAR([Date]) like '%" + key +            //tim data theo key search
@@ -118,6 +121,7 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
     }
 
     //insert payment which is buying game by user to the database
+    @Override
     public void addPaymentBuyGame(User user, Game game) {
         Payment payment = new Payment();
         payment.setUserID(user);

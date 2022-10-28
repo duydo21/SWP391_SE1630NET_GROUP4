@@ -5,6 +5,8 @@
 package controller;
 
 import dal.CategoryDAO;
+import dal.DAOInterface.ICategoryDAO;
+import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,8 +64,8 @@ public class FreeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GameDAO gd = new GameDAO();
-        CategoryDAO cd = new CategoryDAO();
+        IGameDAO gd = new GameDAO();
+        ICategoryDAO cd = new CategoryDAO();
         List<Game> list = gd.getFreeGames();
         List<Category> clist = cd.getCategory();
         int size = list.size();

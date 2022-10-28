@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.DAOInterface.IUserDAO;
 import dal.PaymentDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -83,7 +84,7 @@ public class PaymentServlet extends HttpServlet {
         String type_raw = "";
         int type=-1;
         try {
-            UserDAO userDao = new UserDAO();
+            IUserDAO userDao = new UserDAO();
             HttpSession session = request.getSession();
             //lấy session của user
             Account account = (Account) session.getAttribute("acc");

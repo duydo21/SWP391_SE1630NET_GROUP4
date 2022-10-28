@@ -5,6 +5,7 @@
 
 package controller;
 
+import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,7 +60,7 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         //Gọi GameDao
-        GameDAO gd = new GameDAO();
+        IGameDAO gd = new GameDAO();
         //lấy parameter của search
         String searchString = request.getParameter("search");
         //Gọi list Game bằng method tìm game bằng tên

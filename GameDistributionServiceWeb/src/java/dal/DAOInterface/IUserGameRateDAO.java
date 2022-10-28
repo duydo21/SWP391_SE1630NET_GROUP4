@@ -4,6 +4,9 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
+import model.Game;
+import model.User;
 import model.UserGameRate;
 
 /**
@@ -11,5 +14,6 @@ import model.UserGameRate;
  * @author ACER
  */
 public interface IUserGameRateDAO extends IDAO<UserGameRate>{
-    
+    UserGameRate getUserRateOfGame(User user, Game game);
+    List<UserGameRate> getAll();
 }

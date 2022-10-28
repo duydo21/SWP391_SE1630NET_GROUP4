@@ -5,6 +5,8 @@
 package controller;
 
 import dal.AdminDAO;
+import dal.DAOInterface.IAdminDAO;
+import dal.DAOInterface.IUserDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -81,8 +83,8 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String user = request.getParameter("user").trim();
         String pass = request.getParameter("pass");
-        UserDAO ud = new UserDAO();
-        AdminDAO ad = new AdminDAO();
+        IUserDAO ud = new UserDAO();
+        IAdminDAO ad = new AdminDAO();
         Account a = null;
         //kiểm tra Đã đăng nhập 
         a = ud.checkLogin(user, pass);

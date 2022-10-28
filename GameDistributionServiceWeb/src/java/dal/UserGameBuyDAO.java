@@ -22,6 +22,7 @@ import model.UserGameBuy;
 public class UserGameBuyDAO extends DBContext implements IUserGameBuyDAO{
 
     //method to check if a game is bought by the user or not
+    @Override
     public UserGameBuy isGameIDBoughtByUserID(int userID, int gameID) {
         GameDAO g_Dao = new GameDAO();
         UserDAO u_Dao = new UserDAO();
@@ -53,6 +54,7 @@ public class UserGameBuyDAO extends DBContext implements IUserGameBuyDAO{
     }
 
     //insert buy game history to database
+    @Override
     public void addBuyGame(User u, Game g) {
         String sql = "INSERT [dbo].[User-Game-Buy] "
                 + "VALUES (?, ?,?)";

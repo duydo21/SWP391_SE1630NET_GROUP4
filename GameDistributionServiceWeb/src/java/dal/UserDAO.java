@@ -21,6 +21,7 @@ import model.User;
 public class UserDAO extends DBContext implements IUserDAO{
 
     //tạo thêm Account
+    @Override
     public void createAccount(Account a) {
         String sql = "INSERT INTO [dbo].[Account]\n"
                 + "           ([Username]\n"
@@ -46,6 +47,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //kiểm tra account có tồn tại
+    @Override
     public Account checkAccountExist(String username) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
@@ -74,6 +76,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //kiểm tra account qua username và password
+    @Override
     public Account checkLogin(String username, String password) {
         String sql = "SELECT [Username]\n"
                 + "      ,[Password]\n"
@@ -103,6 +106,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //tạo User
+    @Override
     public void createUser(String name) {
         String sql = "INSERT INTO [dbo].[User]\n"
                 + "           ([Name]\n"
@@ -137,6 +141,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //Tìm User qua Name
+    @Override
     public User findUserByName(String Username) {
         String sql = "SELECT * FROM [dbo].[User] where [Name] = ?";
         User u = new User();
@@ -171,6 +176,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //Tìm User qua UserID
+    @Override
     public User findUserByID(int id) {
         String sql = "SELECT * FROM [dbo].[User] where [UserID] = ?";
         User u = new User();
@@ -207,6 +213,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //Cập nhật thông tin của User
+    @Override
     public int updateProfileUser(User u) {
 
         int count = 0;
@@ -238,6 +245,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //Thay đổi password của Account
+    @Override
     public int changePassUser(Account a) {
         int count = 0;
         String sql = "update [Account] set Username = ? , "
@@ -261,6 +269,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //cập nhật User là Dev
+    @Override
     public void updateIsDevUser(User u) {
         int count = 0;
         String sql = "update [User] set  "
@@ -293,6 +302,7 @@ public class UserDAO extends DBContext implements IUserDAO{
     }
 
     //Số tiền hiện có của User
+    @Override
     public void manageAccBalance(User u) {
         String sql = "UPDATE [dbo].[User]\n"
                 + "   SET [AccountBalance] = ?\n"

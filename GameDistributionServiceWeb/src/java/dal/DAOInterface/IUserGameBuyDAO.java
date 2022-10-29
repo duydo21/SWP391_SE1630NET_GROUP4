@@ -16,5 +16,5 @@ import model.UserGameBuy;
 public interface IUserGameBuyDAO extends IDAO<UserGameBuy>{
     UserGameBuy isGameIDBoughtByUserID(int userID, int gameID);
     void addBuyGame(User u, Game g);
-    List<UserGameBuy> getAll();
+
 }

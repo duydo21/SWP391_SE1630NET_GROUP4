@@ -12,5 +12,5 @@ import model.UserGameReport;
  * @author ACER
  */
 public interface IUserGameReportDAO extends IDAO<UserGameReport>{
-    List<UserGameReport> getAll();
+
 }

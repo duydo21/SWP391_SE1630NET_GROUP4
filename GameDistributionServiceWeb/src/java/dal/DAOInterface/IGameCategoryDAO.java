@@ -12,5 +12,5 @@ import model.GameCategory;
  * @author ACER
  */
 public interface IGameCategoryDAO extends IDAO<GameCategory>{
-    List<GameCategory> getAll();
+
 }

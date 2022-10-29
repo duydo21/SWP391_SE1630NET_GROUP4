@@ -12,5 +12,5 @@ import model.UserGameDeveloper;
  * @author ACER
  */
 public interface IUserGameDeveloperDAO extends IDAO<UserGameDeveloper>{
-    List<UserGameDeveloper> getAll();
+
 }

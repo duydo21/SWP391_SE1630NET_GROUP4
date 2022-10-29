@@ -15,5 +15,5 @@ import model.UserGameRate;
  */
 public interface IUserGameRateDAO extends IDAO<UserGameRate>{
     UserGameRate getUserRateOfGame(User user, Game game);
-    List<UserGameRate> getAll();
+
 }

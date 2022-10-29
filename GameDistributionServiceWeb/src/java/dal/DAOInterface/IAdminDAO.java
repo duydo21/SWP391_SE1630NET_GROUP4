@@ -18,5 +18,5 @@ public interface IAdminDAO extends IDAO<Admin>{
     List<UserGameReport> getReport();
     Account checkAccountExist(String username);
     Admin findAdminByName(String Username);
-    List<Admin> getAll();
+
 }

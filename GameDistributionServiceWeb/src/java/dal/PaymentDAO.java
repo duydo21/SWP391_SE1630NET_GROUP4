@@ -40,16 +40,13 @@ public class PaymentDAO extends DBContext implements IPaymentDAO{
             preparedStatement.setDate(4, date);
             preparedStatement.executeQuery();
         } catch (SQLException e) {
-
         } finally {
             try {
                 preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
-
             }
         }
-
     }
 
     //get all transaction of an user

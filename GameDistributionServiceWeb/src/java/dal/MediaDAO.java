@@ -7,9 +7,11 @@ package dal;
 import dal.DAOInterface.IMediaDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import model.Media;
+import dal.DAOInterface.IGameDAO;
 
 /**
  *
@@ -52,7 +54,29 @@ public class MediaDAO extends DBContext implements IMediaDAO{
 
     @Override
     public Media get(String link) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        IGameDAO gameDAO = new GameDAO();
+        String sql = "SELECT * FROM [dbo].[Media] where Link = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setString(1, link);
+            resultSet = getResultSet(preparedStatement);
+            if (resultSet.next()) {
+                Media m = new Media(gameDAO.get(resultSet.getInt("GameID")), link, resultSet.getInt("Type"));
+                return m;
+            }
+        } catch (SQLException e) {
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return null;
     }
     
 }

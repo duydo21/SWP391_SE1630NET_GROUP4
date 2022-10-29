@@ -20,10 +20,11 @@ public class Notification {
         
     }
 
-    public Notification(int NotiID, int Type, String Content) {
+    public Notification(int NotiID, int Type, String Content, Date date) {
         this.NotiID = NotiID;
         this.Type = Type;
         this.Content = Content;
+        this.date = date;
     }
     public Notification(String Context) {
         this.Content = Context;

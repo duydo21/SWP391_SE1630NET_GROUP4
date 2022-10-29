@@ -36,5 +36,5 @@ public interface IUserDAO extends IDAO<User> {
 
     void manageAccBalance(User u);
 
-    List<User> getAll();
+
 }

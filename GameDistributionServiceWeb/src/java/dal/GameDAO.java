@@ -757,7 +757,29 @@ public class GameDAO extends DBContext implements IGameDAO{
 
     @Override
     public Game get(int GameID) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM [dbo].[Game] where GameID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setInt(1, GameID);
+            resultSet = getResultSet(preparedStatement);
+            if (resultSet.next()) {
+                //(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date)
+                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"), resultSet.getFloat("Price"), resultSet.getInt("Download"), resultSet.getInt("Discount"), resultSet.getFloat("Rate"), resultSet.getInt("Status"), resultSet.getString("Description"), resultSet.getDate("Date"), resultSet.getString("Poster"));
+                return g;
+            }
+        } catch (SQLException e) {
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return null;
     }
 
     @Override

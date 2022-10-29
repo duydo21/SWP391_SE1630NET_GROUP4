@@ -35,6 +35,10 @@ public interface IUserDAO extends IDAO<User> {
     void updateIsDevUser(User u);
 
     void manageAccBalance(User u);
+    
+    User findUserByNameAndEmail(String Username,String Email );
+    
+    Account findAccountByName(String username);
 
 
 }

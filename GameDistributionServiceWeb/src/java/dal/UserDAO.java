@@ -18,7 +18,7 @@ import model.User;
  *
  * @author Strongest
  */
-public class UserDAO extends DBContext implements IUserDAO{
+public class UserDAO extends DBContext implements IUserDAO {
 
     //tạo thêm Account
     @Override
@@ -293,14 +293,6 @@ public class UserDAO extends DBContext implements IUserDAO{
 //        return count;
     }
 
-    public static void main(String[] args) {
-
-        User u = new UserDAO().findUserByID(4);
-
-        System.out.println(u);
-
-    }
-
     //Số tiền hiện có của User
     @Override
     public void manageAccBalance(User u) {
@@ -336,11 +328,11 @@ public class UserDAO extends DBContext implements IUserDAO{
             resultSet = getResultSet(preparedStatement);
             while (resultSet.next()) {
                 User a = new User(resultSet.getInt("UserID"),
-                accountDAO.get(resultSet.getString("Name")),
-                resultSet.getString("NickName"),resultSet.getString("Country"),
-                resultSet.getFloat("AccountBalance"),resultSet.getString("Email"),
-                resultSet.getString("Avatar"),resultSet.getBoolean("IsDev"),
-                resultSet.getDate("Date"),resultSet.getString("Description"),resultSet.getBoolean("IsPrivate"));
+                        accountDAO.get(resultSet.getString("Name")),
+                        resultSet.getString("NickName"), resultSet.getString("Country"),
+                        resultSet.getFloat("AccountBalance"), resultSet.getString("Email"),
+                        resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"),
+                        resultSet.getDate("Date"), resultSet.getString("Description"), resultSet.getBoolean("IsPrivate"));
                 list.add(a);
             }
         } catch (SQLException e) {
@@ -408,6 +400,7 @@ public class UserDAO extends DBContext implements IUserDAO{
                 preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -417,11 +410,11 @@ public class UserDAO extends DBContext implements IUserDAO{
         String sql = "Delete from [User] where UserID = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        try{
+        try {
             preparedStatement.setInt(1, t.getUserID());
             preparedStatement.executeQuery();
-        }catch(SQLException e){
-        }finally{
+        } catch (SQLException e) {
+        } finally {
             try {
                 preparedStatement.close();
                 connection.close();
@@ -437,21 +430,21 @@ public class UserDAO extends DBContext implements IUserDAO{
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
-        try{
+        try {
             preparedStatement.setInt(1, UserID);
             resultSet = getResultSet(preparedStatement);
-            if(resultSet.next()){
-                User a = new User(resultSet.getInt("UserID"), 
-                        accountDAO.get(resultSet.getString("Name")), 
-                        resultSet.getString("NickName"), resultSet.getString("Country"), 
-                        resultSet.getFloat("AccountBalance"), resultSet.getString("Email"), 
-                        resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"), 
-                        resultSet.getDate("Date"), resultSet.getString("Description"), 
+            if (resultSet.next()) {
+                User a = new User(resultSet.getInt("UserID"),
+                        accountDAO.get(resultSet.getString("Name")),
+                        resultSet.getString("NickName"), resultSet.getString("Country"),
+                        resultSet.getFloat("AccountBalance"), resultSet.getString("Email"),
+                        resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"),
+                        resultSet.getDate("Date"), resultSet.getString("Description"),
                         resultSet.getBoolean("IsPrivate"));
                 return a;
             }
-        }catch(SQLException e){
-        }finally{
+        } catch (SQLException e) {
+        } finally {
             try {
                 resultSet.close();
                 preparedStatement.close();
@@ -462,4 +455,77 @@ public class UserDAO extends DBContext implements IUserDAO{
         }
     }
 
+    //tìm User qua Name và Email
+    @Override
+    public User findUserByNameAndEmail(String Username, String Email) {
+        String sql = "select * from [User] where [Name]=? and Email = ?";
+        User u = new User();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setString(1, Username);
+            preparedStatement.setString(2, Email);
+            resultSet = getResultSet(preparedStatement);
+            if (resultSet.next()) {
+                Account a = checkAccountExist(resultSet.getString("Name"));
+                u.setUserID(resultSet.getInt("UserID"));
+                u.setUsername(a);
+                u.setNickname(resultSet.getString("Nickname"));
+                u.setCountry(resultSet.getString("Country"));
+                u.setAccountBalance(resultSet.getFloat("AccountBalance"));
+                u.setEmail(resultSet.getString("Email"));
+                u.setAvatar(resultSet.getString("Avatar"));
+                u.setIsDev(resultSet.getBoolean("IsDev"));
+                return u;
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return null;
+    }
+
+    //tim account bang username
+    @Override
+    public Account findAccountByName(String username) {
+        String sql = "select * from Account where Username=?";
+        Account a = new Account();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setString(1, username);
+            resultSet = getResultSet(preparedStatement);
+            if (resultSet.next()) {
+                a.setUsername(resultSet.getString("Username"));
+                a.setPassword(resultSet.getString("Password"));
+                a.setType(resultSet.getBoolean("Type"));
+                return a;
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+
+        Account u = new UserDAO().findAccountByName("gavan2");
+
+        System.out.println(u);
+
+    }
 }
+

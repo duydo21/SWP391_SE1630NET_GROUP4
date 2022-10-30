@@ -352,7 +352,7 @@ public class GameDAO extends DBContext implements IGameDAO{
             preparedStatement.setInt(1, id);
             resultSet = getResultSet(preparedStatement);
             while (resultSet.next()) {
-                UserGameComment cmt = new UserGameComment(userDao.findUserByID(resultSet.getInt("UserIDs")), getGameById(resultSet.getInt("GameID")), resultSet.getString("Content"), resultSet.getDate("Date"));
+                UserGameComment cmt = new UserGameComment(userDao.findUserByID(resultSet.getInt("UserID")), getGameById(resultSet.getInt("GameID")), resultSet.getString("Content"));
                 list.add(cmt);
             }
         } catch (SQLException e) {
@@ -730,6 +730,7 @@ public class GameDAO extends DBContext implements IGameDAO{
         return -1;
     }
 
+    @Override
     public int getUserVoteOfAGame(User user, Game game) {
         String sql = "Select Rate from [SWP].[dbo].[User-Game-Rate] "
                 + " where UserID =? and GameID =?";

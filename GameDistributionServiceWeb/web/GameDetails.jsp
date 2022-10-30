@@ -3,7 +3,12 @@
     Created on : Oct 6, 2022, 9:51:54 AM
     Author     : ACER
 --%>
-
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import ="model.UserGameRate"%>
+<%@ page import ="model.UserGameComment"%>
+<%@ page import ="dal.GameDAO"%>
+<%@ page import ="dal.DAOInterface.IGameDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -36,6 +41,9 @@
         <c:set var="catList" value = "${requestScope.catList}"/>
         <c:set var="user" value = "${sessionScope.userlogin}"/>
         <c:set var="userVote" value = "${requestScope.userVote}"/>
+        <c:set var="cmtList" value = "${requestScope.cmtList}"/>
+        <c:set var="rateList" value = "${requestScope.rateList}"/>
+        <c:set var="isCmt" value="${requestScope.isCmt}"/>
 
         <header>
             <jsp:include page="Header.jsp" />
@@ -114,31 +122,31 @@
                                     <!--TH chua login-->
                                     <c:if test="${user==null}">
                                         <icon class="fa-regular fa-thumbs-up"></icon>
-                                    </c:if>
+                                        </c:if>
                                     <!--Th login roi-->
                                     <c:if test="${user!=null}">
                                         <!--TH user chua mua game -> ko dc vote-->
                                         <c:if test ="${!isBought}">
                                             <icon class="fa-regular fa-thumbs-up"></icon>
-                                        </c:if>
+                                            </c:if>
                                         <!--TH user mua game -> dc vote-->
                                         <c:if test ="${isBought}">
                                             <!--TH user chua vote-->
                                             <c:if test="${userVote==-1}">
                                                 <icon class="fa-regular fa-thumbs-up" 
                                                       onclick="window.location.href = 'votegame?type=1&GameID=${game.getGameID()}'"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user likes-->
                                             <c:if test="${userVote==1}">
                                                 <icon class="fa-solid fa-thumbs-up"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user dislike-->
                                             <c:if test="${userVote==0}">
                                                 <icon class="fa-regular fa-thumbs-up"
                                                       onclick="window.location.href = 'votegame?type=1&GameID=${game.getGameID()}'"></icon>
+                                                </c:if>
                                             </c:if>
-                                        </c:if>
-                                        
+
                                     </c:if>
                                     <div>${requestScope.likes} likes</div>
                                 </div>
@@ -146,31 +154,31 @@
                                     <!--TH chua login-->
                                     <c:if test="${user==null}">
                                         <icon class="fa-regular fa-thumbs-down"></icon>
-                                    </c:if>
+                                        </c:if>
                                     <!--Th login roi-->
                                     <c:if test="${user!=null}">
                                         <!--TH user chua mua game -> ko dc vote-->
                                         <c:if test ="${!isBought}">
                                             <icon class="fa-regular fa-thumbs-down"></icon>
-                                        </c:if>
+                                            </c:if>
                                         <!--TH user mua game -> dc vote-->
                                         <c:if test ="${isBought}">
                                             <!--TH user chua vote-->
                                             <c:if test="${userVote==-1}">
                                                 <icon class="fa-regular fa-thumbs-down"
                                                       onclick="window.location.href = 'votegame?type=0&GameID=${game.getGameID()}'"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user dislikes-->
                                             <c:if test="${userVote==0}">
                                                 <icon class="fa-solid fa-thumbs-down"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user likes-->
                                             <c:if test="${userVote==1}">
                                                 <icon class="fa-regular fa-thumbs-down"
                                                       onclick="window.location.href = 'votegame?type=0&GameID=${game.getGameID()}'"></icon>
+                                                </c:if>
                                             </c:if>
                                         </c:if>
-                                    </c:if>
                                     <div>${requestScope.dislikes} dislikes</div>
                                 </div>
                             </span>
@@ -203,7 +211,59 @@
                         <div class="clear"></div>
                     </div>
                     <div id="user-comment">
-                        <div class="heading-content">Comment</div>
+                        <div class="heading-content" style="margin-bottom: 5px">Comment</div>
+                        <c:if test="${(user!=null && isBought && userVote!=-1 && !isCmt)}">
+                            <div class="comment-form">
+                                <form>
+                                    <div class="cmt-textbox" style="width: 90%">
+                                        <textarea name="cmt" rows="3" style="width:100%"></textarea>
+                                    </div>
+                                    <div class="cmt-send" style="width:10%">
+                                        <input type="submit" value="Send" style="width: 100%; height: 74px;">
+                                    </div>
+                                </form>
+                                <div class="clear"></div>
+                            </div>
+                        </c:if>
+                        <%! int a=0;%>
+                        <% a=0; %>
+                        <%!IGameDAO gameDao = new GameDAO();%>
+                        <%!List<UserGameComment> cmtList = new ArrayList<>();%>
+                        <%!List<UserGameRate> rateList1 = new ArrayList<>();%>
+                        <% cmtList = gameDao.getGameCommentByGameID(1); %>
+                        <%for(UserGameComment cmt : cmtList){
+                            rateList1.add(new UserGameRate( cmt.getUserID(), 
+                            cmt.getGameID(),
+                            gameDao.getUserVoteOfAGame(cmt.getUserID(), cmt.getGameID()
+                            )));
+                        }%>
+                        <div class="comment-container">
+                            <% for(int j=cmtList.size()-1;j>=0;j--){ %>
+                            <% a++; %>
+                            <div class="detail-cmt" >
+                                    <div class="cmt-vote" style="background-color: #006666; line-height: 32px;">
+                                        <% if(rateList1.get(j).getRate()==0){ %>
+                                            <icon class="fa-solid fa-thumbs-down" style="padding: 2px 10px 0 10px"></icon>Not recommend
+                                        <% }else{ %>
+                                            <icon class="fa-solid fa-thumbs-up" style="padding: 2px 10px 0 10px"></icon>Recommend
+                                        <% } %>
+                                    </div>
+                                    <div class="cmt-content" style="background-color: #009999">
+                                        <div class="cmter" style="width: 20%">
+                                            <img src="<%= cmtList.get(j).getUserID().getAvatar() %>" style="width:35%"/>
+                                            <p><%= cmtList.get(j).getUserID().getUsername().getUsername() %></p>
+                                        </div>
+                                        <div class="cmter-content" style="width: 80%"><%= cmtList.get(j).getContent() %></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                                <% if(a==3){break;} %>
+                            <% } %>
+                        </div>
+                        <div class="link-more-cmt" style="text-align: center;">
+                            <icon class="ti-arrow-right"></icon>
+                            <a href="#">See more comment</a>
+                        </div>
                     </div>
                 </div>
                 <div id="more-game">

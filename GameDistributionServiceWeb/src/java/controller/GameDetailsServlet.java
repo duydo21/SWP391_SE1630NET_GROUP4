@@ -10,8 +10,10 @@ import dal.DAOInterface.ICategoryDAO;
 import dal.DAOInterface.IGameDAO;
 import dal.DAOInterface.IUserDAO;
 import dal.DAOInterface.IUserGameBuyDAO;
+import dal.DAOInterface.IUserGameCommentDAO;
 import dal.GameDAO;
 import dal.UserDAO;
+import dal.UserGameCommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -28,6 +30,7 @@ import model.Game;
 import model.Media;
 import model.User;
 import model.UserGameComment;
+import model.UserGameRate;
 
 /**
  *
@@ -78,6 +81,7 @@ public class GameDetailsServlet extends HttpServlet {
         ICategoryDAO cat_DAO = new CategoryDAO();
         IUserGameBuyDAO ugb_Dao = new UserGameBuyDAO();
         IUserDAO u_Dao = new UserDAO();
+        IUserGameCommentDAO userGameCommentDAO = new UserGameCommentDAO();
         HttpSession session = request.getSession();
 
         String gameID_raw = request.getParameter("GameID");
@@ -109,8 +113,26 @@ public class GameDetailsServlet extends HttpServlet {
             userVote = gameDao.getUserVoteOfAGame(user, game);
         }
         //get game comment
-        List<UserGameComment> cmtList = new ArrayList<>();
-        cmtList = gameDao.getGameCommentByGameID(gameID);
+        boolean isCmt = false;
+        if (user != null) {
+            try {
+                if(userGameCommentDAO.getUserCommentOfAGame(user.getUserID(), game.getGameID())!=null){
+                    isCmt = true;
+                }
+            } catch (NullPointerException e) {
+            }
+        }
+
+//        List<UserGameComment> cmtList = new ArrayList<>();
+//        cmtList = gameDao.getGameCommentByGameID(gameID);
+//        
+//        List<UserGameRate> rateListForCmtSection = new ArrayList<>();
+//        for(UserGameComment cmt : cmtList){
+//            rateListForCmtSection.add(new UserGameRate( cmt.getUserID(), 
+//                    cmt.getGameID(),
+//                    gameDao.getUserVoteOfAGame(cmt.getUserID(), cmt.getGameID()
+//                    )));
+//        }
         //get recommend game list
         List<Game> gameList_full = new ArrayList<>();
         List<Game> gameList = new ArrayList<>();
@@ -158,11 +180,13 @@ public class GameDetailsServlet extends HttpServlet {
         request.setAttribute("dislikes", dislikes);
         request.setAttribute("votes", votes);
         request.setAttribute("game", game);
-        request.setAttribute("gameComment", cmtList);
+//        request.setAttribute("cmtList", cmtList);
         request.setAttribute("gameMedias", gameMedias);
         request.setAttribute("gameList", gameList);
         request.setAttribute("catList", cateList);
         request.setAttribute("isBought", isBought);
+        request.setAttribute("isCmt", isCmt);
+//        request.setAttribute("rateList", rateListForCmtSection);
 //        request.setAttribute("devList", devList);
         request.getRequestDispatcher("GameDetails.jsp").forward(request, response);
         gameList_full.clear();
@@ -193,8 +217,20 @@ public class GameDetailsServlet extends HttpServlet {
     }// </editor-fold>
 
 //    public static void main(String[] args) {
-//        GameDAO gameDao = new GameDAO();
-//        Game g = gameDao.getGameById(1);
-//        System.out.println(g.getDescription().length());
+//        IGameDAO gameDao = new GameDAO();
+//        List<UserGameComment> cmtList = new ArrayList<>();
+//        cmtList = gameDao.getGameCommentByGameID(1);
+//        
+//        List<UserGameRate> rateListForCmtSection = new ArrayList<>();
+//        for(UserGameComment cmt : cmtList){
+//            rateListForCmtSection.add(new UserGameRate( cmt.getUserID(), 
+//                    cmt.getGameID(),
+//                    gameDao.getUserVoteOfAGame(cmt.getUserID(), cmt.getGameID()
+//                    )));
+//        }
+//        
+//        for(UserGameRate a : rateListForCmtSection){
+//            System.out.println(a.getUserID().getUserID() + "-"+a.getRate());
+//        }
 //    }
 }

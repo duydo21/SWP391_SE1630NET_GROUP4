@@ -179,6 +179,32 @@ html{
     opacity: 0.7;
 }
 
+#user-comment .cmt-textbox,
+#user-comment .cmt-send{
+    float: left;
+    display: inline-block;
+}
+
+.cmt-send input{
+    background-color: #6666ff;
+    color: white;
+    text-transform: uppercase;
+}
+
+.detail-cmt .cmt-content .cmter,
+.detail-cmt .cmt-content .cmter-content{
+    float: left;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.detail-cmt .cmter{
+    text-align: center;
+}
+
+.detail-cmt{
+    margin-bottom: 10px;
+}
 
 #action{
     position: relative;

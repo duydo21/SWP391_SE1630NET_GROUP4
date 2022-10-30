@@ -36,7 +36,7 @@
 
                                         <div style="text-align: center">
 
-                                            <input type="checkbox" required=""> I accept to all the terms.<br>
+                                            <input type="checkbox" required=""> I accept to all the terms.<br>          <!-- checkbox de accept -->
                                             <button type="submit">Register!!</button>
 
                                         </div>                                     

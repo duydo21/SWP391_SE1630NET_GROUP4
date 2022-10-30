@@ -4,7 +4,6 @@
  */
 package dal.DAOInterface;
 
-import java.util.List;
 import model.UserGameReport;
 
 /**

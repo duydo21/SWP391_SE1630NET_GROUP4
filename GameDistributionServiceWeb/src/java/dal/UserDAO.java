@@ -412,6 +412,7 @@ public class UserDAO extends DBContext implements IUserDAO {
                 preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -502,13 +503,77 @@ public class UserDAO extends DBContext implements IUserDAO {
         }
         return pUser;
     }
-
-    public static void main(String[] args) {
-        UserDAO ud = new UserDAO();
-        List<User> list = ud.getAll();
-        for (User u : list) {
-            System.out.println(u.getUserID());
+    //tìm User qua Name và Email
+    @Override
+    public User findUserByNameAndEmail(String Username, String Email) {
+        String sql = "select * from [User] where [Name]=? and Email = ?";
+        User u = new User();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setString(1, Username);
+            preparedStatement.setString(2, Email);
+            resultSet = getResultSet(preparedStatement);
+            if (resultSet.next()) {
+                Account a = checkAccountExist(resultSet.getString("Name"));
+                u.setUserID(resultSet.getInt("UserID"));
+                u.setUsername(a);
+                u.setNickname(resultSet.getString("Nickname"));
+                u.setCountry(resultSet.getString("Country"));
+                u.setAccountBalance(resultSet.getFloat("AccountBalance"));
+                u.setEmail(resultSet.getString("Email"));
+                u.setAvatar(resultSet.getString("Avatar"));
+                u.setIsDev(resultSet.getBoolean("IsDev"));
+                return u;
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
         }
+        return null;
+    }
+
+    //tim account bang username
+    @Override
+    public Account findAccountByName(String username) {
+        String sql = "select * from Account where Username=?";
+        Account a = new Account();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            preparedStatement.setString(1, username);
+            resultSet = getResultSet(preparedStatement);
+            if (resultSet.next()) {
+                a.setUsername(resultSet.getString("Username"));
+                a.setPassword(resultSet.getString("Password"));
+                a.setType(resultSet.getBoolean("Type"));
+                return a;
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+
+        Account u = new UserDAO().findAccountByName("gavan2");
+
+        System.out.println(u);
 
     }
 }
+

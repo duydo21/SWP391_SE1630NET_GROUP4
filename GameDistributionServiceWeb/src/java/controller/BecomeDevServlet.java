@@ -42,7 +42,7 @@ public class BecomeDevServlet extends HttpServlet {
             out.println("<title>Servlet isDevServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet isDevServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>There is something wrong, please try again</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,11 +60,15 @@ public class BecomeDevServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int Id = Integer.parseInt(request.getParameter("UserID"));
+        try {
+            int Id = Integer.parseInt(request.getParameter("UserID"));                              //lay id tai khoan
 
-        User user = new UserDAO().findUserByID(Id);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("BecomeDev.jsp").forward(request, response);
+            User user = new UserDAO().findUserByID(Id);                                             //tim user
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("BecomeDev.jsp").forward(request, response);               //ve trang
+        } catch (ServletException | IOException | NumberFormatException e) {
+            processRequest(request, response);
+        }
     }
 
     /**
@@ -87,26 +91,8 @@ public class BecomeDevServlet extends HttpServlet {
             session.removeAttribute("acc");
             response.sendRedirect("mainscreen");
         } catch (NumberFormatException e) {
+            processRequest(request, response);
         }
-//        UserDAO d = new UserDAO();
-//        try {
-//            int id = Integer.parseInt(request.getParameter("id"));
-//            //boolean isDev = Boolean.parseBoolean(request.getParameter("isdev"));
-//            d.updateisDevUser(id);
-//            processRequest(request, response);
-//
-//        } catch (ServletException | IOException | NumberFormatException e) {
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet BecomeDevServlet</title>");
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet BecomeDevServlet at " + e.getMessage() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
-
     }
 
     /**

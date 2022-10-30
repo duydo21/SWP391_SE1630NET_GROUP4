@@ -214,12 +214,13 @@
                         <div class="heading-content" style="margin-bottom: 5px">Comment</div>
                         <c:if test="${(user!=null && isBought && userVote!=-1 && !isCmt)}">
                             <div class="comment-form">
-                                <form>
+                                <form action="commentGame">
                                     <div class="cmt-textbox" style="width: 90%">
                                         <textarea name="cmt" rows="3" style="width:100%"></textarea>
                                     </div>
                                     <div class="cmt-send" style="width:10%">
                                         <input type="submit" value="Send" style="width: 100%; height: 74px;">
+                                        <input type="hidden" name="GameID" value="${game.getGameID()}">
                                     </div>
                                 </form>
                                 <div class="clear"></div>

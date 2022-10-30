@@ -229,10 +229,12 @@
                         </c:if>
                         <%! int a=0;%>
                         <% a=0; %>
+                        <% String gameID_raw = request.getParameter("GameID");%>
+                        <% int gameID = Integer.parseInt(gameID_raw);  %>
                         <%!IGameDAO gameDao = new GameDAO();%>
                         <%!List<UserGameComment> cmtList = new ArrayList<>();%>
                         <%!List<UserGameRate> rateList1 = new ArrayList<>();%>
-                        <% cmtList = gameDao.getGameCommentByGameID(1); %>
+                        <% cmtList = gameDao.getGameCommentByGameID(gameID); %>
                         <%for(UserGameComment cmt : cmtList){
                             rateList1.add(new UserGameRate( cmt.getUserID(), 
                             cmt.getGameID(),
@@ -243,23 +245,23 @@
                             <% for(int j=cmtList.size()-1;j>=0;j--){ %>
                             <% a++; %>
                             <div class="detail-cmt" >
-                                    <div class="cmt-vote" style="background-color: #006666; line-height: 32px;">
-                                        <% if(rateList1.get(j).getRate()==0){ %>
-                                            <icon class="fa-solid fa-thumbs-down" style="padding: 2px 10px 0 10px"></icon>Not recommend
+                                <div class="cmt-vote" style="background-color: #006666; line-height: 32px;">
+                                    <% if(rateList1.get(j).getRate()==0){ %>
+                                    <icon class="fa-solid fa-thumbs-down" style="padding: 2px 10px 0 10px"></icon>Not recommend
                                         <% }else{ %>
-                                            <icon class="fa-solid fa-thumbs-up" style="padding: 2px 10px 0 10px"></icon>Recommend
+                                    <icon class="fa-solid fa-thumbs-up" style="padding: 2px 10px 0 10px"></icon>Recommend
                                         <% } %>
-                                    </div>
-                                    <div class="cmt-content" style="background-color: #009999">
-                                        <div class="cmter" style="width: 20%">
-                                            <img src="<%= cmtList.get(j).getUserID().getAvatar() %>" style="width:35%"/>
-                                            <p><%= cmtList.get(j).getUserID().getUsername().getUsername() %></p>
-                                        </div>
-                                        <div class="cmter-content" style="width: 80%"><%= cmtList.get(j).getContent() %></div>
-                                        <div class="clear"></div>
-                                    </div>
                                 </div>
-                                <% if(a==3){break;} %>
+                                <div class="cmt-content" style="background-color: #009999">
+                                    <div class="cmter" style="width: 20%">
+                                        <img src="<%= cmtList.get(j).getUserID().getAvatar() %>" style="width:35%"/>
+                                        <p><%= cmtList.get(j).getUserID().getUsername().getUsername() %></p>
+                                    </div>
+                                    <div class="cmter-content" style="width: 80%"><%= cmtList.get(j).getContent() %></div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <% if(a==3){break;} %>
                             <% } %>
                         </div>
                         <div class="link-more-cmt" style="text-align: center;">

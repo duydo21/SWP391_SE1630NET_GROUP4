@@ -184,6 +184,7 @@ public class GameDetailsServlet extends HttpServlet {
         request.setAttribute("catList", cateList);
         request.setAttribute("isBought", isBought);
         request.setAttribute("isCmt", isCmt);
+        request.setAttribute("GameID", gameID_raw);
 //        request.setAttribute("rateList", rateListForCmtSection);
 //        request.setAttribute("devList", devList);
         request.getRequestDispatcher("GameDetails.jsp").forward(request, response);

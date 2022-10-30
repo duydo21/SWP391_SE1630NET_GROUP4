@@ -116,7 +116,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         
         List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do                 
 
-        List<Payment> listAfterSearch = new PaymentDAO().searchPaymentbyKey(user, key);     //lay du lieu theo tai khoan do voi tu tim kiem
+        List<Payment> listAfterSearch = new PaymentDAO().searchPaymentbyKey(user, key.trim());     //lay du lieu theo tai khoan do voi tu tim kiem
 
         List<Payment> listAfterChecked;
         listAfterChecked = listAfterSearch;
@@ -175,7 +175,7 @@ public class TransactionhistoryServlet extends HttpServlet {
         request.setAttribute("subchecked", subchecked);
         request.setAttribute("subcheckbox", subcheckbox);
 
-        request.setAttribute("keytranhis", key);                                                        //truyen tu tim kiem
+        request.setAttribute("keytranhis", key.trim());                                                        //truyen tu tim kiem
 
         request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);              //ve trang
     }

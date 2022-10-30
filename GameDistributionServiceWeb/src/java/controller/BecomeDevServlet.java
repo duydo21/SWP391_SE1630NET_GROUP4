@@ -60,11 +60,11 @@ public class BecomeDevServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int Id = Integer.parseInt(request.getParameter("UserID"));
+        int Id = Integer.parseInt(request.getParameter("UserID"));                              //lay id tai khoan
 
-        User user = new UserDAO().findUserByID(Id);
+        User user = new UserDAO().findUserByID(Id);                                             //tim user
         request.setAttribute("user", user);
-        request.getRequestDispatcher("BecomeDev.jsp").forward(request, response);
+        request.getRequestDispatcher("BecomeDev.jsp").forward(request, response);               //ve trang
     }
 
     /**

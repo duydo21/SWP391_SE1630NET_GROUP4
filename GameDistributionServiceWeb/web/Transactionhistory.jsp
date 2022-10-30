@@ -49,7 +49,7 @@
                 </div>
                 <div id="post">
                     <div style="float: left">   
-                        <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}"><!-- tim kiem -->
+                        <input type="search" placeholder="Search" aria-label="Search" name="keytransactionhistory" value="${keytranhis}" maxlength="20"><!-- tim kiem -->
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         
                     </div>

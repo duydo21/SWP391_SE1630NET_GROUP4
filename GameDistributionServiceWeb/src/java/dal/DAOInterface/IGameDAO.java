@@ -72,4 +72,6 @@ public interface IGameDAO extends IDAO<Game> {
     int getLikesOrDislikes(Game game, int voteType);
 
     int getUserVoteOfAGame(User user, Game game);
+    
+    void deleteGameByID(int id);
 }

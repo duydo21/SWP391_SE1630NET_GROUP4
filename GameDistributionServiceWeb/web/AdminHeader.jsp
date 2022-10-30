@@ -48,7 +48,7 @@
                         <a class="nav-link" href="#">Pending uploads</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Manage Users</a>
+                        <a class="nav-link" href="user">Manage Users</a>
                     </li>
                 </ul>
                 <form class="search d-flex " action="search" method = "get" style="position: relative">

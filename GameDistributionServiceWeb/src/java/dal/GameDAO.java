@@ -782,7 +782,22 @@ public class GameDAO extends DBContext implements IGameDAO{
         }
         return null;
     }
-
+    public void deleteGameByID(int id){
+        String sql = "Delete from [Game] where GameID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }catch(SQLException e){
+        }finally{
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
     @Override
     public List<Game> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -805,7 +820,7 @@ public class GameDAO extends DBContext implements IGameDAO{
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try{
             preparedStatement.setInt(1, t.getGameID());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         }catch(SQLException e){
         }finally{
             try {

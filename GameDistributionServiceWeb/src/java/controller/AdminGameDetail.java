@@ -55,7 +55,7 @@ public class AdminGameDetail extends HttpServlet {
             out.println("<title>Servlet AdminGameDetail</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminGameDetail at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AdminGameDetail at " + g.getGameID() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,6 +69,7 @@ public class AdminGameDetail extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    Game g;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -84,27 +85,27 @@ public class AdminGameDetail extends HttpServlet {
         User user = (User) session.getAttribute("userlogin");
 
         //get game info
-        Game game = gameDao.getGameById(gameID);
+        g = gameDao.getGameById(gameID);
 
-        if (game.getDescription().length() > 300) {
-            game.setDescription(game.getDescription().substring(0, 295).concat("..."));
+        if (g.getDescription().length() > 300) {
+            g.setDescription(g.getDescription().substring(0, 295).concat("..."));
         }
         //get game media
         List<Media> gameMedias = new ArrayList<>();
         gameMedias = gameDao.getGameMediaByGameID(gameID);
         //get game rate
         float gameRate = gameDao.getGameRateByID(gameID);
-        game.setRate(gameRate);
+        g.setRate(gameRate);
         //get amount of like votes
-        int likes = gameDao.getLikesOrDislikes(game, 1);
+        int likes = gameDao.getLikesOrDislikes(g, 1);
         //get amount of dislike votes
-        int dislikes = gameDao.getLikesOrDislikes(game, 0);
+        int dislikes = gameDao.getLikesOrDislikes(g, 0);
         //get amount of votes
         int votes = likes + dislikes;
         //get user vote
         int userVote = -1;
         if (user != null) {
-            userVote = gameDao.getUserVoteOfAGame(user, game);
+            userVote = gameDao.getUserVoteOfAGame(user, g);
         }
         //get game comment
         List<UserGameComment> cmtList = new ArrayList<>();
@@ -155,7 +156,7 @@ public class AdminGameDetail extends HttpServlet {
         request.setAttribute("likes", likes);
         request.setAttribute("dislikes", dislikes);
         request.setAttribute("votes", votes);
-        request.setAttribute("game", game);
+        request.setAttribute("game", g);
         request.setAttribute("gameComment", cmtList);
         request.setAttribute("gameMedias", gameMedias);
         request.setAttribute("gameList", gameList);
@@ -176,7 +177,11 @@ public class AdminGameDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String context = request.getParameter("context");
+        IGameDAO gameDao = new GameDAO();
+        gameDao.deleteGameByID(g.getGameID());
+        response.sendRedirect("amainscreen");
+        
     }
 
     /** 

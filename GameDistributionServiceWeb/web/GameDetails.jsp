@@ -109,6 +109,7 @@
                                         <a href="" style="text-decoration: none">${cat.getCategoryName()}</a>
                                     </c:forEach>
                                 </p>
+                                <p>Release date: ${game.getDate()}</p>
                             </div>
                         </div>
                         <div class="clear"></div>

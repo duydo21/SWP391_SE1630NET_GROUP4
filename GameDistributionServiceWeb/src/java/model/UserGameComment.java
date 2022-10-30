@@ -19,6 +19,11 @@ public class UserGameComment {
     public UserGameComment() {
     }
 
+    public UserGameComment(User UserID, Game GameID) {
+        this.UserID = UserID;
+        this.GameID = GameID;
+    }
+    
     public UserGameComment(User UserID, Game GameID, String content) {
         this.UserID = UserID;
         this.GameID = GameID;

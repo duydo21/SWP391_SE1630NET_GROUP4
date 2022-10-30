@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.Account;
 import model.User;
 
@@ -39,5 +40,10 @@ public interface IUserDAO extends IDAO<User> {
     
     Account findAccountByName(String username);
 
-
+    List<User> getUserByPage(List<User> list, int start, int end);
+    
+    List<User> getAll();
+    
+    List<User> getAllUser();
+    
 }

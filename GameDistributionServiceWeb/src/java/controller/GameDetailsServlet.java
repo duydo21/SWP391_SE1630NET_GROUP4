@@ -29,8 +29,6 @@ import model.Category;
 import model.Game;
 import model.Media;
 import model.User;
-import model.UserGameComment;
-import model.UserGameRate;
 
 /**
  *

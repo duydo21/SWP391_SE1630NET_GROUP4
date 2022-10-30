@@ -45,7 +45,7 @@ public class TransactionhistoryServlet extends HttpServlet {
             out.println("<title>Servlet transactionhistoryServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet transactionhistoryServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>There is something wrong, please try again</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,121 +63,125 @@ public class TransactionhistoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("UserID"));                          //lay id nguoi duong nhap
+        try {
+            int id = Integer.parseInt(request.getParameter("UserID"));                          //lay id nguoi duong nhap
 
-        String key = request.getParameter("keytransactionhistory");                         //lay tu tim kiem
-        if (key == null) {
-            key = "";
-        }
-
-        String indexPage = request.getParameter("index");                                   //lay so trang
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-
-        String addcheckbox = request.getParameter("addonly");                               //lay tich checkbox
-        if (addcheckbox == null) {
-            addcheckbox = "";
-        }
-        String addchecked = "";
-        if (addcheckbox.equals("on")) {
-            addchecked = "checked";
-        }
-        String subcheckbox = request.getParameter("subonly");
-        if (subcheckbox == null) {
-            subcheckbox = "";
-        }
-        String subchecked = "";
-        if (subcheckbox.equals("on")) {
-            subchecked = "checked";
-        }
-
-        String sortType = request.getParameter("sortList");                                 //lay kieu sap xep
-        if (sortType == null) {
-            sortType = "date";
-        }
-        String dateSelect = "";
-        String moneySelect = "";
-        String paymentMethodSelect = "";
-        switch (sortType) {
-            case "date":
-                dateSelect = "selected";
-                break;
-            case "money":
-                moneySelect = "selected";
-                break;
-            case "paymentmethod":
-                paymentMethodSelect = "selected";
-                break;
-        }
-
-        User user = new UserDAO().findUserByID(id);                                         //tim tai khoan nguoi dang nhap
-        
-        List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do                 
-
-        List<Payment> listAfterSearch = new PaymentDAO().searchPaymentbyKey(user, key.trim());     //lay du lieu theo tai khoan do voi tu tim kiem
-
-        List<Payment> listAfterChecked;
-        listAfterChecked = listAfterSearch;
-
-        if (addcheckbox.equals("on")) {                                                     //tao list moi voi ap dung checkbox
-            listAfterChecked = new ArrayList<>();
-            for (int i = 0; i < listAfterSearch.size(); i++) {
-                if (listAfterSearch.get(i).getMoney() > 0) {
-                    listAfterChecked.add(listAfterSearch.get(i));
-                }
+            String key = request.getParameter("keytransactionhistory");                         //lay tu tim kiem
+            if (key == null) {
+                key = "";
             }
-        }
-        if (subcheckbox.equals("on")) {
-            listAfterChecked = new ArrayList<>();
-            for (int i = 0; i < listAfterSearch.size(); i++) {
-                if (listAfterSearch.get(i).getMoney() < 0) {
-                    listAfterChecked.add(listAfterSearch.get(i));
-                }
+
+            String indexPage = request.getParameter("index");                                   //lay so trang
+            if (indexPage == null) {
+                indexPage = "1";
             }
-        }
-        if (addcheckbox.equals("on") && subcheckbox.equals("on")) {
+            int index = Integer.parseInt(indexPage);
+
+            String addcheckbox = request.getParameter("addonly");                               //lay tich checkbox
+            if (addcheckbox == null) {
+                addcheckbox = "";
+            }
+            String addchecked = "";
+            if (addcheckbox.equals("on")) {
+                addchecked = "checked";
+            }
+            String subcheckbox = request.getParameter("subonly");
+            if (subcheckbox == null) {
+                subcheckbox = "";
+            }
+            String subchecked = "";
+            if (subcheckbox.equals("on")) {
+                subchecked = "checked";
+            }
+
+            String sortType = request.getParameter("sortList");                                 //lay kieu sap xep
+            if (sortType == null) {
+                sortType = "date";
+            }
+            String dateSelect = "";
+            String moneySelect = "";
+            String paymentMethodSelect = "";
+            switch (sortType) {
+                case "date":
+                    dateSelect = "selected";
+                    break;
+                case "money":
+                    moneySelect = "selected";
+                    break;
+                case "paymentmethod":
+                    paymentMethodSelect = "selected";
+                    break;
+            }
+
+            User user = new UserDAO().findUserByID(id);                                         //tim tai khoan nguoi dang nhap
+
+            List<Payment> list = new PaymentDAO().getAllTransactionHistory(user);               //lay du lieu theo tai khoan do                 
+
+            List<Payment> listAfterSearch = new PaymentDAO().searchPaymentbyKey(user, key.trim());     //lay du lieu theo tai khoan do voi tu tim kiem
+
+            List<Payment> listAfterChecked;
             listAfterChecked = listAfterSearch;
+
+            if (addcheckbox.equals("on")) {                                                     //tao list moi voi ap dung checkbox
+                listAfterChecked = new ArrayList<>();
+                for (int i = 0; i < listAfterSearch.size(); i++) {
+                    if (listAfterSearch.get(i).getMoney() > 0) {
+                        listAfterChecked.add(listAfterSearch.get(i));
+                    }
+                }
+            }
+            if (subcheckbox.equals("on")) {
+                listAfterChecked = new ArrayList<>();
+                for (int i = 0; i < listAfterSearch.size(); i++) {
+                    if (listAfterSearch.get(i).getMoney() < 0) {
+                        listAfterChecked.add(listAfterSearch.get(i));
+                    }
+                }
+            }
+            if (addcheckbox.equals("on") && subcheckbox.equals("on")) {
+                listAfterChecked = listAfterSearch;
+            }
+
+            switch (sortType) {                                                                             //sap xep list cuoi cung
+                case "date":
+                    listAfterChecked = sortDateList(listAfterChecked);
+                    break;
+                case "money":
+                    listAfterChecked = sortMoneyList(listAfterChecked);
+                    break;
+                case "paymentmethod":
+                    listAfterChecked = sortPaymentMethodList(listAfterChecked);
+                    break;
+            }
+
+            int countList = listAfterChecked.size();                                                        //them trang thieu
+            int endPage = countList / 5;
+            if (countList % 5 != 0) {
+                endPage++;
+            }
+
+            List<Payment> listPaging = getPaging(listAfterChecked, index);                                  //phan trang
+
+            request.setAttribute("pagingth", listPaging);                                                   //truyen du lieu danh sach da phan trang
+            request.setAttribute("endPageth", endPage);                                                     //truyen so trang hien thi
+            request.setAttribute("sizeth", countList);                                                      //truyen kich thuoc danh sach
+
+            request.setAttribute("sorttype", sortType);                                                     //truyen kieu sap xep
+            request.setAttribute("dateSelected", dateSelect);
+            request.setAttribute("moneySelected", moneySelect);
+            request.setAttribute("paymentMethodSelected", paymentMethodSelect);
+
+            request.setAttribute("addchecked", addchecked);                                                 //truyen checkbox
+            request.setAttribute("addcheckbox", addcheckbox);
+            request.setAttribute("subchecked", subchecked);
+            request.setAttribute("subcheckbox", subcheckbox);
+
+            request.setAttribute("keytranhis", key.trim());                                                        //truyen tu tim kiem
+
+            request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);              //ve trang
+        } catch (Exception e) {
+            processRequest(request, response);
         }
-
-        switch (sortType) {                                                                             //sap xep list cuoi cung
-            case "date":
-                listAfterChecked = sortDateList(listAfterChecked);
-                break;
-            case "money":
-                listAfterChecked = sortMoneyList(listAfterChecked);
-                break;
-            case "paymentmethod":
-                listAfterChecked = sortPaymentMethodList(listAfterChecked);
-                break;
-        }
-
-        int countList = listAfterChecked.size();                                                        //them trang thieu
-        int endPage = countList / 5;
-        if (countList % 5 != 0) {
-            endPage++;
-        }
-
-        List<Payment> listPaging = getPaging(listAfterChecked, index);                                  //phan trang
-
-        request.setAttribute("pagingth", listPaging);                                                   //truyen du lieu danh sach da phan trang
-        request.setAttribute("endPageth", endPage);                                                     //truyen so trang hien thi
-        request.setAttribute("sizeth", countList);                                                      //truyen kich thuoc danh sach
-
-        request.setAttribute("sorttype", sortType);                                                     //truyen kieu sap xep
-        request.setAttribute("dateSelected", dateSelect);
-        request.setAttribute("moneySelected", moneySelect);
-        request.setAttribute("paymentMethodSelected", paymentMethodSelect);
-
-        request.setAttribute("addchecked", addchecked);                                                 //truyen checkbox
-        request.setAttribute("addcheckbox", addcheckbox);
-        request.setAttribute("subchecked", subchecked);
-        request.setAttribute("subcheckbox", subcheckbox);
-
-        request.setAttribute("keytranhis", key.trim());                                                        //truyen tu tim kiem
-
-        request.getRequestDispatcher("Transactionhistory.jsp").forward(request, response);              //ve trang
     }
 
     /**

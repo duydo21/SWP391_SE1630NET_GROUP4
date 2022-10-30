@@ -13,14 +13,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Account;
+import java.util.List;
+import model.User;
 
 /**
  *
  * @author Strongest
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "AdminManageUser", urlPatterns = {"/user"})
+public class AdminManageUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class RegisterServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegisterServlet</title>");
+            out.println("<title>Servlet AdminManageUser</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RegisterServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminManageUser at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +61,29 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Register.jsp").forward(request, response);
+        IUserDAO ud = new UserDAO();
+        List<User> list = ud.getAll();
+        request.setAttribute("user", list);
+//        //phan trang
+//        int size = list.size();
+//        int page, numpage = 20;
+//        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
+//        String xpage = request.getParameter("page");
+//        if (xpage == null) {
+//            page = 1;
+//        } else {
+//            page = Integer.parseInt(xpage);
+//        }
+//        int start, end;
+//        start = (page - 1) * numpage;
+//        end = Math.min(page * numpage, size);
+//        List<User> plist = ud.getUserByPage(list, start, end);
+//        request.setAttribute("size", size);
+//        request.setAttribute("page", page);
+//        request.setAttribute("num", num);
+//        
+//        request.setAttribute("user", plist);
+        request.getRequestDispatcher("UsersList.jsp").forward(request, response);
     }
 
     /**
@@ -74,43 +97,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //lấy các paramter bên trang register
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        String pass2 = request.getParameter("pass2");
-
-        
-        IUserDAO ud = new UserDAO();
-        //Kiểm tra trong Account có tài khoản dc nhập chưa bằng method checkAccountExit 
-        Account a = ud.checkAccountExist(user);
-        //trường hợp trùng Account
-        if (a != null){
-            request.setAttribute("msr", "this username is existed!!! ");
-            request.getRequestDispatcher("Register.jsp").forward(request, response);            
-        }
-        //trường hợp không nhập username
-        else if (user == null || user.equals("")) {
-            request.setAttribute("msr", "Please enter username!!! ");
-            request.getRequestDispatcher("Register.jsp").forward(request, response);
-        }
-        //trường hợp không nhập pass
-        else if (pass == null || pass.equals("") || pass2 == null || pass2.equals("")) {
-            request.setAttribute("msr", "Please enter password!!! ");
-            request.getRequestDispatcher("Register.jsp").forward(request, response);
-        }
-        //trường hợp pass ko giống pass2
-        else if (!pass.equals(pass2)) {
-            request.setAttribute("msr", "Re-enter password does not match with your password!!! ");
-            request.getRequestDispatcher("Register.jsp").forward(request, response);
-        } else{
-            Account reg = new Account(user, pass, true);
-            //gọi method createAccount cho dữ liệu vào Account
-            ud.createAccount(reg);
-            //gọi method createUser cho dữ liệu vào User
-            ud.createUser(user);
-            //chuyển trang login.jsp
-            response.sendRedirect("login");
-        }
+        processRequest(request, response);
     }
 
     /**

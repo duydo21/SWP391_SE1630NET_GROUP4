@@ -18,7 +18,7 @@ import model.User;
  *
  * @author Strongest
  */
-public class UserDAO extends DBContext implements IUserDAO{
+public class UserDAO extends DBContext implements IUserDAO {
 
     //tạo thêm Account
     @Override
@@ -115,9 +115,14 @@ public class UserDAO extends DBContext implements IUserDAO{
                 + "           ,[AccountBalance]\n"
                 + "           ,[Email]\n"
                 + "           ,[Avatar]\n"
-                + "           ,[IsDev])\n"
+                + "           ,[IsDev]\n"
+                + "           ,[Date]\n"
+                + "           ,[Description]\n"
+                + "           ,[IsPrivate])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?)";
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try {
@@ -128,6 +133,9 @@ public class UserDAO extends DBContext implements IUserDAO{
             preparedStatement.setString(5, "No information");
             preparedStatement.setString(6, "image/Default Avatar.jpg");
             preparedStatement.setBoolean(7, false);
+            preparedStatement.setDate(8, date);
+            preparedStatement.setString(9, "Nothing");
+            preparedStatement.setBoolean(10, false);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -161,6 +169,9 @@ public class UserDAO extends DBContext implements IUserDAO{
                 u.setEmail(resultSet.getString("Email"));
                 u.setAvatar(resultSet.getString("Avatar"));
                 u.setIsDev(resultSet.getBoolean("IsDev"));
+                u.setDate(resultSet.getDate("Date"));
+                u.setIsPrivate(resultSet.getBoolean("IsPrivate"));
+                u.setDecription(resultSet.getString("Description"));
                 return u;
             }
         } catch (SQLException e) {
@@ -196,6 +207,7 @@ public class UserDAO extends DBContext implements IUserDAO{
                 u.setEmail(resultSet.getString("Email"));
                 u.setAvatar(resultSet.getString("Avatar"));
                 u.setIsDev(resultSet.getBoolean("IsDev"));
+                u.setDate(resultSet.getDate("Date"));
                 u.setIsPrivate(resultSet.getBoolean("IsPrivate"));
                 u.setDecription(resultSet.getString("Description"));
             }
@@ -293,14 +305,6 @@ public class UserDAO extends DBContext implements IUserDAO{
 //        return count;
     }
 
-    public static void main(String[] args) {
-
-        User u = new UserDAO().findUserByID(4);
-
-        System.out.println(u);
-
-    }
-
     //Số tiền hiện có của User
     @Override
     public void manageAccBalance(User u) {
@@ -336,11 +340,11 @@ public class UserDAO extends DBContext implements IUserDAO{
             resultSet = getResultSet(preparedStatement);
             while (resultSet.next()) {
                 User a = new User(resultSet.getInt("UserID"),
-                accountDAO.get(resultSet.getString("Name")),
-                resultSet.getString("NickName"),resultSet.getString("Country"),
-                resultSet.getFloat("AccountBalance"),resultSet.getString("Email"),
-                resultSet.getString("Avatar"),resultSet.getBoolean("IsDev"),
-                resultSet.getDate("Date"),resultSet.getString("Description"),resultSet.getBoolean("IsPrivate"));
+                        accountDAO.get(resultSet.getString("Name")),
+                        resultSet.getString("NickName"), resultSet.getString("Country"),
+                        resultSet.getFloat("AccountBalance"), resultSet.getString("Email"),
+                        resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"),
+                        resultSet.getDate("Date"), resultSet.getString("Description"), resultSet.getBoolean("IsPrivate"));
                 list.add(a);
             }
         } catch (SQLException e) {
@@ -417,11 +421,11 @@ public class UserDAO extends DBContext implements IUserDAO{
         String sql = "Delete from [User] where UserID = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        try{
+        try {
             preparedStatement.setInt(1, t.getUserID());
             preparedStatement.executeQuery();
-        }catch(SQLException e){
-        }finally{
+        } catch (SQLException e) {
+        } finally {
             try {
                 preparedStatement.close();
                 connection.close();
@@ -437,21 +441,21 @@ public class UserDAO extends DBContext implements IUserDAO{
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
-        try{
+        try {
             preparedStatement.setInt(1, UserID);
             resultSet = getResultSet(preparedStatement);
-            if(resultSet.next()){
-                User a = new User(resultSet.getInt("UserID"), 
-                        accountDAO.get(resultSet.getString("Name")), 
-                        resultSet.getString("NickName"), resultSet.getString("Country"), 
-                        resultSet.getFloat("AccountBalance"), resultSet.getString("Email"), 
-                        resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"), 
-                        resultSet.getDate("Date"), resultSet.getString("Description"), 
+            if (resultSet.next()) {
+                User a = new User(resultSet.getInt("UserID"),
+                        accountDAO.get(resultSet.getString("Name")),
+                        resultSet.getString("NickName"), resultSet.getString("Country"),
+                        resultSet.getFloat("AccountBalance"), resultSet.getString("Email"),
+                        resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"),
+                        resultSet.getDate("Date"), resultSet.getString("Description"),
                         resultSet.getBoolean("IsPrivate"));
                 return a;
             }
-        }catch(SQLException e){
-        }finally{
+        } catch (SQLException e) {
+        } finally {
             try {
                 resultSet.close();
                 preparedStatement.close();
@@ -462,4 +466,49 @@ public class UserDAO extends DBContext implements IUserDAO{
         }
     }
 
+    @Override
+    public List<User> getAllUser() {
+
+        List<User> list = new ArrayList<>();
+        String sql = "Select * from [dbo].[User]";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            resultSet = getResultSet(preparedStatement);
+            while (resultSet.next()) {
+                Account a = checkAccountExist(resultSet.getString("Name"));
+                User u = new User(resultSet.getInt("UserID"), a, resultSet.getString("NickName"), resultSet.getString("Country"), resultSet.getFloat("AccountBalance"), resultSet.getString("Email"), resultSet.getString("Avatar"), resultSet.getBoolean("IsDev"), resultSet.getDate("Date"), resultSet.getString("Description"), resultSet.getBoolean("IsPrivate"));
+                list.add(u);
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return list;
+        }
+    }
+
+    //lay danh sach user theo trang
+    public List<User> getUserByPage(List<User> list, int start, int end) {
+        List<User> pUser = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            pUser.add(list.get(i));
+        }
+        return pUser;
+    }
+
+    public static void main(String[] args) {
+        UserDAO ud = new UserDAO();
+        List<User> list = ud.getAll();
+        for (User u : list) {
+            System.out.println(u.getUserID());
+        }
+
+    }
 }

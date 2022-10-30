@@ -32,22 +32,24 @@
             <jsp:include page="AdminHeader.jsp"/>
         </header>
         <section>
-            <table>
-                <thead>
-                    <tr>
-
-                    </tr>
+            <table class=" table table-hover">
+                <thead style="color:white">
+                        <tr>
+                            <td>User</td>
+                            <td>Game name</td>
+                            <td>Description</td>
+                            <td>date</td>
+                        </tr>  
                 </thead>
                 <tbody>
                     <c:forEach items="${requestScope.report}" var="r">
-                        <tr>
-                            <td>${r.userID.userID}</td>
-                            <td>${r.gameID.gameID}</td>
+                        <tr style="color:white">
+                            <td>${r.userID.username}</td>
+                            <td>${r.gameID.name}</td>
                             <td>${r.content}</td>
                             <td>${r.date}</td>
                         </tr>                    
                     </c:forEach>
-
                 </tbody>
             </table>
         </section>

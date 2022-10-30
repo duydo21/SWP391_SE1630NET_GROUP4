@@ -16,7 +16,7 @@ import model.Notification;
  *
  * @author ACER
  */
-public class NotificationDAO extends DBContext implements INotificationDAO{
+public class NotificationDAO extends DBContext implements INotificationDAO {
 
     @Override
     public List<Notification> getAll() {
@@ -38,11 +38,11 @@ public class NotificationDAO extends DBContext implements INotificationDAO{
         String sql = "Delete from [Notification] where NotiID = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        try{
+        try {
             preparedStatement.setInt(1, t.getNotiID());
             preparedStatement.executeQuery();
-        }catch(SQLException e){
-        }finally{
+        } catch (SQLException e) {
+        } finally {
             try {
                 preparedStatement.close();
                 connection.close();
@@ -61,8 +61,8 @@ public class NotificationDAO extends DBContext implements INotificationDAO{
             preparedStatement.setInt(1, NotiID);
             resultSet = getResultSet(preparedStatement);
             if (resultSet.next()) {
-                Notification g = new Notification(resultSet.getInt("NotiID"), 
-                        resultSet.getInt("Type"), resultSet.getString("Content"), 
+                Notification g = new Notification(resultSet.getInt("NotiID"),
+                        resultSet.getInt("Type"), resultSet.getString("Content"),
                         resultSet.getDate("Date"));
                 return g;
             }
@@ -78,5 +78,31 @@ public class NotificationDAO extends DBContext implements INotificationDAO{
         }
         return null;
     }
-    
+
+    public void createNotification(String context, int type) {
+        String sql = "INSERT INTO [dbo].[Notification]\n"
+                + "           ([Type]\n"
+                + "           ,[Content]\n"
+                + "           ,[Date])\n"
+                + "     VALUES\n"
+                + "           (?,?,?)";
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try {
+            preparedStatement.setInt(1, type);
+            preparedStatement.setString(2, context);
+            preparedStatement.setDate(3, date);
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
 }

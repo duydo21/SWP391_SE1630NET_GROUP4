@@ -11,8 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Game Detail</title>
-        <link rel="stylesheet" href="css/game-details.css">
+        <title>${game.getName()}</title>
+        <link rel="stylesheet" href="css/admin-game-details.css">
         <script src="https://kit.fontawesome.com/f92d1eca7b.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/fonts/themify-icons/themify-icons.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -105,6 +105,7 @@
                                         <a href="" style="text-decoration: none">${cat.getCategoryName()}</a>
                                     </c:forEach>
                                 </p>
+                                <p>Release date: ${game.getDate()}</p>
                             </div>
                         </div>
                         <div class="clear"></div>
@@ -180,13 +181,7 @@
                             </span>
                         </div>
                         <div id="btn">
-                            <c:if test ="${isBought}">
-                                <button class="buy" style="background-color: rgb(92, 92, 198);">BOUGHT</button>
-                            </c:if>
-                            <c:if test ="${!isBought}">
-                                <button class="buy js-buy-btn" style="background-color: rgb(92, 92, 198);">BUY</button>
-                            </c:if>
-
+                            <button class="delete" style="background-color: rgb(92, 92, 198);">Delete</button>
 
                             <c:if test ="${(game.getDiscount()==0)}">
                                 <div class="price" style="background-color: green; line-height: 40px">
@@ -216,23 +211,22 @@
             <%@include file="footer.jsp"%>
         </footer>
 
-        <div class="not-login-modal">
+        <div class="modal">
             <div class="modal-container">
-                <header class="modal-header">
-                    <icon class="ti-alert"></icon>
-                    <p style="color: red;">Buy failed!</p>
-                </header>
-                <div class="modal-content">
-                    You need to login first!
-                </div>
-                <div class="modal-footer">
-                    <button  class="login-button" onclick="window.location.href = 'login'">
-                        Login
-                    </button>
-                    <button class="cancel-button">
-                        Cancel
-                    </button>
-                </div>
+                <form action="agameDetails" method="post">
+                    <header class="modal-header">
+                        <p style="color: red;">Tell developer why:</p>
+                        <span class="close">&times;</span>
+                    </header>
+                    <div class="modal-content">
+                        <textarea class="form-control" id="text" name="context" rows="6"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="submit-button" type="sumbit">
+                            Submit and Delete
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         <script>
@@ -274,37 +268,17 @@
         </script>
         <script>
             //js for buy btn
-            const buyBtn = document.querySelector('.js-buy-btn');
-            const notLoginModal = document.querySelector('.not-login-modal');
-            const closeModal = document.querySelector('.ok-button.ok-fail');
-            const closeModal1 = document.querySelector('.cancel-button');
-            function showNotLogin() {
-                notLoginModal.classList.add('open');
+            const Btn = document.querySelector('.delete');
+            const Modal = document.querySelector('.modal');
+            const closeModal1 = document.querySelector('.close');
+            function Show() {
+                Modal.classList.add('open');
             }
-            function showFail() {
-                buyFailModal.classList.add('open');
+            function Hide() {
+                Modal.classList.remove('open');
             }
-            function showSuccessful() {
-                buySuccessfulModal.classList.add('open');
-            }
-            function remove() {
-                buyFailModal.classList.remove('open');
-                notLoginModal.classList.remove('open');
-            }
-            <c:if test ="${(user==null)}">
-            buyBtn.addEventListener('click', showNotLogin);
-            </c:if>
-
-            <c:if test ="${(user!=null)}">
-                <c:if test ="${(user.getAccountBalance() < game.getPriceAfterDiscount())}">
-            buyBtn.addEventListener('click', showFail);
-                </c:if>
-                <c:if test ="${(user.getAccountBalance() >= game.getPriceAfterDiscount())}">
-            buyBtn.addEventListener('click', showSuccessful);
-                </c:if>
-            </c:if>
-            closeModal1.addEventListener('click', remove);
-            closeModal.addEventListener('click', remove);
+            Btn.addEventListener('click', Show);
+            closeModal1.addEventListener('click', Hide);
         </script>
     </body>
 </html>

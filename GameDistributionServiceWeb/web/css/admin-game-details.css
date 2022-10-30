@@ -1,0 +1,278 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 30, 2022, 12:09:45 PM
+    Author     : Strongest
+*/
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#content{
+    background-color: #333333;
+}
+#content{
+    color: white;
+}
+.clear{
+    clear: both;
+}
+
+.line_through{
+    text-decoration: line-through;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+.full_width{
+    width: 100%;
+}
+#game-info .heading,
+#user-comment .heading-content,
+#more-game .heading .heading-content
+{
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: normal;
+    font-size: 26px;
+    line-height: 32px;
+}
+
+/*#user-comment .heading-content{
+    font-size: 26px;
+    font-weight: normal;
+}*/
+#game-info{
+    position: relative;
+    margin-bottom: 1px;
+}
+
+#game-details {
+    max-height: 100%;
+}
+.pic-container{
+
+}
+
+#selected-game{
+
+    width: 65%;
+}
+
+#game-details{
+    width: 34%;
+    position: absolute;
+    right: 0;
+    /*padding-bottom: 1px;*/
+}
+
+#game-info #selected-game,
+#game-info #game-details{
+    float:left;
+}
+
+.pic-container .mySlides{
+    display: none;
+    position: relative;
+}
+
+.mySlides img,
+.mySlides video{
+    width: 100%;
+}
+
+.row1{
+    width: 100%;
+}
+
+.row1 img,
+.row1 video{
+    width: 16%;
+    padding: 0 1px;
+}
+
+.row1 column1{
+    float: left;
+    width: 16%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+    opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+    opacity: 1;
+}
+
+#game-poster img{
+    width: 100%;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 16px;
+    margin-top: -10px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+    text-decoration: none;
+}
+
+/* Position the "next button" to the right */
+
+.prev{
+    left:0;
+}
+.next {
+    right:0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#rating p,
+#rating span,
+#action #rating,
+#action #btn{
+    float: left;
+}
+
+.fa-thumbs-up, .fa-thumbs-down{
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.fa-thumbs-up:hover, .fa-thumbs-down:hover{
+    color: #64acff;
+}
+
+#like, #dislike{
+    padding: 0 25px;
+    text-align: center;
+}
+
+#btn .buy,
+#btn .price,
+#btn #discount{
+    float: right;
+    margin: 0 1px;
+    color: #ffe7c3;
+}
+#btn .buy{
+    line-height: 36px;
+}
+#btn #discount{
+    line-height: 40px;
+}
+#btn .buy:hover{
+    opacity: 0.7;
+}
+
+
+#action{
+    position: relative;
+    margin-top: 20px;
+}
+
+#btn{
+    right :0;
+    position: absolute;
+}
+
+#user-comment,
+#more-game{
+    margin-top: 20px;
+}
+
+#games .game{
+    float: left;
+    width: 25%;
+    padding: 0 3px;
+}
+#games .game:hover{
+    background-color: rgb(108,117,125);
+}
+#games .game img{
+    width: 100%;
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-container{
+    background-color: #fff;
+    width: 600px;
+    max-width: calc(100% - 32px);
+    min-height: 200px;
+    height: 60%;
+    position: relative;
+    animation: modalFadeIn ease 0.3s;
+}
+
+.modal-container .modal-header{
+    position: absolute;
+    width: 100%;
+    left:50%;
+    top: 0;
+    font-size: 30px;
+    transform: translateX(-50%);
+    font-weight: 700;
+}
+.modal-container .modal-content{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    text-align:center;
+}
+.submit-button{
+    position: absolute;
+    left:50%;
+    bottom: 7%;
+    transform: translateX(-50%);
+    border: none;
+    padding: 8px;
+    background-color: #000;
+    color: #fff;
+    width: fit-content;
+}
+.modal-footer .cancel-button:hover{
+    background-color: #ccc;
+    color: black;
+}
+
+.open{
+    display: flex !important;
+}

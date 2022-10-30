@@ -101,6 +101,7 @@
                                         <a href="" style="text-decoration: none">${cat.getCategoryName()}</a>
                                     </c:forEach>
                                 </p>
+                                <p>Release date: ${game.getDate()}</p>
                             </div>
                         </div>
                         <div class="clear"></div>
@@ -114,31 +115,31 @@
                                     <!--TH chua login-->
                                     <c:if test="${user==null}">
                                         <icon class="fa-regular fa-thumbs-up"></icon>
-                                    </c:if>
+                                        </c:if>
                                     <!--Th login roi-->
                                     <c:if test="${user!=null}">
                                         <!--TH user chua mua game -> ko dc vote-->
                                         <c:if test ="${!isBought}">
                                             <icon class="fa-regular fa-thumbs-up"></icon>
-                                        </c:if>
+                                            </c:if>
                                         <!--TH user mua game -> dc vote-->
                                         <c:if test ="${isBought}">
                                             <!--TH user chua vote-->
                                             <c:if test="${userVote==-1}">
                                                 <icon class="fa-regular fa-thumbs-up" 
                                                       onclick="window.location.href = 'votegame?type=1&GameID=${game.getGameID()}'"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user likes-->
                                             <c:if test="${userVote==1}">
                                                 <icon class="fa-solid fa-thumbs-up"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user dislike-->
                                             <c:if test="${userVote==0}">
                                                 <icon class="fa-regular fa-thumbs-up"
                                                       onclick="window.location.href = 'votegame?type=1&GameID=${game.getGameID()}'"></icon>
+                                                </c:if>
                                             </c:if>
-                                        </c:if>
-                                        
+
                                     </c:if>
                                     <div>${requestScope.likes} likes</div>
                                 </div>
@@ -146,31 +147,31 @@
                                     <!--TH chua login-->
                                     <c:if test="${user==null}">
                                         <icon class="fa-regular fa-thumbs-down"></icon>
-                                    </c:if>
+                                        </c:if>
                                     <!--Th login roi-->
                                     <c:if test="${user!=null}">
                                         <!--TH user chua mua game -> ko dc vote-->
                                         <c:if test ="${!isBought}">
                                             <icon class="fa-regular fa-thumbs-down"></icon>
-                                        </c:if>
+                                            </c:if>
                                         <!--TH user mua game -> dc vote-->
                                         <c:if test ="${isBought}">
                                             <!--TH user chua vote-->
                                             <c:if test="${userVote==-1}">
                                                 <icon class="fa-regular fa-thumbs-down"
                                                       onclick="window.location.href = 'votegame?type=0&GameID=${game.getGameID()}'"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user dislikes-->
                                             <c:if test="${userVote==0}">
                                                 <icon class="fa-solid fa-thumbs-down"></icon>
-                                            </c:if>
+                                                </c:if>
                                             <!--TH user likes-->
                                             <c:if test="${userVote==1}">
                                                 <icon class="fa-regular fa-thumbs-down"
                                                       onclick="window.location.href = 'votegame?type=0&GameID=${game.getGameID()}'"></icon>
+                                                </c:if>
                                             </c:if>
                                         </c:if>
-                                    </c:if>
                                     <div>${requestScope.dislikes} dislikes</div>
                                 </div>
                             </span>

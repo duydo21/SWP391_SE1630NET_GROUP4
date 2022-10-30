@@ -27,7 +27,8 @@ create table [User]
 	Avatar nvarchar(100),
 	IsDev bit,
 	[Description] nvarchar(max),
-	IsPrivate bit
+	IsPrivate bit,
+	[Date] date
 )
 go
 --payment method 1: paypal 2: credit card 3: banking 4: buy game 5: sell game
@@ -91,7 +92,8 @@ create table [User-Game-Comment]
 (
 	UserID int foreign key references [User](UserID),
 	GameID int foreign key references [Game](GameID),
-	Content nvarchar(max)
+	Content nvarchar(max),
+	[Date] date
 )
 go
 create table [User-Game-Rate]

@@ -41,8 +41,8 @@
         <c:set var="catList" value = "${requestScope.catList}"/>
         <c:set var="user" value = "${sessionScope.userlogin}"/>
         <c:set var="userVote" value = "${requestScope.userVote}"/>
-        <c:set var="cmtList" value = "${requestScope.cmtList}"/>
-        <c:set var="rateList" value = "${requestScope.rateList}"/>
+        <%--<c:set var="cmtList" value = "${requestScope.cmtList}"/>--%>
+        <%--<c:set var="rateList" value = "${requestScope.rateList}"/>--%>
         <c:set var="isCmt" value="${requestScope.isCmt}"/>
 
         <header>
@@ -377,10 +377,10 @@
             let dots = document.getElementsByClassName("demo");
             let captionText = document.getElementById("caption");
             if (n > slides.length) {
-                slideIndex = 1
+                slideIndex = 1;
             }
             if (n < 1) {
-                slideIndex = slides.length
+                slideIndex = slides.length;
             }
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";

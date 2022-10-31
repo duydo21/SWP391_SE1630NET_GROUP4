@@ -121,16 +121,6 @@ public class GameDetailsServlet extends HttpServlet {
             }
         }
 
-//        List<UserGameComment> cmtList = new ArrayList<>();
-//        cmtList = gameDao.getGameCommentByGameID(gameID);
-//        
-//        List<UserGameRate> rateListForCmtSection = new ArrayList<>();
-//        for(UserGameComment cmt : cmtList){
-//            rateListForCmtSection.add(new UserGameRate( cmt.getUserID(), 
-//                    cmt.getGameID(),
-//                    gameDao.getUserVoteOfAGame(cmt.getUserID(), cmt.getGameID()
-//                    )));
-//        }
         //get recommend game list
         List<Game> gameList_full = new ArrayList<>();
         List<Game> gameList = new ArrayList<>();
@@ -178,14 +168,12 @@ public class GameDetailsServlet extends HttpServlet {
         request.setAttribute("dislikes", dislikes);
         request.setAttribute("votes", votes);
         request.setAttribute("game", game);
-//        request.setAttribute("cmtList", cmtList);
         request.setAttribute("gameMedias", gameMedias);
         request.setAttribute("gameList", gameList);
         request.setAttribute("catList", cateList);
         request.setAttribute("isBought", isBought);
         request.setAttribute("isCmt", isCmt);
         request.setAttribute("GameID", gameID_raw);
-//        request.setAttribute("rateList", rateListForCmtSection);
 //        request.setAttribute("devList", devList);
         request.getRequestDispatcher("GameDetails.jsp").forward(request, response);
         gameList_full.clear();

@@ -247,9 +247,9 @@
                             <div class="detail-cmt" >
                                 <div class="cmt-vote" style="background-color: #006666; line-height: 32px;">
                                     <% if(rateList1.get(j).getRate()==0){ %>
-                                    <icon class="fa-solid fa-thumbs-down" style="padding: 2px 10px 0 10px"></icon>Not recommend
+                                    <icon class="fa-solid fa-thumbs-down" style="padding: 2px 5px 0 10px"></icon>Not recommend (Posted <%= cmtList.get(j).getDate() %>)
                                         <% }else{ %>
-                                    <icon class="fa-solid fa-thumbs-up" style="padding: 2px 10px 0 10px"></icon>Recommend
+                                    <icon class="fa-solid fa-thumbs-up" style="padding: 2px 5px 0 10px"></icon>Recommend (Posted <%= cmtList.get(j).getDate() %>)
                                         <% } %>
                                 </div>
                                 <div class="cmt-content" style="background-color: #009999">
@@ -264,6 +264,7 @@
                             <% if(a==3){break;} %>
                             <% } %>
                         </div>
+                        <% rateList1.clear(); %>
                         <div class="link-more-cmt" style="text-align: center;">
                             <icon class="ti-arrow-right"></icon>
                             <a href="#">See more comment</a>

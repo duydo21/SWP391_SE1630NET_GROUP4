@@ -19,6 +19,7 @@ import dal.DAOInterface.IGameDAO;
 import dal.DAOInterface.IUserGameCommentDAO;
 import dal.GameDAO;
 import dal.UserGameCommentDAO;
+import java.util.Date;
 import model.UserGameComment;
 
 /**
@@ -75,7 +76,9 @@ public class CommentGameServlet extends HttpServlet {
         //get comment content
         String content = request.getParameter("cmt");
         //add comment to the database
-        UserGameComment userGameComment = new UserGameComment(user, game, content);
+        Date todayDate = new Date();
+        java.sql.Date date = new java.sql.Date(todayDate.getTime());
+        UserGameComment userGameComment = new UserGameComment(user, game, content, date);
         userGameCommentDAO.insert(userGameComment);
         //return to game details
         request.setAttribute("GameID", gameID_raw);

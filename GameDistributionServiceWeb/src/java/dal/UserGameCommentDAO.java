@@ -47,7 +47,22 @@ public class UserGameCommentDAO extends DBContext implements IUserGameCommentDAO
 
     @Override
     public void update(UserGameComment t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Update [User-Game-Comment] set Content = ? where UserID = ? and GameID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setString(1, t.getContent());
+            preparedStatement.setInt(2, t.getUserID().getUserID());
+            preparedStatement.setInt(3, t.getGameID().getGameID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try{
+                preparedStatement.close();
+                connection.close();
+            }catch(SQLException e){
+            }
+        }
     }
 
     @Override

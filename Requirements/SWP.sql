@@ -26,6 +26,7 @@ create table [User]
 	[Email] nvarchar(70),
 	Avatar nvarchar(100),
 	IsDev bit,
+	[Date] date,
 	[Description] nvarchar(max),
 	IsPrivate bit
 )

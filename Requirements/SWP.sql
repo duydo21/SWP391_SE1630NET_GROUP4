@@ -26,9 +26,9 @@ create table [User]
 	[Email] nvarchar(70),
 	Avatar nvarchar(100),
 	IsDev bit,
+	[Date] date,
 	[Description] nvarchar(max),
-	IsPrivate bit,
-	[Date] date
+	IsPrivate bit
 )
 go
 --payment method 1: paypal 2: credit card 3: banking 4: buy game 5: sell game

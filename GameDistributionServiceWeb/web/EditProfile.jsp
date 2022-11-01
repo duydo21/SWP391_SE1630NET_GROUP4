@@ -28,7 +28,7 @@
                                     <h2 class="text-uppercase text-center mb-5">Edit Profile</h2>
                                     <h5 class="fw-normal mb-3 pb-3" style="color: black;">${requestScope.msr}</h5>
                                     <form action="editprofile" class="register" method="post" enctype='multipart/form-data'>
-                                        
+
                                         <div class="form-outline mb-2">
                                             <input type="number" name ="id" id="form3Example1cg" class="form-control form-control-lg" readonly="" value="${sessionScope.userlogin.userID}" />
                                             <label class="form-label" for="form3Example1cg">ID</label>
@@ -60,11 +60,16 @@
                                             <label class="form-label" for="form3Example4cdg">Country</label>
                                         </div>
 
+                                        <div class="form-outline mb-2">
+                                            <input type="date" name="date" id="form3Example4cg" class="form-control form-control-lg" value="${sessionScope.userlogin.date}"/>
+                                            <label class="form-label" for="form3Example4cg">Date</label>
+                                        </div>
+
                                         <div id="selectedBanner"></div>
                                         <div class="form-outline mb-2">
                                             <div class="form-group">
                                                 <input type="file" id="img" class="form-control" name="avatar"   />
-                                                       <label class="form-label" for="form3Example4cg">Avatar</label>
+                                                <label class="form-label" for="form3Example4cg">Avatar</label>
                                             </div>
                                         </div>
 
@@ -95,49 +100,49 @@
             crossorigin="anonymous"
         ></script>
         <script>
-            var selDiv = "";
-            var storedFiles = [];
-            $(document).ready(function () {
-                $("#img").on("change", handleFileSelect);
-                selDiv = $("#selectedBanner");
-            });
+                                                var selDiv = "";
+                                                var storedFiles = [];
+                                                $(document).ready(function () {
+                                                    $("#img").on("change", handleFileSelect);
+                                                    selDiv = $("#selectedBanner");
+                                                });
 
-            function handleFileSelect(e) {
-                var files = e.target.files;
-                var filesArr = Array.prototype.slice.call(files);
-                filesArr.forEach(function (f) {
-                    if (!f.type.match("image.*")) {
-                        return;
-                    }
-                    storedFiles.push(f);
+                                                function handleFileSelect(e) {
+                                                    var files = e.target.files;
+                                                    var filesArr = Array.prototype.slice.call(files);
+                                                    filesArr.forEach(function (f) {
+                                                        if (!f.type.match("image.*")) {
+                                                            return;
+                                                        }
+                                                        storedFiles.push(f);
 
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var html =
-                                '<img src="' +
-                                e.target.result +
-                                "\" data-file='" +
-                                f.name +
-                                "alt='Category Image' height='50px' width='50px'>";
-                        selDiv.html(html);
-                    };
-                    reader.readAsDataURL(f);
-                });
-            }
-            function message(){
-               var name = document.getElementsByName("nickname")[0].value;
-               var email = document.getElementsByName("email")[0].value;
-               var result = name.replace(/^\s+|\s+$/gm,'');
+                                                        var reader = new FileReader();
+                                                        reader.onload = function (e) {
+                                                            var html =
+                                                                    '<img src="' +
+                                                                    e.target.result +
+                                                                    "\" data-file='" +
+                                                                    f.name +
+                                                                    "alt='Category Image' height='50px' width='50px'>";
+                                                            selDiv.html(html);
+                                                        };
+                                                        reader.readAsDataURL(f);
+                                                    });
+                                                }
+                                                function message() {
+                                                    var name = document.getElementsByName("nickname")[0].value;
+                                                    var email = document.getElementsByName("email")[0].value;
+                                                    var result = name.replace(/^\s+|\s+$/gm, '');
 
-                if (name != null && name.replace(/^\s+|\s+$/gm,'') && validateEmail(email) ) {
-                      swal("Update Succesfull");
-                }
-                    }
-                    
-             function validateEmail(email) {
-                    var re = /\S+@\S+\.\S+/;
-                    return re.test(email);
-                    }
+                                                    if (name != null && name.replace(/^\s+|\s+$/gm, '') && validateEmail(email)) {
+                                                        swal("Update Succesfull");
+                                                    }
+                                                }
+
+                                                function validateEmail(email) {
+                                                    var re = /\S+@\S+\.\S+/;
+                                                    return re.test(email);
+                                                }
         </script>
     </body>
 

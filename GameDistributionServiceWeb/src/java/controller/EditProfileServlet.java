@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.sql.SQLWarning;
 import model.User;
 
@@ -98,6 +99,7 @@ public class EditProfileServlet extends HttpServlet {
         String email = request.getParameter("email").trim();
         String decription = request.getParameter("decription").trim();
         boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
+        Date date = Date.valueOf(request.getParameter("date"));
 
         //tạo đường truyền dẫn cho upload ảnh
         Part part = request.getPart("avatar");
@@ -111,7 +113,7 @@ public class EditProfileServlet extends HttpServlet {
         part.write(realPath + "/" + filename);
 
         //truyền dữ liệu vào User
-        User u = new User(id, nickname, country, email, "image" + "/" + filename, decription, isPrivate);
+        User u = new User(id, nickname, country, email, "image" + "/" + filename, date, decription, isPrivate);
         //method UpdateProfileUser
         if (new UserDAO().updateProfileUser(u) > 0) {
             HttpSession session = request.getSession();

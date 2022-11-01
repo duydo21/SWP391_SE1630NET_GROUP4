@@ -34,16 +34,16 @@
         <section>
             <table class=" table table-hover">
                 <thead style="color:white">
-                        <tr>
-                            <td>User</td>
-                            <td>Game name</td>
-                            <td>Description</td>
-                            <td>date</td>
-                        </tr>  
+                    <tr>
+                        <td>User</td>
+                        <td>Game name</td>
+                        <td>Description</td>
+                        <td>date</td>
+                    </tr>  
                 </thead>
                 <tbody>
                     <c:forEach items="${requestScope.report}" var="r">
-                        <tr style="color:white">
+                        <tr style="color:white" class="trigger">
                             <td>${r.userID.username}</td>
                             <td>${r.gameID.name}</td>
                             <td>${r.content}</td>
@@ -52,7 +52,40 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <div class="modal">
+                <div class="modal-container">
+                    <form action="agameDetails" method="post">
+                        <header class="modal-header">
+                            <p style="color: red;">Tell developer why:</p>
+                            <span class="close">&times;</span>
+                        </header>
+                        <div class="modal-content">
+                            <textarea class="form-control" id="text" name="context" rows="6"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="submit-button" type="sumbit">
+                                Submit and Delete
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </section>
+        <script>
+            //js for buy btn
+            const Btn = document.querySelector('.trigger');
+            const Modal = document.querySelector('.modal');
+            const closeModal1 = document.querySelector('.close');
+            function Show() {
+                Modal.classList.add('open');
+            }
+            function Hide() {
+                Modal.classList.remove('open');
+            }
+            Btn.addEventListener('click', Show);
+            closeModal1.addEventListener('click', Hide);
+        </script>
         <footer>
             <jsp:include page="footer.jsp"/>
         </footer>

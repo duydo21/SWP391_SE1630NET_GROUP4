@@ -25,14 +25,15 @@ public class UserGameCommentDAO extends DBContext implements IUserGameCommentDAO
 
     @Override
     public void insert(UserGameComment t) {
-        String sql = "Insert [User-Game-Comment] (UserID, GameID, Content) "
-                + "values (?, ?, ?)";
+        String sql = "Insert [User-Game-Comment] (UserID, GameID, Content, Date) "
+                + "values (?, ?, ?, ?)";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try{
             preparedStatement.setInt(1, t.getUserID().getUserID());
             preparedStatement.setInt(2, t.getGameID().getGameID());
             preparedStatement.setString(3, t.getContent());
+            preparedStatement.setDate(4, t.getDate());
             preparedStatement.executeQuery();
         }catch(SQLException e){
         }finally{
@@ -51,7 +52,21 @@ public class UserGameCommentDAO extends DBContext implements IUserGameCommentDAO
 
     @Override
     public void delete(UserGameComment t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Delete from [User-Game-Comment] where UserID =? and GameID = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try{
+            preparedStatement.setInt(1, t.getUserID().getUserID());
+            preparedStatement.setInt(2, t.getGameID().getGameID());
+            preparedStatement.executeQuery();
+        }catch(SQLException e){
+        }finally{
+            try{
+                preparedStatement.close();
+                connection.close();
+            }catch(SQLException e){
+            }
+        }
     }
 
     @Override
@@ -68,7 +83,7 @@ public class UserGameCommentDAO extends DBContext implements IUserGameCommentDAO
             resultSet = getResultSet(preparedStatement);
             if(resultSet.next()){
                 UserGameComment ugm = new UserGameComment(userDAO.findUserByID(userID),
-                        gameDAO.get(gameID), resultSet.getString("Content"));
+                        gameDAO.get(gameID), resultSet.getString("Content"), resultSet.getDate("Date"));
                 return ugm;
             }
         }catch(SQLException e){

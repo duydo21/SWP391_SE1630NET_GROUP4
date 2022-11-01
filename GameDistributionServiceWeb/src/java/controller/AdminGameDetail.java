@@ -10,9 +10,11 @@ import dal.DAOInterface.ICategoryDAO;
 import dal.DAOInterface.IGameDAO;
 import dal.DAOInterface.IUserDAO;
 import dal.DAOInterface.IUserGameBuyDAO;
+import dal.DAOInterface.IUserNotificationDAO;
 import dal.GameDAO;
 import dal.UserDAO;
 import dal.UserGameBuyDAO;
+import dal.UserNotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -179,6 +181,8 @@ public class AdminGameDetail extends HttpServlet {
     throws ServletException, IOException {
         String context = request.getParameter("context");
         IGameDAO gameDao = new GameDAO();
+        IUserNotificationDAO un = new UserNotificationDAO();
+        un.adminCreateNotification(context);
         gameDao.deleteGameByID(g.getGameID());
         response.sendRedirect("amainscreen");
         

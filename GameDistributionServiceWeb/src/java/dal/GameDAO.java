@@ -352,7 +352,9 @@ public class GameDAO extends DBContext implements IGameDAO{
             preparedStatement.setInt(1, id);
             resultSet = getResultSet(preparedStatement);
             while (resultSet.next()) {
-                UserGameComment cmt = new UserGameComment(userDao.findUserByID(resultSet.getInt("UserID")), getGameById(resultSet.getInt("GameID")), resultSet.getString("Content"));
+                UserGameComment cmt = new UserGameComment(userDao.findUserByID(resultSet.getInt("UserID")), 
+                        getGameById(resultSet.getInt("GameID")), 
+                        resultSet.getString("Content"), resultSet.getDate("Date"));
                 list.add(cmt);
             }
         } catch (SQLException e) {
@@ -782,6 +784,7 @@ public class GameDAO extends DBContext implements IGameDAO{
         }
         return null;
     }
+    @Override
     public void deleteGameByID(int id){
         String sql = "Delete from [Game] where GameID = ?";
         Connection connection = getConnection();

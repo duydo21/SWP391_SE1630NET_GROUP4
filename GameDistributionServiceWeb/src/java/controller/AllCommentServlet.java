@@ -5,6 +5,12 @@
 
 package controller;
 
+import dal.DAOInterface.IGameDAO;
+import dal.DAOInterface.IUserGameBuyDAO;
+import dal.DAOInterface.IUserGameCommentDAO;
+import dal.GameDAO;
+import dal.UserGameBuyDAO;
+import dal.UserGameCommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,21 +19,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Account;
 import model.Game;
 import model.User;
-import dal.DAOInterface.IGameDAO;
-import dal.DAOInterface.IUserGameCommentDAO;
-import dal.GameDAO;
-import dal.UserGameCommentDAO;
-import java.util.Date;
-import model.UserGameComment;
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name="CommentGameServlet", urlPatterns={"/commentGame"})
-public class CommentGameServlet extends HttpServlet {
+@WebServlet(name="AllCommentServlet", urlPatterns={"/allcomments"})
+public class AllCommentServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -44,10 +45,10 @@ public class CommentGameServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CommentGameServlet</title>");  
+            out.println("<title>Servlet AllCommentServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CommentGameServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AllCommentServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,25 +65,44 @@ public class CommentGameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
         IGameDAO gameDao = new GameDAO();
+        IUserGameBuyDAO ugb_Dao = new UserGameBuyDAO();
         IUserGameCommentDAO userGameCommentDAO = new UserGameCommentDAO();
-        //get user 
-        User user = (User)session.getAttribute("userlogin");
-        //get game
+        HttpSession session = request.getSession();
+        
         String gameID_raw = request.getParameter("GameID");
         int gameID = Integer.parseInt(gameID_raw);
+        User user = (User) session.getAttribute("userlogin");
+        
         Game game = gameDao.getGameById(gameID);
-        //get comment content
-        String content = request.getParameter("cmt");
-        //add comment to the database
-        Date todayDate = new Date();
-        java.sql.Date date = new java.sql.Date(todayDate.getTime());
-        UserGameComment userGameComment = new UserGameComment(user, game, content, date);
-        userGameCommentDAO.insert(userGameComment);
-        //return to game details
-        request.setAttribute("GameID", gameID_raw);
-        request.getRequestDispatcher("gameDetails").forward(request, response);
+        
+        int userVote = -1;
+        if (user != null) {
+            userVote = gameDao.getUserVoteOfAGame(user, game);
+        }
+        
+        boolean isCmt = false;
+        if (user != null) {
+            try {
+                if(userGameCommentDAO.getUserCommentOfAGame(user.getUserID(), game.getGameID())!=null){
+                    isCmt = true;
+                }
+            } catch (NullPointerException e) {
+            }
+        }
+        
+        boolean isBought = false;
+        if (user != null) {
+            if (ugb_Dao.isGameIDBoughtByUserID(user.getUserID(), gameID) != null) {
+                isBought = true;
+            }
+        }
+        
+        request.setAttribute("userVote", userVote);
+        request.setAttribute("game", game);
+        request.setAttribute("isBought", isBought);
+        request.setAttribute("isCmt", isCmt);
+        request.getRequestDispatcher("AllComments.jsp").forward(request, response);
     } 
 
     /** 

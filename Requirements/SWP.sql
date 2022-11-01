@@ -92,7 +92,8 @@ create table [User-Game-Comment]
 (
 	UserID int foreign key references [User](UserID),
 	GameID int foreign key references [Game](GameID),
-	Content nvarchar(max)
+	Content nvarchar(max),
+	[Date] date
 )
 go
 create table [User-Game-Rate]

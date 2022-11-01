@@ -217,7 +217,7 @@
                             <div class="comment-form">
                                 <form action="commentGame">
                                     <div class="cmt-textbox" style="width: 90%">
-                                        <textarea name="cmt" rows="3" style="width:100%"></textarea>
+                                        <textarea name="cmt" rows="3" style="width:100%" required></textarea>
                                     </div>
                                     <div class="cmt-send" style="width:10%">
                                         <input type="submit" value="Send" style="width: 100%; height: 74px;">
@@ -266,8 +266,10 @@
                         </div>
                         <% rateList1.clear(); %>
                         <div class="link-more-cmt" style="text-align: center;">
-                            <icon class="ti-arrow-right"></icon>
-                            <a href="#">See more comment</a>
+                            <% if(cmtList.size() > 3 ){ %>
+                                <icon class="ti-arrow-right"></icon>
+                                <a href="allcomments?GameID=${game.getGameID()}">See more comment</a>
+                            <% } %>
                         </div>
                     </div>
                 </div>

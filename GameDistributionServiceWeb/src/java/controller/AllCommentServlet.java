@@ -92,17 +92,21 @@ public class AllCommentServlet extends HttpServlet {
             } catch (NullPointerException e) {
             }
         }
-        //
-        boolean isBought = false;
-        if (user != null) {
-            if (ugb_Dao.isGameIDBoughtByUserID(user.getUserID(), gameID) != null) {
-                isBought = true;
-            }
+        //Sort
+        String sort = request.getParameter("sort"); //0: recently - 1: oldest
+        if(sort == null){
+            sort = "0";
         }
-        
+        //Filter
+        String filter = request.getParameter("filter"); //0: all - 1: posotive only - 2: negative only
+        if(filter == null){
+            filter = "0";
+        }
+        //send data to jsp
+        request.setAttribute("sort", sort);
+        request.setAttribute("filter", filter);
         request.setAttribute("userVote", userVote);
         request.setAttribute("game", game);
-        request.setAttribute("isBought", isBought);
         request.setAttribute("isCmt", isCmt);
         request.setAttribute("usercomment", comment);
         request.getRequestDispatcher("AllComments.jsp").forward(request, response);

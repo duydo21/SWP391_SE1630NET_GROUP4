@@ -4,11 +4,13 @@
     Author     : ACER
 --%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Collections"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import ="model.UserGameRate"%>
 <%@ page import ="model.UserGameComment"%>
 <%@ page import ="dal.GameDAO"%>
 <%@ page import ="dal.DAOInterface.IGameDAO"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -53,17 +55,21 @@
                 background-color: black;
                 color: white;
             }
+            .show-cmt{
+                display: block !important;
+            }
         </style>
     </head>
     <body>
         <c:set var="game" value = "${requestScope.game}"/>
-        <c:set var="isBought" value = "${requestScope.isBought}"/>
-        <c:set var="user" value = "${sessionScope.userlogin}"/>
         <c:set var="userVote" value = "${requestScope.userVote}"/>
+        <c:set var="user" value = "${sessionScope.userlogin}"/>
         <c:set var="cmtList" value = "${requestScope.cmtList}"/>
         <c:set var="rateList" value = "${requestScope.rateList}"/>
         <c:set var="isCmt" value="${requestScope.isCmt}"/>
         <c:set var="usercomment" value="${requestScope.usercomment}"/>
+        <c:set var="sort" value="${requestScope.sort}"/>
+        <c:set var="filter" value="${requestScope.filter}"/>
         <header>
             <jsp:include page="Header.jsp" />
         </header>
@@ -110,17 +116,73 @@
             <%!List<UserGameComment> cmtList = new ArrayList<>();%>
             <%!List<UserGameRate> rateList1 = new ArrayList<>();%>
             <% cmtList = gameDao.getGameCommentByGameID(gameID); %>
+            <%! int cmt_size = cmtList.size(); %>
             <%for(UserGameComment cmt : cmtList){
                 rateList1.add(new UserGameRate( cmt.getUserID(), 
                 cmt.getGameID(),
                 gameDao.getUserVoteOfAGame(cmt.getUserID(), cmt.getGameID()
                 )));
             }%>
+            <c:if test="${filter.equals('1')}">
+                <% for(int a=0; a<cmtList.size(); a++){ 
+                    if(rateList1.get(a).getRate()==0){
+                        cmtList.remove(a);
+                        rateList1.remove(a);
+                        a--;
+                    }
+                }%>
+
+            </c:if>
+            <c:if test="${filter.equals('2')}">
+                <% for(int a=0; a<cmtList.size(); a++){ 
+                    if(rateList1.get(a).getRate()==1){
+                        cmtList.remove(a);
+                        rateList1.remove(a);
+                        a--;
+                    }
+                }%>
+            </c:if>
+            <c:if test="${sort.equals('1')}">
+                <% Collections.reverse(cmtList); %>
+                <% Collections.reverse(rateList1); %>
+            </c:if>
             <div class="cmt-list">
                 <p style="font-size: 30px">List comment:</p>
+                <form>
+                    <input type="hidden" name="GameID" value="${game.getGameID()}">
+                    <label>Show: </label>
+                    <select name="sort">
+                        <c:if test="${sort.equals('0')}">
+                            <option value="0" selected>Latest</option>
+                            <option value="1">Oldest</option>
+                        </c:if>
+                        <c:if test="${sort.equals('1')}">
+                            <option value="0">Latest</option>
+                            <option value="1" selected>Oldest</option>
+                        </c:if>
+                    </select>
+                    <select name="filter">
+                        <c:if test="${filter.equals('0')}">
+                            <option value="0" selected>All</option>
+                            <option value="1">Positive only</option>
+                            <option value="2">Negative only</option>
+                        </c:if>
+                        <c:if test="${filter.equals('1')}">
+                            <option value="0">All</option>
+                            <option value="1" selected>Positive only</option>
+                            <option value="2">Negative only</option>
+                        </c:if>
+                        <c:if test="${filter.equals('2')}">
+                            <option value="0">All</option>
+                            <option value="1">Positive only</option>
+                            <option value="2" selected>Negative only</option>
+                        </c:if>
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
                 <div class="cmt-list-container">
                     <% for(int j=cmtList.size()-1;j>=0;j--){ %>
-                    <div class="detail-cmt" style="margin-bottom: 7px;">
+                    <div class="detail-cmt" style="margin-bottom: 7px; display: none">
                         <div class="cmt-vote" style="background-color: #006666; line-height: 32px;">
                             <% if(rateList1.get(j).getRate()==0){ %>
                             <icon class="fa-solid fa-thumbs-down" style="font-size: 30px"></icon>Not recommend (Posted <%= cmtList.get(j).getDate() %>)
@@ -139,6 +201,7 @@
                     </div>
                     <% } %>
                 </div>
+                <% cmtList.clear(); rateList1.clear(); %>
             </div>
         </section>
 
@@ -151,7 +214,7 @@
                     <p>Do you want to delete this comment?</p>
                 </div>
                 <div class="modal-footer">
-                    <button style="transform: translateX(-370px)" onclick="window.location.href='managecomment?GameID=${game.getGameID()}&action=1'">Yes</button>
+                    <button style="transform: translateX(-370px)" onclick="window.location.href = 'managecomment?GameID=${game.getGameID()}&action=1'">Yes</button>
                     <button class="cancel-btn" style="transform: translateX(-250px)">Cancel</button>
                 </div>
             </div>
@@ -164,16 +227,16 @@
                 </div>
                 <form action="managecomment">
                     <div class="modal-content">
-                    <div style="width: 90%;">
-                        <textarea name="edit-cmt" rows="3" style="width: 100%; transform: translateX(40px)">${usercomment.getContent()}</textarea> 
-                        <input type="hidden" name="GameID" value="${game.getGameID()}">
-                        <input type="hidden" name="action" value="2">
+                        <div style="width: 90%;">
+                            <textarea name="edit-cmt" rows="3" style="width: 100%; transform: translateX(40px)">${usercomment.getContent()}</textarea> 
+                            <input type="hidden" name="GameID" value="${game.getGameID()}">
+                            <input type="hidden" name="action" value="2">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" style="transform: translateX(-370px)" >Save</button>
-                    <button class="cancel-btn1" style="transform: translateX(-230px)">Cancel</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="submit" style="transform: translateX(-370px)" >Save</button>
+                        <button class="cancel-btn1" style="transform: translateX(-230px)">Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -217,7 +280,7 @@
             }
         </style>
         <footer>
-            <%@include file="footer.jsp"%>
+            <%--<%@include file="footer.jsp"%>--%>
         </footer>
 
         <script>
@@ -238,11 +301,35 @@
             function showDel() {
                 deleteModal.classList.add('open');
             }
-
             editBtn.addEventListener('click', showEdit);
             deleteBtn.addEventListener('click', showDel);
             closeModal.addEventListener('click', close);
             closeModal1.addEventListener('click', close);
+        </script>
+
+        <script>
+            const container = document.querySelector('.cmt-list-container');
+            const cmts = document.querySelectorAll('.detail-cmt');
+            let i = 0;
+
+            function loadComments(num_cmt = 5) {
+                let j = 0;
+                while (j < num_cmt) {
+                    cmts[i].classList.add('show-cmt');
+                    i++;
+                    j++;
+            }
+            }
+
+            loadComments();
+
+            window.addEventListener('scroll', () => {
+                console.log(window.scrollY); //scrolled from top
+                console.log(window.innerHeight); //visible part of screen
+                if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+                    loadComments();
+                }
+            });
         </script>
     </body>
 </html>

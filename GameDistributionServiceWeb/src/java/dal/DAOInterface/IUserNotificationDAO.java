@@ -4,12 +4,18 @@
  */
 package dal.DAOInterface;
 
+import model.Notification;
 import model.UserNotification;
 
 /**
  *
  * @author ACER
  */
-public interface IUserNotificationDAO extends IDAO<UserNotification>{
+public interface IUserNotificationDAO extends IDAO<UserNotification> {
 
+    void adminCreateNotification(String context);
+
+    void NotificationToUserByID(int notiID, int userID);
+    
+    Notification getNotificationByNotiID(int notiID);
 }

@@ -29,6 +29,27 @@
             table{
                 width: 100%;
             }
+            #modal{
+                position: fixed;
+                top: 0;
+                left: 0;
+                right:0;
+                bottom: 0;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+            .modal-container{
+                margin: 0 auto;
+                margin-top: 12%;
+                background-color: #fff;
+                width: 600px;
+                max-width: calc(100% - 32px);
+                min-height: 200px;
+                height: 60%;
+                animation: modalFadeIn ease 0.3s;
+            }
         </style>
     </head>
     <body>
@@ -54,7 +75,7 @@
                     </thead>
                     <tbody style="color:white">
                         <c:forEach items="${requestScope.user}" var="u">
-                            <tr>
+                            <tr onclick="Display('${u.userID}')" >
                                 <td>${u.userID}</td>
                                 <td><img src="${u.avatar}"style="height:100px" alt="alt"/></td>
                                 <td>${u.nickname}</td>
@@ -63,7 +84,23 @@
                                 <td>${u.isDev}</td>
                                 <td>${u.date}</td>
                             </tr>
-                        </c:forEach>
+                        <div class="modal" id="myModal_' + "${u.userID}" + '">
+                            <div class="modal-container">
+                                <div class="modal-header">
+                                    <p style="color: red; font-size: 30px; font-weight: 50px">${u.userID}</p>
+                                    <span class="close" style="font-size: 50px">&times;</span>
+                                </div>
+                                <div class="modal-content">
+                                    <textarea class="form-control" id="text" name="context" rows="6"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="submit-button" type="sumbit">
+                                        Submit and Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                     </tbody>
                 </table>
 
@@ -76,6 +113,19 @@
                 </nav>
             </div>
         </section>
+        <script>
+            //js for buy btn
+            const closeModal1 = document.querySelector('.close');
+            function Hide() {
+                Modal.style.display = 'none';
+            }
+
+            function Display(id) {
+                var modelDiv = document.getElementById('myModal_' + id);
+                modelDiv.style.display = 'block';
+            }
+            closeModal1.addEventListener('click', Hide);
+        </script>
         <footer>
             <jsp:include page="footer.jsp"/>
         </footer>

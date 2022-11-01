@@ -231,7 +231,7 @@ public class UserDAO extends DBContext implements IUserDAO {
         int count = 0;
         String sql = "update [User] set  "
                 + "Nickname=?,  Country =?,  [Email] =?,"
-                + "Avatar =?, [Description] = ?, IsPrivate = ?  "
+                + "Avatar =?, [Description] = ?, IsPrivate = ? , [Date]= ? "
                 + "where UserID=?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
@@ -242,7 +242,9 @@ public class UserDAO extends DBContext implements IUserDAO {
             preparedStatement.setString(4, u.getAvatar());
             preparedStatement.setString(5, u.getDecription());
             preparedStatement.setBoolean(6, u.isIsPrivate());
-            preparedStatement.setInt(7, u.getUserID());
+            preparedStatement.setDate(7, u.getDate());
+            preparedStatement.setInt(8, u.getUserID());
+            
             count = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

@@ -79,7 +79,7 @@ public class ProfileServlet extends HttpServlet {
         //lấy list game 
         List<Game> glist = new ArrayList<>();
         glist = gd.getGame();
-        //lấy list game của user mua
+        //lấy list game của user
         List<UserGameBuy> uglist = new ArrayList<>();
         uglist = gd.getUserGameBuybyId(id);
         

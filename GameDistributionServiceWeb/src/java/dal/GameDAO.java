@@ -18,6 +18,7 @@ import model.Media;
 import model.User;
 import model.UserGameBuy;
 import model.UserGameComment;
+import model.UserGameDeveloper;
 import model.UserGameRate;
 
 /**
@@ -833,7 +834,34 @@ public class GameDAO extends DBContext implements IGameDAO{
             }
         }
     }
+      
+    @Override
+    public List<UserGameDeveloper> getUserGameDeveloped(){
+        UserDAO usAO = new UserDAO();
+        List<UserGameDeveloper> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[User-Game-Developer]";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            resultSet = getResultSet(preparedStatement);
+            while (resultSet.next()) {
+                User u = usAO.findUserByID(resultSet.getInt("UserID"));
+                Game g = getGameById(resultSet.getInt("GameID"));
 
-    
+                UserGameDeveloper ugd = new UserGameDeveloper(u, g);
+                list.add(ugd);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return list;
+        }
+    }
 
 }

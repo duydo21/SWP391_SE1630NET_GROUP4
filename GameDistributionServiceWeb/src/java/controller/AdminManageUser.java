@@ -4,7 +4,9 @@
  */
 package controller;
 
+import dal.DAOInterface.IGameDAO;
 import dal.DAOInterface.IUserDAO;
+import dal.GameDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,8 +15,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
+import model.Game;
 import model.User;
+import model.UserGameBuy;
+import model.UserGameDeveloper;
 
 /**
  *
@@ -63,26 +69,42 @@ public class AdminManageUser extends HttpServlet {
             throws ServletException, IOException {
         IUserDAO ud = new UserDAO();
         List<User> list = ud.getAll();
-        request.setAttribute("user", list);
-//        //phan trang
-//        int size = list.size();
-//        int page, numpage = 20;
-//        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
-//        String xpage = request.getParameter("page");
-//        if (xpage == null) {
-//            page = 1;
-//        } else {
-//            page = Integer.parseInt(xpage);
-//        }
-//        int start, end;
-//        start = (page - 1) * numpage;
-//        end = Math.min(page * numpage, size);
-//        List<User> plist = ud.getUserByPage(list, start, end);
-//        request.setAttribute("size", size);
-//        request.setAttribute("page", page);
-//        request.setAttribute("num", num);
-//        
-//        request.setAttribute("user", plist);
+
+        //phan trang
+        int size = list.size();
+        int page, numpage = 20;
+        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numpage;
+        end = Math.min(page * numpage, size);
+        List<User> plist = ud.getUserByPage(list, start, end);
+        request.setAttribute("size", size);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+
+        request.setAttribute("user", plist);
+
+        IGameDAO gd = new GameDAO();
+        //lấy list game 
+        List<Game> glist = new ArrayList<>();
+        glist = gd.getGame();
+
+        List<UserGameDeveloper> ugdlist = new ArrayList<>();
+        ugdlist = gd.getUserGameDeveloped();
+        
+        List<UserGameBuy> uglist = new ArrayList<>();
+        uglist = gd.getUserGameBuy();
+        //set Attribute của glist và uglist
+        request.setAttribute("gamelist", glist);
+        request.setAttribute("dev", ugdlist);
+        request.setAttribute("buy", uglist);
+        
         request.getRequestDispatcher("UsersList.jsp").forward(request, response);
     }
 

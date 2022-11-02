@@ -44,11 +44,39 @@
                 margin: 0 auto;
                 margin-top: 12%;
                 background-color: #fff;
-                width: 600px;
+                width: 60%;
                 max-width: calc(100% - 32px);
                 min-height: 200px;
                 height: 60%;
                 animation: modalFadeIn ease 0.3s;
+                overflow: auto;
+            }
+
+            .modal-content{
+                position: relative;
+            }
+            .x{
+                right: 2%;
+                position: absolute;
+                top: 10%;
+                font-size: 50px;
+            }
+            .x:hover{
+                cursor: pointer;
+            }
+
+            .left{
+                width: 50%;
+                height: fit-content;
+            }
+            .right{
+                width: 50%;
+                height: fit-content;
+            }
+            
+            .left .row:hover{
+                cursor: pointer;
+                -webkit-filter: brightness(70%);
             }
         </style>
     </head>
@@ -84,19 +112,68 @@
                                 <td>${u.isDev}</td>
                                 <td>${u.date}</td>
                             </tr>
-                        <div class="modal" id="myModal_' + "${u.userID}" + '">
+                        <div class="modal" id="myModal_${u.userID}">
                             <div class="modal-container">
-                                <div class="modal-header">
-                                    <p style="color: red; font-size: 30px; font-weight: 50px">${u.userID}</p>
-                                    <span class="close" style="font-size: 50px">&times;</span>
-                                </div>
                                 <div class="modal-content">
-                                    <textarea class="form-control" id="text" name="context" rows="6"></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="submit-button" type="sumbit">
-                                        Submit and Delete
-                                    </button>
+                                    <div class="top" style="height:120px; background-color: black; display: flex">
+                                        <div style="margin:1%">
+                                            <img src="${u.avatar}"style="height:100px; margin: 1%" alt="alt"/>
+                                        </div>
+                                        <div style="color: white; margin: 1%">
+                                            <p>${u.nickname}</p>
+                                            <p>${u.country}</p>                               
+                                        </div>
+                                        <div style="color: white; margin: 1%">
+                                            <p>${u.decription}</p>
+                                        </div>
+                                        <span class="x" onclick="Hide('${u.userID}');" style="color:white">&times;</span>
+                                    </div>
+                                    <div style="display: flex">
+                                        <div class="left">
+                                            <h3>Game published</h3>
+                                            <%int j = 0;%>
+                                            <c:forEach items="${requestScope.dev}" var="g">
+                                                <c:if test="${(g.userID.userID == u.userID)}">
+                                                    <div class="row" style="margin-bottom:2px;width: 100%" onclick="window.location.href='agameDetails?GameID=${g.gameID.gameID}'">
+                                                        <div class="shadow-sm">
+                                                            <img src="${g.gameID.poster}" alt="alt" style="height:100px;"/>
+                                                            <span>${g.gameID.name}</span>
+                                                            <span>${g.gameID.price}</span>
+                                                        </div>
+                                                    </div>
+                                                    <% j++; %>
+                                                </c:if>
+                                            </c:forEach>
+                                            <% if(j==0){%>
+                                            <div class="row">
+                                                <div class="shadow-sm">
+                                                    <span>This user have 0 games published</span>
+                                                </div>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Game Bought</h3>
+                                            <%int i = 0;%>
+                                            <c:forEach items="${requestScope.buy}" var="b">
+                                                <c:if test="${(b.userID.userID == u.userID)}">
+                                                    <div class="row" style="height: 5%">
+                                                        <div class="col shadow-sm">
+                                                            <img src="${b.gameID.poster}" alt="alt" style="height:100%" />      
+                                                        </div>      
+                                                    </div>
+                                                    <% i++; %>
+                                                </c:if>
+                                            </c:forEach>
+                                            <% if(i==0){%>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span>This user didnt buy any games</span>
+                                                </div>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -116,8 +193,9 @@
         <script>
             //js for buy btn
             const closeModal1 = document.querySelector('.close');
-            function Hide() {
-                Modal.style.display = 'none';
+            function Hide(id) {
+                var modelDiv = document.getElementById('myModal_' + id);
+                modelDiv.style.display = 'none';
             }
 
             function Display(id) {

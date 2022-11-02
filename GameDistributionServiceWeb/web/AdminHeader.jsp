@@ -56,7 +56,7 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                     <div id="dropdown" style="display: none">
                         <c:forEach items="${requestScope.gamelist}" var="g">
-                            <div id="game" onclick="window.location.href = 'gameDetails?GameID=${g.gameID}'">
+                            <div id="game" onclick="window.location.href = 'agameDetails?GameID=${g.gameID}'">
                                 <div>
                                     <img src="${g.poster}" alt="alt" style="width: 20%; float: left"/>
                                     <p>${g.name}</p>                                 

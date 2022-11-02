@@ -12,6 +12,7 @@ import model.Media;
 import model.User;
 import model.UserGameBuy;
 import model.UserGameComment;
+import model.UserGameDeveloper;
 
 /**
  *
@@ -74,4 +75,7 @@ public interface IGameDAO extends IDAO<Game> {
     int getUserVoteOfAGame(User user, Game game);
     
     void deleteGameByID(int id);
+
+    List<UserGameDeveloper> getUserGameDeveloped();
+    
 }

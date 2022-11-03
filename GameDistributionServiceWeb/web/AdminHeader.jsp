@@ -50,6 +50,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="user">Manage Users</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">Sign out</a>
+                    </li>
                 </ul>
                 <form class="search d-flex " action="search" method = "get" style="position: relative">
                     <input class="form-control me-2" id="input" type="search" placeholder="Search" aria-label="Search" name="search" onkeyup="filterFunction()">

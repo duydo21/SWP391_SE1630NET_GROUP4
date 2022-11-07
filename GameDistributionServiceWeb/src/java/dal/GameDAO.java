@@ -54,7 +54,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -120,7 +120,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -150,7 +150,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -180,7 +180,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -210,7 +210,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -240,7 +240,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -270,7 +270,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -301,7 +301,8 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));                return g;
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));               
+                return g;
             }
         } catch (SQLException e) {
             return null;
@@ -486,7 +487,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException ex) {
@@ -516,7 +517,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -546,7 +547,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -640,7 +641,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -669,7 +670,7 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -781,7 +782,8 @@ public class GameDAO extends DBContext implements IGameDAO{
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getString("Text"));                return g;
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));               
+                return g;
             }
         } catch (SQLException e) {
             return null;

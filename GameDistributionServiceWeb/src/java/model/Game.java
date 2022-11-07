@@ -23,12 +23,13 @@ public class Game {
     private String Description;
     private Date Date;
     private String Poster;
+    private String Text;
     
     public Game() {
         
     }
 
-    public Game(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster) {
+    public Game(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster, String Text) {
         this.GameID = GameID;
         this.Name = Name;
         this.Price = Price;
@@ -41,6 +42,7 @@ public class Game {
         this.Description = Description;
         this.Date = Date;
         this.Poster = Poster;
+        this.Text = Text;
     }
 
     public int getGameID() {
@@ -141,6 +143,14 @@ public class Game {
 
     public void setPoster(String Poster) {
         this.Poster = Poster;
+    }
+
+    public String getText() {
+        return Text;
+    }
+
+    public void setText(String Text) {
+        this.Text = Text;
     }
 
     

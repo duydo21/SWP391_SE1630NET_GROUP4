@@ -44,7 +44,7 @@
                 <tbody>
                     <c:forEach items="${requestScope.report}" var="r">
                         <tr style="color:white" class="trigger">
-                            <td>${r.userID.username}</td>
+                            <td>${r.userID.nickname}</td>
                             <td>${r.gameID.name}</td>
                             <td>${r.content}</td>
                             <td>${r.date}</td>

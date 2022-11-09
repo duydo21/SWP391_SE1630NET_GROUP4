@@ -182,6 +182,7 @@
                         <!-- Kết thúc cột phải -->
                     </div>
                 </div>
+                
         </section>
         <footer>
             <jsp:include page="footer.jsp"/>

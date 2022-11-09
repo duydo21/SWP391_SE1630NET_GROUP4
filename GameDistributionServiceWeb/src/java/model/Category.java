@@ -15,6 +15,11 @@ public class Category {
     public Category() {
     }
 
+    public Category(int CategoryID, String CategoryName) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+    }
+
     public Category(int CategoryID, String CategoryName, String Cover) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;

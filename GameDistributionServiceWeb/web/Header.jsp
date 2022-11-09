@@ -79,8 +79,11 @@
                                 <a class="dropdown-item" href="profile?UserID=${sessionScope.userlogin.userID}">Profile</a>
                                 <a class="dropdown-item" href="changepass?acc=${sessionScope.acc.username}">Change Password</a>
                                 <a class="dropdown-item" href="logout">Sign out</a>
-                                <a class="dropdown-item" href="#">Payment</a>
+                                <a class="dropdown-item" href="payment">Payment</a>
                                 <a class="dropdown-item" href="transactionhistory?UserID=${sessionScope.userlogin.userID}">Transaction History</a>
+                                <c:if test="${sessionScope.userlogin.isDev==true}"> 
+                                <a class="dropdown-item" href="uploadgame">Upload Games</a>
+                                </c:if>
                             </div>
                         </li>
                     </c:if>

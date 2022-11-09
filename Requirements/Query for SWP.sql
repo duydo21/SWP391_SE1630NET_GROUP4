@@ -74,6 +74,7 @@ INSERT INTO Game ([Name], Price, Download, Rate, [Status], [Description],  [Date
 --INSERT INTO [dbo].[User-Game-Developer] (UserID, GameID) VALUES (,19) ;
 
 update Game set Discount = 0 
+update Game set Buyable = 1 
 --select * from Media
 --type 1: anh demo trong game, 2: video demo trong game
 INSERT INTO [dbo].[Media]([GameID] ,[Link] ,[Type]) VALUES (1,'asset/cuphead/c1.jpg',1)

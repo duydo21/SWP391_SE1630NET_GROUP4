@@ -247,7 +247,7 @@
                             <div class="detail-cmt" >
                                 <div class="cmt-vote" style="background-color: #006666; line-height: 32px;">
                                     <% if(rateList1.get(j).getRate()==0){ %>
-                                    <icon class="fa-solid fa-thumbs-down" style="padding: 2px 5px 0 10px"></icon>Not recommend (Posted <%= cmtList.get(j).getDate() %>)
+                                    <icon class="fa-solid fa-thumbs-down" style="padding: 2px 5px 0 10px;"></icon>Not recommend (Posted <%= cmtList.get(j).getDate() %>)
                                         <% }else{ %>
                                     <icon class="fa-solid fa-thumbs-up" style="padding: 2px 5px 0 10px"></icon>Recommend (Posted <%= cmtList.get(j).getDate() %>)
                                         <% } %>

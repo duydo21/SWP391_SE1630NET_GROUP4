@@ -3,7 +3,12 @@
     Created on : Oct 27, 2022, 5:11:13 PM
     Author     : Strongest
 --%>
-
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import ="model.UserGameRate"%>
+<%@ page import ="model.UserGameComment"%>
+<%@ page import ="dal.GameDAO"%>
+<%@ page import ="dal.DAOInterface.IGameDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -202,7 +207,51 @@
                         <div class="clear"></div>
                     </div>
                     <div id="user-comment">
-                        <div class="heading-content">Comment</div>
+                        <div class="heading-content" style="margin-bottom: 5px">Comment</div>
+                        <%! int a=0;%>
+                        <% a=0; %>
+                        <% String gameID_raw = request.getParameter("GameID");%>
+                        <% int gameID = Integer.parseInt(gameID_raw);  %>
+                        <%!IGameDAO gameDao = new GameDAO();%>
+                        <%!List<UserGameComment> cmtList = new ArrayList<>();%>
+                        <%!List<UserGameRate> rateList1 = new ArrayList<>();%>
+                        <% cmtList = gameDao.getGameCommentByGameID(gameID); %>
+                        <%for(UserGameComment cmt : cmtList){
+                            rateList1.add(new UserGameRate( cmt.getUserID(), 
+                            cmt.getGameID(),
+                            gameDao.getUserVoteOfAGame(cmt.getUserID(), cmt.getGameID()
+                            )));
+                        }%>
+                        <div class="comment-container">
+                            <% for(int j=cmtList.size()-1;j>=0;j--){ %>
+                            <% a++; %>
+                            <div class="detail-cmt" >
+                                <div class="cmt-vote" style="background-color: #006666; line-height: 32px;">
+                                    <% if(rateList1.get(j).getRate()==0){ %>
+                                    <icon class="fa-solid fa-thumbs-down" style="padding: 2px 5px 0 10px;"></icon>Not recommend (Posted <%= cmtList.get(j).getDate() %>)
+                                        <% }else{ %>
+                                    <icon class="fa-solid fa-thumbs-up" style="padding: 2px 5px 0 10px"></icon>Recommend (Posted <%= cmtList.get(j).getDate() %>)
+                                        <% } %>
+                                </div>
+                                <div class="cmt-content" style="background-color: #009999">
+                                    <div class="cmter" style="width: 20%">
+                                        <img src="<%= cmtList.get(j).getUserID().getAvatar() %>" style="width:35%"/>
+                                        <p><%= cmtList.get(j).getUserID().getUsername().getUsername() %></p>
+                                    </div>
+                                    <div class="cmter-content" style="width: 80%"><%= cmtList.get(j).getContent() %></div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <% if(a==3){break;} %>
+                            <% } %>
+                        </div>
+                        <% rateList1.clear(); %>
+                        <div class="link-more-cmt" style="text-align: center;">
+                            <% if(cmtList.size() > 3 ){ %>
+                                <icon class="ti-arrow-right"></icon>
+                                <a href="allcomments?GameID=${game.getGameID()}">See more comment</a>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             </div>           

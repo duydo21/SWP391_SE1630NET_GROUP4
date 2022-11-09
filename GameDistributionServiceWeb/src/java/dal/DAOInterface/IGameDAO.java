@@ -78,4 +78,8 @@ public interface IGameDAO extends IDAO<Game> {
 
     List<UserGameDeveloper> getUserGameDeveloped();
     
+    List<Category> getCategory();
+    
+    int uploadGame(Game g);
+    
 }

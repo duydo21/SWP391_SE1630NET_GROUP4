@@ -4,8 +4,10 @@
  */
 package controller;
 
-import Util.ForgotPassUtils;
-import dal.UserDAO;
+import dal.CategoryDAO;
+import dal.DAOInterface.ICategoryDAO;
+import dal.DAOInterface.IGameDAO;
+import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +15,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Account;
-import model.Email;
-import model.User;
+import jakarta.servlet.http.Part;
+import java.nio.file.Paths;
+import java.util.List;
+import model.Category;
+import model.Game;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "ForgotPasswordServlet", urlPatterns = {"/forgotpass"})
-public class ForgotPasswordServlet extends HttpServlet {
+@WebServlet(name = "UploadGameServlet", urlPatterns = {"/uploadgame"})
+public class UploadGameServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +45,10 @@ public class ForgotPasswordServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ForgotPasswordServlet</title>");
+            out.println("<title>Servlet UploadGameServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ForgotPasswordServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UploadGameServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,8 +66,13 @@ public class ForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //vào trang ForgotPassword.jsp
-        request.getRequestDispatcher("ForgotPassword.jsp").forward(request, response);
+        ICategoryDAO cd = new CategoryDAO();
+        List<Category> list = cd.getCategory();
+
+        request.setAttribute("cate", list);
+
+        //vào trang UploadGames
+        request.getRequestDispatcher("UploadGames.jsp").forward(request, response);
     }
 
     /**
@@ -78,43 +87,41 @@ public class ForgotPasswordServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-
-            String name = request.getParameter("user").trim();
-            String email = request.getParameter("email").trim();
-            //method findUserByNameAndEmail gọi vào User
-            UserDAO u = new UserDAO();
-            Account account = u.findAccountByName(name);
-            User user = u.findUserByNameAndEmail(name, email);
-            //khi usernaem hoac email ko dung
-            if (user == null) {
-                request.setAttribute("msr", "Username or email are incorrect");
-            } else {
-                //tạo tin nhẵn email
-                Email email1 = new Email();
-                email1.setFrom("nhochoanganh2211@gmail.com");
-                email1.setFromPassword("ukeriudgmvnpssno");
-                email1.setTo(email);
-                email1.setSubject("Forgot Password Funtion");
-
-                StringBuilder sb = new StringBuilder();
-                sb.append("Dear ").append(name).append("<br>");
-                sb.append("You are used the forgot password funtion. <br>");
-                sb.append("Your password is <b>").append(account.getPassword()).append("<br>");
-                sb.append("Regards<br>");
-                sb.append("Administrator");
-
-                email1.setContent(sb.toString());
-                ForgotPassUtils.send(email1);
-                
-                //thông báo gửi email thành công
-                request.setAttribute("msr", "Email sent to the email Address." + "Please check and get your password");
-
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        String name = request.getParameter("name");
+        float price = (float) 0.0; // default value
+        if (request.getParameter("price") != null) {
+            price = Float.parseFloat(request.getParameter("price"));
         }
-        request.getRequestDispatcher("ForgotPassword.jsp").forward(request, response);
+        String decription = request.getParameter("decription");
+
+//        List<Category> list = new ArrayList<>();
+//        String[] cid_raw = request.getParameterValues("category");
+//        int[] cid = new int[cid_raw.length];
+//        for (int i = 0; i < cid_raw.length; i++) {
+//            cid[i] = Integer.parseInt(cid_raw[i]);
+//            Category c = new Category(cid[i], "");
+//            list.add(c);
+//        }
+        //tạo đường truyền dẫn cho upload ảnh
+        Part part = request.getPart("poster");
+        String realPath = request.getServletContext().getRealPath("/poster");
+        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+
+        //trường hợp không có ảnh truyền vào
+        if (filename.isEmpty()) {
+            filename = "Default Avatar.jpg";
+        }
+        part.write(realPath + "/" + filename);
+
+        //truyền dữ liệu vào User
+        Game g = new Game(name, price, decription, "poster/" + filename);
+//        g.setCategorys(list);
+
+        IGameDAO gd = new GameDAO();
+        if (gd.uploadGame(g) > 0) {
+            response.sendRedirect("mainscrean");
+        }
+
     }
 
     /**
@@ -125,5 +132,6 @@ public class ForgotPasswordServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>  
+    }// </editor-fold>
+
 }

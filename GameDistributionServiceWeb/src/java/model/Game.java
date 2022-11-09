@@ -5,6 +5,8 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,9 +25,17 @@ public class Game {
     private String Description;
     private Date Date;
     private String Poster;
+    List<Category> categorys = new ArrayList<>();
     
     public Game() {
         
+    }
+
+    public Game(String Name, float Price, String Description,  String Poster) {
+        this.Name = Name;
+        this.Price = Price;
+        this.Description = Description;
+        this.Poster = Poster;
     }
 
     public Game(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster) {
@@ -141,6 +151,14 @@ public class Game {
 
     public void setPoster(String Poster) {
         this.Poster = Poster;
+    }
+
+    public List<Category> getCategorys() {
+        return categorys;
+    }
+
+    public void setCategorys(List<Category> categorys) {
+        this.categorys = categorys;
     }
 
     

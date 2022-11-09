@@ -78,7 +78,8 @@ create table [Game]
 	[Description] nvarchar(max),
 	--Developer nvarchar(300),
 	[Date] date,
-	Poster nvarchar(max)
+	Poster nvarchar(max),
+	Buyable bit
 )
 go
 

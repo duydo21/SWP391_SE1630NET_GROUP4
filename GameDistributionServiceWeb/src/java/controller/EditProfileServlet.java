@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.nio.file.Paths;
 import java.sql.Date;
-import java.sql.SQLWarning;
 import model.User;
 
 /**
@@ -91,10 +90,6 @@ public class EditProfileServlet extends HttpServlet {
         //lấy pameter ở EditProfile
         int id = Integer.parseInt(request.getParameter("id"));
         String nickname = request.getParameter("nickname").trim();
-        if (nickname.equals("")) {
-            request.setAttribute("msr", "please enter nick name");
-            request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
-        }
         String country = request.getParameter("country");
         String email = request.getParameter("email").trim();
         String decription = request.getParameter("decription").trim();

@@ -50,13 +50,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="user">Manage Users</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">Sign out</a>
+                    </li>
                 </ul>
                 <form class="search d-flex " action="search" method = "get" style="position: relative">
                     <input class="form-control me-2" id="input" type="search" placeholder="Search" aria-label="Search" name="search" onkeyup="filterFunction()">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                     <div id="dropdown" style="display: none">
                         <c:forEach items="${requestScope.gamelist}" var="g">
-                            <div id="game" onclick="window.location.href = 'gameDetails?GameID=${g.gameID}'">
+                            <div id="game" onclick="window.location.href = 'agameDetails?GameID=${g.gameID}'">
                                 <div>
                                     <img src="${g.poster}" alt="alt" style="width: 20%; float: left"/>
                                     <p>${g.name}</p>                                 

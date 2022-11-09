@@ -112,6 +112,7 @@
                                     </a>
                                 </th>
                                 <th style="color: white; width: 22%;">Release date</th>
+                                <th>Download</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,6 +125,7 @@
                                         <span style="color: white">${n.name}</span>
                                     </td>
                                     <td class="text-success"><b>${n.date}</b></td>
+                                    <td class="text-success"><b>${n.text}</b></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -169,6 +171,7 @@
                                     </a>
                                 </th>
                                 <th style="color: white; width: 22%;">Release date</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -186,6 +189,7 @@
                         </tbody>
                     </table>
                 </div>
+                
             </div>
             <div class="container">
                 <h3 style="color: white">Current database</h3>

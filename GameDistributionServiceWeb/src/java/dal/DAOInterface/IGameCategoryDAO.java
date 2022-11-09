@@ -12,4 +12,5 @@ import model.GameCategory;
  */
 public interface IGameCategoryDAO extends IDAO<GameCategory>{
 
+    void insertGameCategory(GameCategory gc);
 }

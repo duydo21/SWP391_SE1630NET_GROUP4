@@ -20,6 +20,10 @@ public class GameCategory {
         this.CategoryID = CategoryID;
     }
 
+    public GameCategory(Category CategoryID) {
+        this.CategoryID = CategoryID;
+    }
+
     public Game getGameID() {
         return GameID;
     }

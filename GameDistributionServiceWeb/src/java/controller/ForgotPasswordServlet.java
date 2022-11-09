@@ -93,7 +93,7 @@ public class ForgotPasswordServlet extends HttpServlet {
                 //tạo tin nhẵn email
                 Email email1 = new Email();
                 email1.setFrom("nhochoanganh2211@gmail.com");
-                email1.setFromPassword("iooxgxqwevelajtj");
+                email1.setFromPassword("ukeriudgmvnpssno");
                 email1.setTo(email);
                 email1.setSubject("Forgot Password Funtion");
 
@@ -106,7 +106,8 @@ public class ForgotPasswordServlet extends HttpServlet {
 
                 email1.setContent(sb.toString());
                 ForgotPassUtils.send(email1);
-
+                
+                //thông báo gửi email thành công
                 request.setAttribute("msr", "Email sent to the email Address." + "Please check and get your password");
 
             }

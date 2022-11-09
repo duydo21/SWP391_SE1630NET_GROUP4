@@ -18,13 +18,14 @@ import model.Media;
 import model.User;
 import model.UserGameBuy;
 import model.UserGameComment;
+import model.UserGameDeveloper;
 import model.UserGameRate;
 
 /**
  *
  * @author Strongest
  */
-public class GameDAO extends DBContext implements IGameDAO{
+public class GameDAO extends DBContext implements IGameDAO {
 
 //    [GameID]
 //      ,[Name]
@@ -37,7 +38,6 @@ public class GameDAO extends DBContext implements IGameDAO{
 //      ,[Description]
 //      ,[Developer]
 //      ,[Date]
-
     //lay danh sach game
     @Override
     public List<Game> getGame() {
@@ -143,13 +143,13 @@ public class GameDAO extends DBContext implements IGameDAO{
         Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
-                        rs.getFloat("Price"), rs.getInt("Download"),
-                        rs.getInt("Discount"), rs.getFloat("Rate"),
-                        rs.getInt("Status"), rs.getString("Description"),
-                        rs.getDate("Date"), rs.getString("Poster"));
+            ResultSet resultSet = st.executeQuery();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"),
+                        resultSet.getFloat("Price"), resultSet.getInt("Download"),
+                        resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
+                        resultSet.getInt("Status"), resultSet.getString("Description"),
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -296,7 +296,11 @@ public class GameDAO extends DBContext implements IGameDAO{
             resultSet = getResultSet(preparedStatement);
             if (resultSet.next()) {
                 //(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date)
-                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"), resultSet.getFloat("Price"), resultSet.getInt("Download"), resultSet.getInt("Discount"), resultSet.getFloat("Rate"), resultSet.getInt("Status"), resultSet.getString("Description"), resultSet.getDate("Date"), resultSet.getString("Poster"));
+                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"),
+                        resultSet.getFloat("Price"), resultSet.getInt("Download"),
+                        resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
+                        resultSet.getInt("Status"), resultSet.getString("Description"),
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 return g;
             }
         } catch (SQLException e) {
@@ -344,7 +348,7 @@ public class GameDAO extends DBContext implements IGameDAO{
     public List<UserGameComment> getGameCommentByGameID(int id) {
         String sql = "SELECT * FROM [dbo].[User-Game-Comment] where GameID = ?";
         Connection connection = getConnection();
-        PreparedStatement  preparedStatement = getPreparedStatement(sql, connection);
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
         List<UserGameComment> list = new ArrayList<>();
         UserDAO userDao = new UserDAO();
@@ -352,8 +356,8 @@ public class GameDAO extends DBContext implements IGameDAO{
             preparedStatement.setInt(1, id);
             resultSet = getResultSet(preparedStatement);
             while (resultSet.next()) {
-                UserGameComment cmt = new UserGameComment(userDao.findUserByID(resultSet.getInt("UserID")), 
-                        getGameById(resultSet.getInt("GameID")), 
+                UserGameComment cmt = new UserGameComment(userDao.findUserByID(resultSet.getInt("UserID")),
+                        getGameById(resultSet.getInt("GameID")),
                         resultSet.getString("Content"), resultSet.getDate("Date"));
                 list.add(cmt);
             }
@@ -473,12 +477,16 @@ public class GameDAO extends DBContext implements IGameDAO{
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";
         Connection connection = getConnection();
-        PreparedStatement preparedStatement= getPreparedStatement(sql, connection);
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
         try {
             resultSet = getResultSet(preparedStatement);
             while (resultSet.next()) {
-                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"), resultSet.getFloat("Price"), resultSet.getInt("Download"), resultSet.getInt("Discount"), resultSet.getFloat("Rate"), resultSet.getInt("Status"), resultSet.getString("Description"), resultSet.getDate("Date"), resultSet.getString("Poster"));
+                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"),
+                        resultSet.getFloat("Price"), resultSet.getInt("Download"),
+                        resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
+                        resultSet.getInt("Status"), resultSet.getString("Description"),
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException ex) {
@@ -498,8 +506,8 @@ public class GameDAO extends DBContext implements IGameDAO{
     public List<Game> sortGameByName() {
         String sql = "SELECT * FROM [dbo].[Game] order by Name ASC";
         Connection connection = getConnection();
-         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
         List<Game> list = new ArrayList<>();
         try {
             resultSet = getResultSet(preparedStatement);
@@ -562,7 +570,7 @@ public class GameDAO extends DBContext implements IGameDAO{
         String sql = "SELECT * FROM [dbo].[User-Game-Buy] where UserID =?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        ResultSet resultSet =null;
+        ResultSet resultSet = null;
         try {
             preparedStatement.setInt(1, userid);
             resultSet = getResultSet(preparedStatement);
@@ -646,7 +654,8 @@ public class GameDAO extends DBContext implements IGameDAO{
             return list;
         }
     }
-        //lay game co giam gia
+    //lay game co giam gia
+
     @Override
     public List<Game> get10Deals() {
         List<Game> list = new ArrayList<>();
@@ -655,13 +664,13 @@ public class GameDAO extends DBContext implements IGameDAO{
         Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Game g = new Game(rs.getInt("GameID"), rs.getString("Name"),
-                        rs.getFloat("Price"), rs.getInt("Download"),
-                        rs.getInt("Discount"), rs.getFloat("Rate"),
-                        rs.getInt("Status"), rs.getString("Description"),
-                        rs.getDate("Date"), rs.getString("Poster"));
+            ResultSet resultSet = st.executeQuery();
+            while (resultSet.next()) {
+                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"),
+                        resultSet.getFloat("Price"), resultSet.getInt("Download"),
+                        resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
+                        resultSet.getInt("Status"), resultSet.getString("Description"),
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -769,7 +778,11 @@ public class GameDAO extends DBContext implements IGameDAO{
             resultSet = getResultSet(preparedStatement);
             if (resultSet.next()) {
                 //(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date)
-                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"), resultSet.getFloat("Price"), resultSet.getInt("Download"), resultSet.getInt("Discount"), resultSet.getFloat("Rate"), resultSet.getInt("Status"), resultSet.getString("Description"), resultSet.getDate("Date"), resultSet.getString("Poster"));
+                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"),
+                        resultSet.getFloat("Price"), resultSet.getInt("Download"),
+                        resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
+                        resultSet.getInt("Status"), resultSet.getString("Description"),
+                        resultSet.getDate("Date"), resultSet.getString("Poster"));
                 return g;
             }
         } catch (SQLException e) {
@@ -784,16 +797,17 @@ public class GameDAO extends DBContext implements IGameDAO{
         }
         return null;
     }
+
     @Override
-    public void deleteGameByID(int id){
+    public void deleteGameByID(int id) {
         String sql = "Delete from [Game] where GameID = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        try{
+        try {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-        }catch(SQLException e){
-        }finally{
+        } catch (SQLException e) {
+        } finally {
             try {
                 preparedStatement.close();
                 connection.close();
@@ -801,6 +815,7 @@ public class GameDAO extends DBContext implements IGameDAO{
             }
         }
     }
+
     @Override
     public List<Game> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -821,11 +836,11 @@ public class GameDAO extends DBContext implements IGameDAO{
         String sql = "Delete from [Game] where GameID = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        try{
+        try {
             preparedStatement.setInt(1, t.getGameID());
             preparedStatement.executeUpdate();
-        }catch(SQLException e){
-        }finally{
+        } catch (SQLException e) {
+        } finally {
             try {
                 preparedStatement.close();
                 connection.close();
@@ -834,6 +849,114 @@ public class GameDAO extends DBContext implements IGameDAO{
         }
     }
 
-    
+    @Override
+    public List<UserGameDeveloper> getUserGameDeveloped() {
+        UserDAO usAO = new UserDAO();
+        List<UserGameDeveloper> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[User-Game-Developer]";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            resultSet = getResultSet(preparedStatement);
+            while (resultSet.next()) {
+                User u = usAO.findUserByID(resultSet.getInt("UserID"));
+                Game g = getGameById(resultSet.getInt("GameID"));
+
+                UserGameDeveloper ugd = new UserGameDeveloper(u, g);
+                list.add(ugd);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+            return list;
+        }
+    }
+
+    //Lấy list Category
+    @Override
+    public List<Category> getCategory() {
+        List<Category> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[Category]";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        ResultSet resultSet = null;
+        try {
+            resultSet = getResultSet(preparedStatement);
+            while (resultSet.next()) {
+                Category c = new Category(resultSet.getInt("CategoryID"), resultSet.getString("CategoryName"), resultSet.getString("Cover"));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public int uploadGame(Game g) {
+        List<Category> list = new ArrayList<>();
+        int count = 0;
+        String sql = "INSERT INTO [dbo].[Game]\n"
+                + "           ([Name]\n"
+                + "           ,[Price]\n"
+                + "           ,Download\n"
+                + "           ,Discount\n"
+                + "           ,Rate\n"
+                + "           ,[Status]\n"
+                + "           ,[Description]\n"
+                + "           ,[Date]\n"
+                + "           ,Poster\n"
+                + "           ,Buyable)\n"
+                + "     VALUES(?,?,?,?,?,?,?,?,?,?)";
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
+        try {
+            preparedStatement.setString(1, g.getName());
+            preparedStatement.setFloat(2, g.getPrice());
+            preparedStatement.setInt(3, 0);
+            preparedStatement.setInt(4, 0);
+            preparedStatement.setFloat(5, 0);
+            preparedStatement.setInt(6, 1);
+            preparedStatement.setString(7, g.getDescription());
+            preparedStatement.setDate(8, date);
+            preparedStatement.setString(9, g.getPoster());
+            preparedStatement.setBoolean(10, false);
+            count = preparedStatement.executeUpdate();
+
+            for (Category c : list) {
+                String sql2 = "INSERT INTO [dbo].[Game-Category]\n"
+                        + "           ([GameID]\n"
+                        + "           ,[CategoryID])\n"
+                        + "     VALUES\n"
+                        + "           (?,?)";
+                PreparedStatement pt = getPreparedStatement(sql2, connection);
+                pt.setInt(1, 21);
+                pt.setInt(2, c.getCategoryID());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
+        return count;
+    }
 
 }

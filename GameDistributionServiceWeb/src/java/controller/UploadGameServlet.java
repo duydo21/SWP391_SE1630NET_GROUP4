@@ -27,6 +27,7 @@ import model.GameCategory;
  *
  * @author ADMIN
  */
+@MultipartConfig
 @WebServlet(name = "UploadGameServlet", urlPatterns = {"/uploadgame"})
 public class UploadGameServlet extends HttpServlet {
 

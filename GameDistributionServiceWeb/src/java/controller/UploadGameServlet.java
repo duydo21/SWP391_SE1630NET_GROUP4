@@ -17,9 +17,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 import model.Game;
+import model.GameCategory;
 
 /**
  *
@@ -86,6 +88,8 @@ public class UploadGameServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        CategoryDAO c_dao = new CategoryDAO();
+        
 
         String name = request.getParameter("name");
         float price = (float) 0.0; // default value
@@ -94,34 +98,36 @@ public class UploadGameServlet extends HttpServlet {
         }
         String decription = request.getParameter("decription");
 
-//        List<Category> list = new ArrayList<>();
-//        String[] cid_raw = request.getParameterValues("category");
-//        int[] cid = new int[cid_raw.length];
-//        for (int i = 0; i < cid_raw.length; i++) {
-//            cid[i] = Integer.parseInt(cid_raw[i]);
-//            Category c = new Category(cid[i], "");
-//            list.add(c);
+//        //tạo đường truyền dẫn cho upload ảnh
+//        Part part = request.getPart("poster");
+//        String realPath = request.getServletContext().getRealPath("/poster");
+//        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+//
+//        //trường hợp không có ảnh truyền vào
+//        if (filename.isEmpty()) {
+//            filename = "Default Avatar.jpg";
 //        }
-        //tạo đường truyền dẫn cho upload ảnh
-        Part part = request.getPart("poster");
-        String realPath = request.getServletContext().getRealPath("/poster");
-        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+//        part.write(realPath + "/" + filename);
+//        
+        String[] cid_raw = request.getParameterValues("category");
+        List<Category> list = c_dao.getCategory();
+        try {
+            if (cid_raw != null) {
+                for (String i : cid_raw) {
+                    list.add(new Category(Integer.parseInt(i), ""));
+                }
+            }
+            //truyền dữ liệu vào Game
 
-        //trường hợp không có ảnh truyền vào
-        if (filename.isEmpty()) {
-            filename = "Default Avatar.jpg";
+        } catch (NumberFormatException e) {
+            System.out.println(e);
         }
-        part.write(realPath + "/" + filename);
-
-        //truyền dữ liệu vào User
-        Game g = new Game(name, price, decription, "poster/" + filename);
-//        g.setCategorys(list);
+        Game g = new Game(name, price, decription, name, list);
 
         IGameDAO gd = new GameDAO();
         if (gd.uploadGame(g) > 0) {
-            response.sendRedirect("mainscrean");
+            response.sendRedirect("mainscreen");
         }
-
     }
 
     /**

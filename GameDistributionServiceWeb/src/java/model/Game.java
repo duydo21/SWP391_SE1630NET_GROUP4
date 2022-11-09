@@ -13,6 +13,7 @@ import java.util.List;
  * @author Strongest
  */
 public class Game {
+
     private int GameID;
     private String Name;
     private float Price;
@@ -25,13 +26,22 @@ public class Game {
     private String Description;
     private Date Date;
     private String Poster;
-    List<Category> categorys = new ArrayList<>();
-    
+    private boolean Buyable;
+    private List<Category> categorys;
+
     public Game() {
-        
+
     }
 
-    public Game(String Name, float Price, String Description,  String Poster) {
+    public Game(String Name, float Price, String Description, String Poster, List<Category> categorys) {
+        this.Name = Name;
+        this.Price = Price;
+        this.Description = Description;
+        this.Poster = Poster;
+        this.categorys = categorys;
+    }
+
+    public Game(String Name, float Price, String Description, String Poster) {
         this.Name = Name;
         this.Price = Price;
         this.Description = Description;
@@ -39,6 +49,21 @@ public class Game {
     }
 
     public Game(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster) {
+        this.GameID = GameID;
+        this.Name = Name;
+        this.Price = Price;
+        this.Download = Download;
+        this.Discount = Discount;
+        this.Rate = Rate;
+        this.Status = Status;
+        this.Description = Description;
+        this.Date = Date;
+        this.Poster = Poster;
+    }
+    
+    
+
+    public Game(int GameID, String Name, float Price, int Download, int Discount, float Rate, int Status, String Description, Date Date, String Poster, boolean Buyable) {
         this.GameID = GameID;
         this.Name = Name;
         this.Price = Price;
@@ -51,6 +76,8 @@ public class Game {
         this.Description = Description;
         this.Date = Date;
         this.Poster = Poster;
+        this.Buyable = Buyable;
+
     }
 
     public int getGameID() {
@@ -78,9 +105,9 @@ public class Game {
     }
 
     public float getPriceAfterDiscount() {
-        return Price - Price/100*getDiscount();
+        return Price - Price / 100 * getDiscount();
     }
-    
+
 //    public String getPublishedBy() {
 //        return PublishedBy;
 //    }
@@ -96,7 +123,6 @@ public class Game {
 //    public void setDeveloper(String Developer) {
 //        this.Developer = Developer;
 //    }
-
     public int getDownload() {
         return Download;
     }
@@ -153,6 +179,15 @@ public class Game {
         this.Poster = Poster;
     }
 
+
+    public boolean isBuyable() {
+        return Buyable;
+    }
+
+    public void setBuyable(boolean Buyable) {
+        this.Buyable = Buyable;
+    }
+
     public List<Category> getCategorys() {
         return categorys;
     }
@@ -161,5 +196,6 @@ public class Game {
         this.categorys = categorys;
     }
 
-    
+   
+
 }

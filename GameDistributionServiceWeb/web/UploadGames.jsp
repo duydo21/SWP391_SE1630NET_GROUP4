@@ -39,41 +39,41 @@
                                         </div>
 
                                         <div class="form-outline mb-2">
-                                            <input type="text" name="decription" id="form3Example4cg" class="form-control form-control-lg"  />
+                                            <input type="text" name="decription" id="form3Example4cg" class="form-control form-control-lg" required="" />
                                             <label class="form-label" for="form3Example4cg">Decription</label>
                                         </div>
 
                                         <div class="form-outline mb-2" style="border: 1px solid lightgrey; border-radius: 10px">
                                             <c:forEach items="${requestScope.cate}" var="c">
                                                 <input type="checkbox" name="category" id="form3Example4cdg" class="form-checkbox " value="${c.categoryID}" />
-                                            <label class="form-label" for="form3Example4cdg">${c.categoryName}</label>
+                                                <label class="form-label" for="form3Example4cdg">${c.categoryName}</label>
                                             </c:forEach>
                                         </div>
                                         <label class="form-label" for="form3Example4cdg">Category</label>
-                                        
+
                                         <div id="selectedBanner"></div>
                                         <div class="form-outline mb-2">
                                             <div class="form-group">
-                                                <input type="file" id="img" class="form-control" name="poster"   />
+                                                <input type="file" id="img" class="form-control" name="poster" required=""  />
                                                 <label class="form-label" for="form3Example4cg">Poster</label>
                                             </div>
                                         </div>
-                                        
-                                        
+
+
                                         <div class="form-outline mb-2">
                                             <div class="form-group">
                                                 <input type="file" id="img" class="form-control" name="video"   />
                                                 <label class="form-label" for="form3Example4cg">Video</label>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-outline mb-2">
                                             <div class="form-group">
                                                 <input type="file" id="img" class="form-control" name="demo" multiple=""  />
                                                 <label class="form-label" for="form3Example4cg">Picture Demo</label>
                                             </div>
                                         </div>
-                                            
+
                                         <div class="d-flex justify-content-center">
                                             <button type="submit" " class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Submit</button>
                                         </div>                                       
@@ -91,40 +91,40 @@
             crossorigin="anonymous"
         ></script>
         <script>
-                                                var selDiv = "";
-                                                var storedFiles = [];
-                                                $(document).ready(function () {
-                                                    $("#img").on("change", handleFileSelect);
-                                                    selDiv = $("#selectedBanner");
-                                                });
+            var selDiv = "";
+            var storedFiles = [];
+            $(document).ready(function () {
+                $("#img").on("change", handleFileSelect);
+                selDiv = $("#selectedBanner");
+            });
 
-                                                function handleFileSelect(e) {
-                                                    var files = e.target.files;
-                                                    var filesArr = Array.prototype.slice.call(files);
-                                                    filesArr.forEach(function (f) {
-                                                        if (!f.type.match("image.*")) {
-                                                            return;
-                                                        }
-                                                        storedFiles.push(f);
+            function handleFileSelect(e) {
+                var files = e.target.files;
+                var filesArr = Array.prototype.slice.call(files);
+                filesArr.forEach(function (f) {
+                    if (!f.type.match("image.*")) {
+                        return;
+                    }
+                    storedFiles.push(f);
 
-                                                        var reader = new FileReader();
-                                                        reader.onload = function (e) {
-                                                            var html =
-                                                                    '<img src="' +
-                                                                    e.target.result +
-                                                                    "\" data-file='" +
-                                                                    f.name +
-                                                                    "alt='Category Image' height='50px' width='50px'>";
-                                                            selDiv.html(html);
-                                                        };
-                                                        reader.readAsDataURL(f);
-                                                    });
-                                                }
-                                                
-                                                function validateEmail(email) {
-                                                    var re = /\S+@\S+\.\S+/;
-                                                    return re.test(email);
-                                                }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var html =
+                                '<img src="' +
+                                e.target.result +
+                                "\" data-file='" +
+                                f.name +
+                                "alt='Category Image' height='50px' width='50px'>";
+                        selDiv.html(html);
+                    };
+                    reader.readAsDataURL(f);
+                });
+            }
+
+            function validateEmail(email) {
+                var re = /\S+@\S+\.\S+/;
+                return re.test(email);
+            }
         </script>
     </body>
 

@@ -66,7 +66,7 @@ public class AdminNewRelease extends HttpServlet {
 
         //phan trang
         int size = list.size();
-        int page, numpage = 20;
+        int page, numpage = 10;
         int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
         String xpage = request.getParameter("page");
         if (xpage == null) {

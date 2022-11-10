@@ -60,7 +60,7 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${requestScope.gamesearch}" var="game">
-                                    <tr onclick="window.location.href = 'game?gameID=${game.gameID}'">
+                                    <tr onclick="window.location.href='agameDetails?GameID=${game.gameID}'">
                                         <th scope="col">${game.name}</th>
                                         <th scope="col"> 
                                             <div style="width:200px; height: 100px; display: table-cell" >

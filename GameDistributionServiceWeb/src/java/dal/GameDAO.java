@@ -107,7 +107,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> getFreeGames() {
         List<Game> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1 "
+        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1 and"
                 + "[price] = 0";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
@@ -138,7 +138,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> get10FreeGames() {
         List<Game> list = new ArrayList<>();
-        String sql = "select top 10 * FROM [dbo].[Game] where Buyable = 1 "
+        String sql = "select top 10 * FROM [dbo].[Game] where Buyable = 1 and "
                 + "[price] = 0";
         Connection connection = getConnection();
         try {

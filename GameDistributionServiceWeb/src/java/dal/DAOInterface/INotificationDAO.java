@@ -12,4 +12,6 @@ import model.Notification;
  */
 public interface INotificationDAO extends IDAO<Notification>{
     Notification get(int NotiID);
+    
+    void createNotification(String context, int userID, int type);
 }

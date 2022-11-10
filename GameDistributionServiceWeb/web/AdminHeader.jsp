@@ -54,7 +54,7 @@
                         <a class="nav-link" href="logout">Sign out</a>
                     </li>
                 </ul>
-                <form class="search d-flex " action="search" method = "get" style="position: relative">
+                <form class="search d-flex " action="asearch" method = "get" style="position: relative">
                     <input class="form-control me-2" id="input" type="search" placeholder="Search" aria-label="Search" name="search" onkeyup="filterFunction()">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                     <div id="dropdown" style="display: none">

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : games
-    Created on : Oct 4, 2022, 5:04:29 PM
+    Document   : AdminSearch
+    Created on : Nov 10, 2022, 10:38:52 AM
     Author     : Strongest
 --%>
 
@@ -20,13 +20,22 @@
             section{
                 width: 70%;
                 margin: 0 auto;
-
+                color: white;
+            }
+            body{
+                background-color: #333333;
+            }
+            table{
+                background-color: #333333; 
+            }
+            table tr{
+                color: white;
             }
         </style>
     </head>
     <body>
         <header>
-            <jsp:include page="Header.jsp" />
+            <jsp:include page="AdminHeader.jsp" />
         </header>
         <section>
             <div>
@@ -41,7 +50,7 @@
                     </c:if>
                     <c:if test="${requestScope.size != 0}">
                         <div style="width: 70%;">
-                            <table class="table table-secondary table-hover">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 20%">Title</th>
@@ -50,24 +59,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${requestScope.gamesearch}" var="game">
-                                        <tr onclick="window.location.href = 'game?gameID=${game.gameID}'">
-                                            <th scope="col">${game.name}</th>
-                                            <th scope="col"> 
-                                                <div style="width:200px; height: 100px; display: table-cell" >
-                                                    <img src="${game.poster}" alt="alt" style="width: 100%;height: 100%" />
-                                                </div>
-                                            </th>
-                                            <th scope="col" style="text-align: center">${game.price}</th>
-                                        </tr>
-                                    </c:forEach>
+                                <c:forEach items="${requestScope.gamesearch}" var="game">
+                                    <tr onclick="window.location.href = 'game?gameID=${game.gameID}'">
+                                        <th scope="col">${game.name}</th>
+                                        <th scope="col"> 
+                                            <div style="width:200px; height: 100px; display: table-cell" >
+                                                <img src="${game.poster}" alt="alt" style="width: 100%;height: 100%" />
+                                            </div>
+                                        </th>
+                                        <th scope="col" style="text-align: center">${game.price}</th>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>                    
                         </div>              
                     </c:if>
-                    <div style=" background-color: #a0a1b4; width: 20%; height: 500px;">
+                    <div style=" background-color: #333333; width: 20%; height: 500px;">
                         <h5>Choose your price range</h5>
-                        <form action="searchfilter" method="post">
+                        <form action="asearchfilter" method="post">
                             <div>
                                 <input type="number" name="first" placeholder="0" value="0" style="width: 40%;display: inline"/> 
                                 <p style="display: inline">-</p>

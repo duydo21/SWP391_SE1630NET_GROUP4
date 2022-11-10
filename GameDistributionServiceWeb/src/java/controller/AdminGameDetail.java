@@ -183,7 +183,7 @@ public class AdminGameDetail extends HttpServlet {
         IGameDAO gameDao = new GameDAO();
         IUserNotificationDAO un = new UserNotificationDAO();
         un.adminCreateNotification(context);
-        gameDao.deleteGameByID(g.getGameID());
+        gameDao.makeGameUnbuyableByID(g.getGameID());
         response.sendRedirect("amainscreen");
         
     }

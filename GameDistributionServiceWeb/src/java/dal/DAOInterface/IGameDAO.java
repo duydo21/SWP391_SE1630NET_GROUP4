@@ -74,7 +74,7 @@ public interface IGameDAO extends IDAO<Game> {
 
     int getUserVoteOfAGame(User user, Game game);
     
-    void deleteGameByID(int id);
+    void makeGameUnbuyableByID(int id);
 
     List<UserGameDeveloper> getUserGameDeveloped();
     

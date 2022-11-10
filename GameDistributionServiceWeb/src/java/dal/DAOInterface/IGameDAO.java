@@ -56,10 +56,6 @@ public interface IGameDAO extends IDAO<Game> {
 
     List<Game> searchGamesByName(String name);
 
-    List<Game> sortGameByName();
-
-    List<Game> sortGameByPrice();
-
     List<UserGameBuy> getUserGameBuybyId(int userid);
 
     List<UserGameBuy> getUserGameBuy();
@@ -73,15 +69,22 @@ public interface IGameDAO extends IDAO<Game> {
     int getLikesOrDislikes(Game game, int voteType);
 
     int getUserVoteOfAGame(User user, Game game);
-    
+
     void makeGameUnbuyableByID(int id);
 
     List<UserGameDeveloper> getUserGameDeveloped();
-    
+
     List<Category> getCategory();
-    
+
     int uploadGame(Game g);
-    
-    
+
+    List<Game> sortGameByNameASC(List<Game> list);
+
+    List<Game> sortGameByNameDESC(List<Game> list);
+
+    List<Game> sortGameByPriceASC(List<Game> list);
+
+    List<Game> sortGameByPriceDESC(List<Game> list);
+    List<Game> getGameByPriceRange(List<Game> list, float min, float max);
     
 }

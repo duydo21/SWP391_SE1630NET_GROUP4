@@ -9,7 +9,6 @@ import dal.DAOInterface.ICategoryDAO;
 import dal.DAOInterface.IGameDAO;
 import dal.GameDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,34 +22,9 @@ import model.Game;
  *
  * @author Strongest
  */
-@WebServlet(name = "GamesServlet", urlPatterns = {"/games"})
-public class GamesServlet extends HttpServlet {
+@WebServlet(name = "AllGameServlet", urlPatterns = {"/games"})
+public class AllGameServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GamesServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GamesServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
     IGameDAO gd = new GameDAO();
     List<Game> list = gd.getGame();
     ICategoryDAO cd = new CategoryDAO();
@@ -68,14 +42,7 @@ public class GamesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String price = request.getParameter("Price");
-        String name = request.getParameter("Name");
-        list = gd.getGame();
-        if (price != null || name != null) {
-
-        }
-
+        System.out.println("CRAP");
         //phan trang
         int size = list.size();
         int page, numpage = 10;
@@ -115,14 +82,7 @@ public class GamesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String price = request.getParameter("Price");
-        String name = request.getParameter("Name");
-        if (price == null && name == null) {
-            list = gd.getGame();
-        } else if (price == "1") {
-            list = gd.sortGameByPrice();
-        }
-        request.getRequestDispatcher("games.jsp").forward(request, response);
+        
     }
 
     /**

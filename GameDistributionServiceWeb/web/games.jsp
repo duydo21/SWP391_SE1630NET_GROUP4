@@ -71,7 +71,7 @@
                     </div>
                     <div class="overflow-auto" style=" background-color: #a0a1b4; width: 20%; height: 700px;">
                         <h5>Choose your price range</h5>
-                        <form action="games" method="post" id="f1">
+                        <form action="filter" method="get" id="f1">
                             <div>
                                 <input type="number" name="first" placeholder="0" value="0" style="width: 40%;display: inline"/> 
                                 <p style="display: inline">-</p>
@@ -91,23 +91,21 @@
                                 </label>
                             </div> 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Filter" id="3" value="1">
+                                <input class="form-check-input" type="radio" name="Filter" id="3" value="3">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Name(A-Z)
                                 </label>
                             </div>   
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Filter" id="4" value="2">
+                                <input class="form-check-input" type="radio" name="Filter" id="4" value="4">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Name(Z-A)
                                 </label>
                             </div>
-                        </form>
                         <h5>Category:</h5>
-                        <form style="overflow: auto;" ction="games" method="post" id="f2">
                             <c:forEach items="${requestScope.cate}" var="c">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${c.categoryID}">
+                                    <input class="form-check-input" name="cate" type="checkbox" value="${c.categoryID}">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ${c.categoryName}
                                     </label>    

@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import model.Category;
 import model.Game;
@@ -501,66 +503,6 @@ public class GameDAO extends DBContext implements IGameDAO {
         }
     }
 
-    //sap xep danh sach game theo ten
-    @Override
-    public List<Game> sortGameByName() {
-        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1 order by Name ASC";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        ResultSet resultSet = null;
-        List<Game> list = new ArrayList<>();
-        try {
-            resultSet = getResultSet(preparedStatement);
-            while (resultSet.next()) {
-                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"),
-                        resultSet.getFloat("Price"), resultSet.getInt("Download"),
-                        resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
-                        resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
-                list.add(g);
-            }
-        } catch (SQLException e) {
-        } finally {
-            try {
-                resultSet.close();
-                preparedStatement.close();
-                connection.close();
-            } catch (SQLException e) {
-            }
-            return list;
-        }
-    }
-
-    //sap xep danh sach game theo gia tien
-    @Override
-    public List<Game> sortGameByPrice() {
-        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1 order by Price ASC";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
-        ResultSet resultSet = null;
-        List<Game> list = new ArrayList<>();
-        try {
-            resultSet = getResultSet(preparedStatement);
-            while (resultSet.next()) {
-                Game g = new Game(resultSet.getInt("GameID"), resultSet.getString("Name"),
-                        resultSet.getFloat("Price"), resultSet.getInt("Download"),
-                        resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
-                        resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
-                list.add(g);
-            }
-        } catch (SQLException e) {
-        } finally {
-            try {
-                resultSet.close();
-                preparedStatement.close();
-                connection.close();
-            } catch (SQLException e) {
-            }
-            return list;
-        }
-    }
-
     //lay lich su mua game cua user dua theo id
     @Override
     public List<UserGameBuy> getUserGameBuybyId(int userid) {
@@ -961,4 +903,59 @@ public class GameDAO extends DBContext implements IGameDAO {
         return count;
     }
 
+    @Override
+    public List<Game> sortGameByNameASC(List<Game> list) {
+        Collections.sort(list, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return o2.getName().compareTo(o1.getName());
+            }
+        });
+        return list;
+    }
+
+    @Override
+    public List<Game> sortGameByNameDESC(List<Game> list) {
+        Collections.sort(list, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return list;
+    }
+
+    @Override
+    public List<Game> sortGameByPriceASC(List<Game> list) {
+        Collections.sort(list, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Float.compare(o1.getPrice(),o2.getPrice());
+            }
+        });
+        return list;
+    }
+
+    @Override
+    public List<Game> sortGameByPriceDESC(List<Game> list) {
+        Collections.sort(list, new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return Float.compare(o2.getPrice(),o1.getPrice());
+            }
+        });
+        return list;
+    }
+    @Override
+    
+   public List<Game> getGameByPriceRange(List<Game> list, float min, float max){
+       List<Game> glist;
+       for (int i=0; i<list.size();i++){
+           if(list.get(i).getPrice() > max ||list.get(i).getPrice()<min){
+               list.remove(i);
+               i--;
+           }
+       }
+       return list;
+   }
 }

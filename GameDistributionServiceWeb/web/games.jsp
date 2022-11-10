@@ -107,12 +107,13 @@
                         <form style="overflow: auto;" ction="games" method="post" id="f2">
                             <c:forEach items="${requestScope.cate}" var="c">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="">
+                                    <input class="form-check-input" type="checkbox" value="${c.categoryID}">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         ${c.categoryName}
                                     </label>    
                                 </div>
                             </c:forEach>
+                            <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>
                 </div>

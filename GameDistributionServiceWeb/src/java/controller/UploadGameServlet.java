@@ -11,22 +11,22 @@ import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 import model.Game;
-import model.GameCategory;
 
 /**
  *
  * @author ADMIN
  */
+@MultipartConfig
 @WebServlet(name = "UploadGameServlet", urlPatterns = {"/uploadgame"})
 public class UploadGameServlet extends HttpServlet {
 
@@ -89,26 +89,20 @@ public class UploadGameServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CategoryDAO c_dao = new CategoryDAO();
-        
 
-        String name = request.getParameter("name");
+        String name = request.getParameter("name").trim();
         float price = (float) 0.0; // default value
         if (request.getParameter("price") != null) {
             price = Float.parseFloat(request.getParameter("price"));
         }
-        String decription = request.getParameter("decription");
+        String decription = request.getParameter("decription").trim();
 
-//        //tạo đường truyền dẫn cho upload ảnh
-//        Part part = request.getPart("poster");
-//        String realPath = request.getServletContext().getRealPath("/poster");
-//        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-//
-//        //trường hợp không có ảnh truyền vào
-//        if (filename.isEmpty()) {
-//            filename = "Default Avatar.jpg";
-//        }
-//        part.write(realPath + "/" + filename);
-//        
+        //tạo đường truyền dẫn cho upload ảnh
+        Part part = request.getPart("poster");
+        String realPath = request.getServletContext().getRealPath("/games");
+        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+        part.write(realPath + "/" + filename);
+
         String[] cid_raw = request.getParameterValues("category");
         List<Category> list = c_dao.getCategory();
         try {
@@ -122,12 +116,13 @@ public class UploadGameServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             System.out.println(e);
         }
-        Game g = new Game(name, price, decription, name, list);
+        Game g = new Game(name, price, decription, "games/"+filename, list);
 
         IGameDAO gd = new GameDAO();
         if (gd.uploadGame(g) > 0) {
             response.sendRedirect("mainscreen");
         }
+
     }
 
     /**
@@ -141,3 +136,4 @@ public class UploadGameServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+

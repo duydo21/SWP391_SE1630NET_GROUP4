@@ -15,9 +15,18 @@ public class Notification {
     private int Type;
     private String Content;
     private Date date;
+    private User UserID;
     
     public Notification() {
         
+    }
+
+    public Notification(int NotiID, int Type, String Content, Date date, User UserID) {
+        this.NotiID = NotiID;
+        this.Type = Type;
+        this.Content = Content;
+        this.date = date;
+        this.UserID = UserID;
     }
 
     public Notification(int NotiID, int Type, String Content, Date date) {
@@ -62,4 +71,11 @@ public class Notification {
         this.date = date;
     }
     
+    public User getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(User UserID) {
+        this.UserID = UserID;
+    }
 }

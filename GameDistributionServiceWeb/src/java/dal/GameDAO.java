@@ -42,7 +42,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> getGame() {
         List<Game> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[Game]";
+        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -53,7 +53,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -107,7 +107,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> getFreeGames() {
         List<Game> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[Game] where "
+        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1 and"
                 + "[price] = 0";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
@@ -119,7 +119,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -138,7 +138,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> get10FreeGames() {
         List<Game> list = new ArrayList<>();
-        String sql = "select top 10 * FROM [dbo].[Game] where "
+        String sql = "select top 10 * FROM [dbo].[Game] where Buyable = 1 and "
                 + "[price] = 0";
         Connection connection = getConnection();
         try {
@@ -149,7 +149,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -168,7 +168,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> getBestSeller() {
         List<Game> list = new ArrayList<>();
-        String sql = "select * from Game where [Status] != 2 order by Download desc";
+        String sql = "select * from Game where [Status] != 2 and Buyable = 1 order by Download desc ";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -179,7 +179,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -198,7 +198,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> get10BestSeller() {
         List<Game> list = new ArrayList<>();
-        String sql = "select top 10 * from Game where [Status] != 2 order by Download desc";
+        String sql = "select top 10 * from Game where [Status] != 2 and Buyable = 1 order by Download desc";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -209,7 +209,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -228,7 +228,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> getNewRelease() {
         List<Game> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
+        String sql = "SELECT * FROM [dbo].[Game] where [Status] != 2 and Buyable = 1 order by [Date] desc";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -239,7 +239,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -258,7 +258,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> get10NewRelease() {
         List<Game> list = new ArrayList<>();
-        String sql = "SELECT top 10 * FROM [dbo].[Game] where [Status] != 2 order by [Date] desc";
+        String sql = "SELECT top 10 * FROM [dbo].[Game] where [Status] != 2 and Buyable = 1 order by [Date] desc";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -269,7 +269,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -300,7 +300,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 return g;
             }
         } catch (SQLException e) {
@@ -475,7 +475,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     public List<Game> searchGamesByName(String name) {
         List<Game> list = new ArrayList<>();
-        String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%'";
+        String sql = "SELECT * FROM [dbo].[Game] where [Name] like '%" + name + "%' and Buyable = 1";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -486,7 +486,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException ex) {
@@ -504,7 +504,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     //sap xep danh sach game theo ten
     @Override
     public List<Game> sortGameByName() {
-        String sql = "SELECT * FROM [dbo].[Game] order by Name ASC";
+        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1 order by Name ASC";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -516,7 +516,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -534,7 +534,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     //sap xep danh sach game theo gia tien
     @Override
     public List<Game> sortGameByPrice() {
-        String sql = "SELECT * FROM [dbo].[Game] order by Price ASC";
+        String sql = "SELECT * FROM [dbo].[Game] where Buyable = 1 order by Price ASC";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -546,7 +546,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -629,7 +629,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     public List<Game> getDeals() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[Game] where "
-                + "[Discount] != 0";
+                + "[Discount] != 0 and Buyable = 1";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         ResultSet resultSet = null;
@@ -640,7 +640,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -660,7 +660,7 @@ public class GameDAO extends DBContext implements IGameDAO {
     public List<Game> get10Deals() {
         List<Game> list = new ArrayList<>();
         String sql = "SELECT TOP 10 * FROM [dbo].[Game] where "
-                + "[Discount] != 0";
+                + "[Discount] != 0 and Buyable = 1";
         Connection connection = getConnection();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -670,7 +670,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 list.add(g);
             }
         } catch (SQLException e) {
@@ -782,7 +782,7 @@ public class GameDAO extends DBContext implements IGameDAO {
                         resultSet.getFloat("Price"), resultSet.getInt("Download"),
                         resultSet.getInt("Discount"), resultSet.getFloat("Rate"),
                         resultSet.getInt("Status"), resultSet.getString("Description"),
-                        resultSet.getDate("Date"), resultSet.getString("Poster"));
+                        resultSet.getDate("Date"), resultSet.getString("Poster"), resultSet.getBoolean("Buyable"));
                 return g;
             }
         } catch (SQLException e) {
@@ -799,8 +799,10 @@ public class GameDAO extends DBContext implements IGameDAO {
     }
 
     @Override
-    public void deleteGameByID(int id) {
-        String sql = "Delete from [Game] where GameID = ?";
+    public void makeGameUnbuyableByID(int id) {
+        String sql = "UPDATE [dbo].[Game]\n"
+                + "   SET [Buyable] = 0\n"
+                + " WHERE GameID = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = getPreparedStatement(sql, connection);
         try {

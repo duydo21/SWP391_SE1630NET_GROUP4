@@ -105,13 +105,14 @@ public class NotificationDAO extends DBContext implements INotificationDAO {
     }
 
     @Override
-    public void createNotification(String context, int type) {
+    public void createNotification(String context, int userID, int type) {
         String sql = "INSERT INTO [dbo].[Notification]\n"
                 + "           ([Type]\n"
                 + "           ,[Content]\n"
-                + "           ,[Date])\n"
+                + "           ,[Date]"
+                + "           ,[UserID])\n"
                 + "     VALUES\n"
-                + "           (?,?,?)";
+                + "           (?,?,?,?)";
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
         Connection connection = getConnection();
@@ -120,6 +121,7 @@ public class NotificationDAO extends DBContext implements INotificationDAO {
             preparedStatement.setInt(1, type);
             preparedStatement.setString(2, context);
             preparedStatement.setDate(3, date);
+            preparedStatement.setInt(4, userID);
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

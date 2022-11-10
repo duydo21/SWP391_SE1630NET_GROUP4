@@ -112,7 +112,6 @@
                                     </a>
                                 </th>
                                 <th style="color: white; width: 22%;">Release date</th>
-                                <th>Download</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,14 +124,12 @@
                                         <span style="color: white">${n.name}</span>
                                     </td>
                                     <td class="text-success"><b>${n.date}</b></td>
-                                    <td class="text-success"><b>${n.text}</b></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
-
             <div class="row" style="display:flex">
                 <div style="width:50%">
                     <table class="table table-hover">
@@ -188,8 +185,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                </div>
-                
+                </div>                
             </div>
             <div class="container">
                 <h3 style="color: white">Current database</h3>

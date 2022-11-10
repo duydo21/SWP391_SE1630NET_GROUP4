@@ -8,13 +8,13 @@ package controller;
 import dal.CategoryDAO;
 import dal.DAOInterface.ICategoryDAO;
 import dal.DAOInterface.IGameDAO;
+import dal.DAOInterface.INotificationDAO;
 import dal.DAOInterface.IUserDAO;
 import dal.DAOInterface.IUserGameBuyDAO;
-import dal.DAOInterface.IUserNotificationDAO;
 import dal.GameDAO;
+import dal.NotificationDAO;
 import dal.UserDAO;
 import dal.UserGameBuyDAO;
-import dal.UserNotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -181,9 +181,14 @@ public class AdminGameDetail extends HttpServlet {
     throws ServletException, IOException {
         String context = request.getParameter("context");
         IGameDAO gameDao = new GameDAO();
-        IUserNotificationDAO un = new UserNotificationDAO();
-        un.adminCreateNotification(context);
-        gameDao.deleteGameByID(g.getGameID());
+        IUserDAO userDAO = new UserDAO();
+        INotificationDAO notiDAO = new NotificationDAO();
+        List<User> list = userDAO.getAllUser();
+        
+        for(User u: list){
+            notiDAO.createNotification(context, u.getUserID(),6);
+        }       
+        gameDao.makeGameUnbuyableByID(g.getGameID());
         response.sendRedirect("amainscreen");
         
     }

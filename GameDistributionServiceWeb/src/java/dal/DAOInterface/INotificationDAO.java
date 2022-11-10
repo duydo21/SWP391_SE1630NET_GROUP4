@@ -13,8 +13,8 @@ import model.Notification;
  */
 public interface INotificationDAO extends IDAO<Notification>{
     Notification get(int NotiID);
-    public void createNotification(String context, int type);
-    public List<Notification> getAllNotiOfAnUser(int UserID);
-    public List<Notification> sort(List<Notification> list, String sort);
-    public List<Notification> filter(List<Notification> list, String filter);
+    List<Notification> getAllNotiOfAnUser(int UserID);
+    List<Notification> sort(List<Notification> list, String sort);
+    List<Notification> filter(List<Notification> list, String filter);
+    void createNotification(String context, int userID, int type);
 }

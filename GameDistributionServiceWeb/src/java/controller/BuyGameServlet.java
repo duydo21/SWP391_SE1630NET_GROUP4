@@ -5,12 +5,14 @@
 package controller;
 
 import dal.DAOInterface.IGameDAO;
+import dal.DAOInterface.INotificationDAO;
 import dal.DAOInterface.IPaymentDAO;
 import dal.DAOInterface.IUserDAO;
 import dal.DAOInterface.IUserGameBuyDAO;
 import dal.PaymentDAO;
 import dal.UserGameBuyDAO;
 import dal.GameDAO;
+import dal.NotificationDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +22,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 import model.Game;
+import model.Notification;
 import model.User;
 
 /**
@@ -73,11 +77,12 @@ public class BuyGameServlet extends HttpServlet {
         IUserGameBuyDAO ugbDao = new UserGameBuyDAO();
         IUserDAO uDao = new UserDAO();
         IPaymentDAO pDao = new PaymentDAO();
+        INotificationDAO notiDao = new NotificationDAO();
         //get game
         String gameID_raw = request.getParameter("GameID");
         int gameID = Integer.parseInt(gameID_raw);
         Game game = gameDao.getGameById(gameID);
-        
+
         //get user who buy the game
         User user = (User) session.getAttribute("userlogin");
         //add record to UserGameBuy
@@ -87,11 +92,16 @@ public class BuyGameServlet extends HttpServlet {
         //subtract user account balance
         user.setAccountBalance(user.getAccountBalance() - game.getPriceAfterDiscount());
         uDao.manageAccBalance(user);
+        //add record to noti
+        java.util.Date utilDate = new Date();
+        java.sql.Date date = new java.sql.Date(utilDate.getTime());
+        Notification noti = new Notification(0, 1, "Buy game: " + game.getName() + "Account balance: -" + 
+                game.getPriceAfterDiscount() + "/" + game.getGameID(), date, user);
+        notiDao.insert(noti);
         //insert download to the game
-        game.setDownload(game.getDownload()+1);
+        game.setDownload(game.getDownload() + 1);
         gameDao.insertDownloadToGame(game);
-        
-        
+
         request.setAttribute("GameID", gameID_raw);
         request.getRequestDispatcher("gameDetails").forward(request, response);
     }

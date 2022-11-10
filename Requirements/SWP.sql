@@ -55,15 +55,16 @@ create table [Notification]
 	NotiID int IDENTITY(1,1) primary key,
 	[Type] int,
 	Content nvarchar(max),
-	[Date] date
-)
-go
-create table [User-Notification]
-(
-	NotiID int foreign key references [Notification](NotiID),
+	[Date] date,
 	UserID int foreign key references [User](UserID)
 )
 go
+--create table [User-Notification]
+--(
+--	NotiID int foreign key references [Notification](NotiID),
+--	UserID int foreign key references [User](UserID)
+--)
+--go
 
 create table [Game]
 (

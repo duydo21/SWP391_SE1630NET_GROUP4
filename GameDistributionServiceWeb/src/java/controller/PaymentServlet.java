@@ -4,7 +4,9 @@
  */
 package controller;
 
+import dal.DAOInterface.INotificationDAO;
 import dal.DAOInterface.IUserDAO;
+import dal.NotificationDAO;
 import dal.PaymentDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -15,7 +17,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 import model.Account;
+import model.Notification;
 import model.Payment;
 import model.User;
 
@@ -79,10 +83,10 @@ public class PaymentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String method_raw = "";
-        int method=0;
+        int method = 0;
         String amount_raw = "";
         String type_raw = "";
-        int type=-1;
+        int type = -1;
         try {
             IUserDAO userDao = new UserDAO();
             HttpSession session = request.getSession();
@@ -99,11 +103,25 @@ public class PaymentServlet extends HttpServlet {
             //lấy parameter amount of money
             amount_raw = request.getParameter("amount").trim();
             float amount = Float.parseFloat(amount_raw);
+
+            String paymentMethod = "";
+                    switch (method) {
+                        case 1:
+                            paymentMethod = "Paypal";
+                            break;
+                        case 2:
+                            paymentMethod = "Credit card";
+                            break;
+                        case 3:
+                            paymentMethod = "Banking";
+                            break;
+                    }
             
             Payment payment = new Payment();
             payment.setUserID(user);
             payment.setPaymentMethod(Integer.parseInt(method_raw));
             PaymentDAO paymentDAO = new PaymentDAO();
+            INotificationDAO notiDao = new NotificationDAO();
             //trường hợp amount of money < 0
             if (amount < 0) {
                 throw new NumberFormatException();
@@ -120,6 +138,12 @@ public class PaymentServlet extends HttpServlet {
                     user.setAccountBalance(user.getAccountBalance() - amount);
                     payment.setMoney(-amount);
                     paymentDAO.insertPayment(payment);
+                    //add record to noti
+                    java.util.Date utilDate = new Date();
+                    java.sql.Date date = new java.sql.Date(utilDate.getTime());
+                    
+                    Notification noti = new Notification(0, 2, "Withdraw money: " + amount + "/" + paymentMethod, date, user);
+                    notiDao.insert(noti);
                     request.setAttribute("mss", "Successful!!");
                 }
                 //trường hợp user choose to purchase money for account
@@ -127,6 +151,11 @@ public class PaymentServlet extends HttpServlet {
                 user.setAccountBalance(user.getAccountBalance() + amount);
                 payment.setMoney(amount);
                 paymentDAO.insertPayment(payment);
+                //add record to noti
+                java.util.Date utilDate = new Date();
+                java.sql.Date date = new java.sql.Date(utilDate.getTime());
+                Notification noti = new Notification(0, 3, "Purchase money: " + amount + "/" + paymentMethod, date, user);
+                notiDao.insert(noti);
                 request.setAttribute("mss", "Successful!!");
             }
 

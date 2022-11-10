@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.Notification;
 
 /**
@@ -12,6 +13,8 @@ import model.Notification;
  */
 public interface INotificationDAO extends IDAO<Notification>{
     Notification get(int NotiID);
-    
+    List<Notification> getAllNotiOfAnUser(int UserID);
+    List<Notification> sort(List<Notification> list, String sort);
+    List<Notification> filter(List<Notification> list, String filter);
     void createNotification(String context, int userID, int type);
 }

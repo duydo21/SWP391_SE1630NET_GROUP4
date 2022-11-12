@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.CategoryDAO;
 import dal.DAOInterface.ICategoryDAO;
+import dal.DAOInterface.IGameCategoryDAO;
 import dal.DAOInterface.IGameDAO;
+import dal.GameCategoryDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,92 +20,104 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Category;
 import model.Game;
+import model.GameCategory;
 
 /**
  *
  * @author Strongest
  */
-@WebServlet(name="SearchFilter", urlPatterns={"/filter"})
+@WebServlet(name = "SearchFilter", urlPatterns = {"/filter"})
 public class SearchFilter extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchFilter</title>");  
+            out.println("<title>Servlet SearchFilter</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchFilter at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet SearchFilter at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-        IGameDAO gd = new GameDAO();
+    IGameDAO gd = new GameDAO();
     List<Game> list = gd.getGame();
     ICategoryDAO cd = new CategoryDAO();
     List<Category> clist = cd.getCategory();
+    IGameCategoryDAO gc = new GameCategoryDAO();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+        request.setAttribute("action", "filter");
         String priceMin = request.getParameter("first");
         String priceMax = request.getParameter("second");
-
+        String filter = "";
         float min = Float.parseFloat(priceMin);
         float max = Float.parseFloat(priceMax);
+
+        filter = filter + "first=" + priceMin + "&second=" + priceMax;
+
         if (min == 0 && max == 0) {
             list = gd.getGame();
-        }
-        else if(min != 0 && max != 0){
+        } else if (min != 0 && max != 0) {
             list = gd.getGameByPriceRange(list, min, max);
         }
         String radio = request.getParameter("Filter");
-        if(radio == null){
-            
-        }
-        else if (radio.equals("1")) {
+        if (radio == null) {
+
+        } else if (radio.equals("1")) {
             list = gd.sortGameByPriceASC(list);
-        }
-        else if (radio.equals("2")) {
+            filter = filter + "&Filter=" + radio;
+        } else if (radio.equals("2")) {
             list = gd.sortGameByPriceDESC(list);
-        }
-        else if (radio.equals("3")) {
+            filter = filter + "&Filter=" + radio;
+        } else if (radio.equals("3")) {
             list = gd.sortGameByNameASC(list);
-        }
-        else if (radio.equals("4")) {
+            filter = filter + "&Filter=" + radio;
+        } else if (radio.equals("4")) {
             list = gd.sortGameByNameDESC(list);
+            filter = filter + "&Filter=" + radio;
         }
+
         String[] category = request.getParameterValues("cate");
         if (category == null) {
-            
+
         }
         if (category != null) {
             int[] searchint = new int[category.length];
             for (int i = 0; i < searchint.length; i++) {
                 searchint[i] = Integer.parseInt(category[i]);
+                filter = filter + "&cate=" + searchint[i];
             }
+            List<GameCategory> game = gc.getGameIDbyCateID(searchint);
+            list = gd.filterGameByCategory(list, game);
         }
-                //phan trang
+        //phan trang
         int size = list.size();
         int page, numpage = 10;
         int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
@@ -124,16 +137,18 @@ public class SearchFilter extends HttpServlet {
 
         List<Game> glist = gd.getGame();
         request.setAttribute("gamelist", glist);
-        
+
         request.setAttribute("getgames", plist);
         request.setAttribute("cate", clist);
-        request.setAttribute("link", "games");
+        request.setAttribute("link", "filter");
+        request.setAttribute("filter", filter);
         request.setAttribute("text", "All Games");
         request.getRequestDispatcher("games.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -141,12 +156,13 @@ public class SearchFilter extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
 
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

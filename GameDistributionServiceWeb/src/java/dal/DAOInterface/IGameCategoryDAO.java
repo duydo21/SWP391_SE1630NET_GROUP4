@@ -4,6 +4,7 @@
  */
 package dal.DAOInterface;
 
+import java.util.List;
 import model.GameCategory;
 
 /**
@@ -13,4 +14,6 @@ import model.GameCategory;
 public interface IGameCategoryDAO extends IDAO<GameCategory>{
 
     void insertGameCategory(GameCategory gc);
+    
+    List<GameCategory> getGameIDbyCateID(int[] cate);
 }

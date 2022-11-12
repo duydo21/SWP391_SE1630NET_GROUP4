@@ -85,6 +85,8 @@ public interface IGameDAO extends IDAO<Game> {
     List<Game> sortGameByPriceASC(List<Game> list);
 
     List<Game> sortGameByPriceDESC(List<Game> list);
+
     List<Game> getGameByPriceRange(List<Game> list, float min, float max);
-    
+
+    List<Game> filterGameByCategory(List<Game> list , List<GameCategory> gclist);
 }

@@ -4,7 +4,11 @@
  */
 package controller;
 
+import dal.CategoryDAO;
+import dal.DAOInterface.ICategoryDAO;
+import dal.DAOInterface.IGameCategoryDAO;
 import dal.DAOInterface.IGameDAO;
+import dal.GameCategoryDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 import model.Game;
+import model.GameCategory;
 
 /**
  *
@@ -60,19 +65,84 @@ public class NewReleaseServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    IGameDAO gd = new GameDAO();
+    List<Game> list = gd.getNewRelease();
+    ICategoryDAO cd = new CategoryDAO();
+    List<Category> clist = cd.getCategory();
+    IGameCategoryDAO gc = new GameCategoryDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        IGameDAO gd = new GameDAO();
-        List<Game> list = gd.getNewRelease();
-        List<Category> clist = new ArrayList<>();
+        request.setAttribute("action", "news");
+        String priceMin = request.getParameter("first");
+        String priceMax = request.getParameter("second");
+        String filter = "";
+        float min = Float.parseFloat(priceMin);
+        float max = Float.parseFloat(priceMax);
+
+        filter = filter + "first=" + priceMin+"&second="+priceMax;
+        
+        if (min == 0 && max == 0) {
+            list = gd.getNewRelease();
+        } else if (min != 0 && max != 0) {
+            list = gd.getGameByPriceRange(list, min, max);
+        }
+        String radio = request.getParameter("Filter");
+        if (radio == null) {
+
+        } else if (radio.equals("1")) {
+            list = gd.sortGameByPriceASC(list);
+            filter = filter + "&Filter="+radio;
+        } else if (radio.equals("2")) {
+            list = gd.sortGameByPriceDESC(list);
+            filter = filter + "&Filter="+radio;
+        } else if (radio.equals("3")) {
+            list = gd.sortGameByNameASC(list);
+            filter = filter + "&Filter="+radio;
+        } else if (radio.equals("4")) {
+            list = gd.sortGameByNameDESC(list);
+            filter = filter + "&Filter="+radio;
+        }
+        
+        String[] category = request.getParameterValues("cate");
+        if (category == null) {
+
+        }
+        if (category != null) {
+            int[] searchint = new int[category.length];
+            for (int i = 0; i < searchint.length; i++) {
+                searchint[i] = Integer.parseInt(category[i]);
+                filter = filter + "&cate="+searchint[i];
+            }
+            List<GameCategory> game = gc.getGameIDbyCateID(searchint);
+            list = gd.filterGameByCategory(list, game);
+        }
+        //phan trang
         int size = list.size();
+        int page, numpage = 10;
+        int num = (size % numpage == 0 ? (size / numpage) : (size / numpage) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numpage;
+        end = Math.min(page * numpage, size);
+        List<Game> plist = gd.getGameByPage(list, start, end);
+        request.setAttribute("size", size);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
 
         List<Game> glist = gd.getGame();
         request.setAttribute("gamelist", glist);
 
-        request.setAttribute("size", size);
-        request.setAttribute("getgames", list);
+        request.setAttribute("getgames", plist);
+        request.setAttribute("cate", clist);
+        request.setAttribute("link", "news");
+        request.setAttribute("filter", filter);
         request.setAttribute("text", "Newest Games");
         request.getRequestDispatcher("games.jsp").forward(request, response);
     }

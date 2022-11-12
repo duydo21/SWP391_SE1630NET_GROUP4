@@ -949,7 +949,6 @@ public class GameDAO extends DBContext implements IGameDAO {
     @Override
     
    public List<Game> getGameByPriceRange(List<Game> list, float min, float max){
-       List<Game> glist;
        for (int i=0; i<list.size();i++){
            if(list.get(i).getPrice() > max ||list.get(i).getPrice()<min){
                list.remove(i);
@@ -958,4 +957,17 @@ public class GameDAO extends DBContext implements IGameDAO {
        }
        return list;
    }
+
+    @Override
+    public List<Game> filterGameByCategory(List<Game> list, List<GameCategory> gclist) {
+        List<Game> newList = new ArrayList<>();
+        for(int i=0; i<list.size();i++){
+            for(int j = 0; j < gclist.size(); j++){
+                if(list.get(i).getGameID() == gclist.get(j).getGameID().getGameID()){
+                    newList.add(list.get(i));
+                }
+            }
+        }
+        return newList;
+    }
 }

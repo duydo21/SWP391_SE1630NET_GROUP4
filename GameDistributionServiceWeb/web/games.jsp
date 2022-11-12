@@ -64,14 +64,14 @@
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
                                 <c:forEach begin="${1}" end="${requestScope.num}" var="i">
-                                    <li class="page-item"><a class="page-link" href="${requestScope.link}?page=${i}">${i}</a></li>
+                                    <li class="page-item"><a class="page-link" href="${requestScope.link}?page=${i}&${requestScope.filter}">${i}</a></li>
                                     </c:forEach>
                             </ul>
                         </nav>
                     </div>
                     <div class="overflow-auto" style=" background-color: #a0a1b4; width: 20%; height: 700px;">
                         <h5>Choose your price range</h5>
-                        <form action="filter" method="get" id="f1">
+                        <form action="${requestScope.action}" method="get" id="f1">
                             <div>
                                 <input type="number" name="first" placeholder="0" value="0" style="width: 40%;display: inline"/> 
                                 <p style="display: inline">-</p>

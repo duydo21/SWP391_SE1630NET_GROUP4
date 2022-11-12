@@ -6,7 +6,9 @@ package controller;
 
 import dal.CategoryDAO;
 import dal.DAOInterface.ICategoryDAO;
+import dal.DAOInterface.IGameCategoryDAO;
 import dal.DAOInterface.IGameDAO;
+import dal.GameCategoryDAO;
 import dal.GameDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Category;
 import model.Game;
+import model.GameCategory;
 
 /**
  *
@@ -61,14 +64,59 @@ public class BestSellingServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    IGameDAO gd = new GameDAO();
+    List<Game> list = gd.getBestSeller();
+    ICategoryDAO cd = new CategoryDAO();
+    List<Category> clist = cd.getCategory();
+    IGameCategoryDAO gc = new GameCategoryDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        IGameDAO gd = new GameDAO();
-        ICategoryDAO cd = new CategoryDAO();
-        List<Game> list = gd.getBestSeller();
-        List<Category> clist = cd.getCategory();
+        request.setAttribute("action", "best");
+        String priceMin = request.getParameter("first");
+        String priceMax = request.getParameter("second");
+        String filter = "";
+        float min = Float.parseFloat(priceMin);
+        float max = Float.parseFloat(priceMax);
 
+        filter = filter + "first=" + priceMin + "&second=" + priceMax;
+
+        if (min == 0 && max == 0) {
+            list = gd.getGame();
+        } else if (min != 0 && max != 0) {
+            list = gd.getGameByPriceRange(list, min, max);
+        }
+        String radio = request.getParameter("Filter");
+        if (radio == null) {
+
+        } else if (radio.equals("1")) {
+            list = gd.sortGameByPriceASC(list);
+            filter = filter + "&Filter=" + radio;
+        } else if (radio.equals("2")) {
+            list = gd.sortGameByPriceDESC(list);
+            filter = filter + "&Filter=" + radio;
+        } else if (radio.equals("3")) {
+            list = gd.sortGameByNameASC(list);
+            filter = filter + "&Filter=" + radio;
+        } else if (radio.equals("4")) {
+            list = gd.sortGameByNameDESC(list);
+            filter = filter + "&Filter=" + radio;
+        }
+
+        String[] category = request.getParameterValues("cate");
+        if (category == null) {
+
+        }
+        if (category != null) {
+            int[] searchint = new int[category.length];
+            for (int i = 0; i < searchint.length; i++) {
+                searchint[i] = Integer.parseInt(category[i]);
+                filter = filter + "&cate=" + searchint[i];
+            }
+            List<GameCategory> game = gc.getGameIDbyCateID(searchint);
+            list = gd.filterGameByCategory(list, game);
+        }
         //phan trang
         int size = list.size();
         int page, numpage = 10;
@@ -86,13 +134,14 @@ public class BestSellingServlet extends HttpServlet {
         request.setAttribute("size", size);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
-        request.setAttribute("getgames", plist);
-        //
 
         List<Game> glist = gd.getGame();
         request.setAttribute("gamelist", glist);
+
+        request.setAttribute("getgames", plist);
         request.setAttribute("cate", clist);
         request.setAttribute("link", "best");
+        request.setAttribute("filter", filter);
         request.setAttribute("text", "Best seller");
         request.getRequestDispatcher("games.jsp").forward(request, response);
     }
